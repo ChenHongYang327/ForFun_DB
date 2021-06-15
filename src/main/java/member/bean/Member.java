@@ -50,10 +50,10 @@ public class Member {
 		this.createTime = createTime;
 		this.updateYime = updateYime;
 		this.deleteTime = deleteTime;
-		
-		
-		
 	}
+	
+	
+	
 	public Integer getMemberId() {
 		return memberId;
 	}

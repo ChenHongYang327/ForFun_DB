@@ -34,9 +34,6 @@ public class Report {
 		this.item = item;
 		this.createTime1 = createTime1;
 		this.deleteTime = deleteTime;
-		
-		
-		
 	}
 	
 	
