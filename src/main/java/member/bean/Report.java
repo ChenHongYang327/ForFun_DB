@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 
 public class Report {
 	
+	//宣告
 	private Integer reportId;
 	private Integer whistleblowerId;
 	private Integer reportedId;
@@ -33,6 +34,9 @@ public class Report {
 		this.item = item;
 		this.createTime1 = createTime1;
 		this.deleteTime = deleteTime;
+		
+		
+		
 	}
 	
 	
