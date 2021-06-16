@@ -8,7 +8,7 @@ public class ChatRoom {
 	private Integer memberId1;
 	private Integer memberId2;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public ChatRoom(Integer chatroomId, Integer memberId1, Integer memberId2, Timestamp createTime,
@@ -18,7 +18,7 @@ public class ChatRoom {
 		this.memberId1 = memberId1;
 		this.memberId2 = memberId2;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -59,11 +59,11 @@ public class ChatRoom {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

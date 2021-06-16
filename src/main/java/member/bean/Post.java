@@ -11,7 +11,7 @@ public class Post {
 	private String postImg;
 	private String content;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Post(Integer postId, Integer boardId, Integer posterId, String postTitle, String postImg, String content,
@@ -24,7 +24,7 @@ public class Post {
 		this.postImg = postImg;
 		this.content = content;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -89,11 +89,11 @@ public class Post {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

@@ -8,7 +8,7 @@ public class Area {
 	private Integer cityId;
 	private String areaName;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Area(Integer areaId, Integer cityId, String areaName, Timestamp createTime, Timestamp updateYime,
@@ -18,7 +18,7 @@ public class Area {
 		this.cityId = cityId;
 		this.areaName = areaName;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -59,11 +59,11 @@ public class Area {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

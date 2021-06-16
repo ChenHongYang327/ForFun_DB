@@ -12,7 +12,7 @@ public class Message {
 	private String record;
 	private Boolean read;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Message(Integer msgId, Integer chatroomId, Integer memberId, String msgChat, String msgImg, String record,
@@ -26,7 +26,7 @@ public class Message {
 		this.record = record;
 		this.read = read;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -99,11 +99,11 @@ public class Message {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

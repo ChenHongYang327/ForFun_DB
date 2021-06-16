@@ -11,7 +11,7 @@ public class Appointment {
 	private Timestamp appointmentTime;
 	private Boolean read;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Appointment(Integer appointmentId, Integer publishId, Integer ownerId, Integer tenantId,
@@ -24,7 +24,7 @@ public class Appointment {
 		this.appointmentTime = appointmentTime;
 		this.read = read;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -89,11 +89,11 @@ public class Appointment {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

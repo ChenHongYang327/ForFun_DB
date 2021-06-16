@@ -11,7 +11,7 @@ public class Customer_Service {
 	private String mail;
 	private Integer phone;
 	private String mag;
-	private Timestamp createTime1;
+	private Timestamp createTime;
 	private Timestamp deleteTime;
 
 	public Customer_Service(Integer customerId, Integer type, Integer memberId, String nickName, String mail,
@@ -24,7 +24,7 @@ public class Customer_Service {
 		this.mail = mail;
 		this.phone = phone;
 		this.mag = mag;
-		this.createTime1 = createTime;
+		this.createTime = createTime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -89,11 +89,11 @@ public class Customer_Service {
 	}
 
 	public Timestamp getCreateTime() {
-		return createTime1;
+		return createTime;
 	}
 
 	public void setCreateTime(Timestamp createTime) {
-		this.createTime1 = createTime;
+		this.createTime = createTime;
 	}
 
 	public Timestamp getDeleteTime() {

@@ -7,7 +7,7 @@ public class City {
 	private Integer cityId;
 	private String cityName;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public City(Integer cityId, String cityName, Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
@@ -15,7 +15,7 @@ public class City {
 		this.cityId = cityId;
 		this.cityName = cityName;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -48,11 +48,11 @@ public class City {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

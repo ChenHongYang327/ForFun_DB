@@ -13,7 +13,7 @@ public class Report {
 	private Integer postId;
 	private Integer chatroomId;
 	private Integer item;
-	private Timestamp createTime1;
+	private Timestamp createTime;
 	private Timestamp deleteTime;
 
 	public Report(Integer reportId, Integer whistleblowerId, Integer reportedId, Integer type, String message,
@@ -29,7 +29,7 @@ public class Report {
 		this.postId = postId;
 		this.chatroomId = chatroomId;
 		this.item = item;
-		this.createTime1 = createTime1;
+		this.createTime = createTime1;
 		this.deleteTime = deleteTime;
 	}
 
@@ -110,11 +110,11 @@ public class Report {
 	}
 
 	public Timestamp getCreateTime1() {
-		return createTime1;
+		return createTime;
 	}
 
 	public void setCreateTime1(Timestamp createTime1) {
-		this.createTime1 = createTime1;
+		this.createTime = createTime1;
 	}
 
 	public Timestamp getDeleteTime() {

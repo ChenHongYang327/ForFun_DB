@@ -10,7 +10,7 @@ public class Comment {
 	private String commentMsg;
 	private Boolean read;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Comment(Integer commentId, Integer memberId, Integer postId, String commentMsg, Boolean read,
@@ -22,7 +22,7 @@ public class Comment {
 		this.commentMsg = commentMsg;
 		this.read = read;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -79,11 +79,11 @@ public class Comment {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

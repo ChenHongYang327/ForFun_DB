@@ -11,7 +11,7 @@ public class Person_Evaluation {
 	private Integer personStar;
 	private String personComment;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Person_Evaluation(Integer personEvaluationId, Integer orderId, Integer commented, Integer commentedBy,
@@ -25,7 +25,7 @@ public class Person_Evaluation {
 		this.personStar = personStar;
 		this.personComment = personComment;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -90,11 +90,11 @@ public class Person_Evaluation {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

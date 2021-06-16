@@ -12,7 +12,7 @@ public class Order {
 	private Integer roderStatus;
 	private Boolean read;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Order(Integer orderId, Integer publishId, Integer tenantId, Integer publishStar, String publishComment,
@@ -26,7 +26,7 @@ public class Order {
 		this.roderStatus = roderStatus;
 		this.read = read;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -99,11 +99,11 @@ public class Order {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {

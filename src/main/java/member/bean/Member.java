@@ -21,7 +21,7 @@ public class Member {
 	private String idImgb;
 	private String citizen;
 	private Timestamp createTime;
-	private Timestamp updateYime;
+	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Member(Integer memberId, Integer role, String nameL, String nameF, Integer phone, String headshot,
@@ -46,7 +46,7 @@ public class Member {
 		this.idImgb = idImgb;
 		this.citizen = citizen;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -191,11 +191,11 @@ public class Member {
 	}
 
 	public Timestamp getUpdateYime() {
-		return updateYime;
+		return updateTime;
 	}
 
 	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+		this.updateTime = updateYime;
 	}
 
 	public Timestamp getDeleteTime() {
