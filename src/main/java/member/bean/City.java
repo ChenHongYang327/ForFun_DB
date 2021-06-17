@@ -10,12 +10,12 @@ public class City {
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
-	public City(Integer cityId, String cityName, Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
+	public City(Integer cityId, String cityName, Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) {
 		super();
 		this.cityId = cityId;
 		this.cityName = cityName;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -47,12 +47,12 @@ public class City {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {
@@ -62,5 +62,4 @@ public class City {
 	public void setDeleteTime(Timestamp deleteTime) {
 		this.deleteTime = deleteTime;
 	}
-
 }

@@ -11,14 +11,14 @@ public class Area {
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
-	public Area(Integer areaId, Integer cityId, String areaName, Timestamp createTime, Timestamp updateYime,
+	public Area(Integer areaId, Integer cityId, String areaName, Timestamp createTime, Timestamp updateTime,
 			Timestamp deleteTime) {
 		super();
 		this.areaId = areaId;
 		this.cityId = cityId;
 		this.areaName = areaName;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -58,12 +58,12 @@ public class Area {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {
@@ -73,5 +73,4 @@ public class Area {
 	public void setDeleteTime(Timestamp deleteTime) {
 		this.deleteTime = deleteTime;
 	}
-
 }
