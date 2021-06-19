@@ -21,8 +21,71 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public int insert(Member member) {
-		final String sql = "insert into Member (ROLE,NAME_L,NAME_F,PHONE,HEADSHOT,GENDER,ID,BIRTHDAY,ADDRESS,MAIL,TYPE,TOKEN,ID_IMGF,ID_IMGB,CITIZEN,CREATE_TIME,UPDATE_TIME) values (?,?,?,?,?,?,?,?,?,?,?) ";
-		return 0;
+		final String sql;
+		if(member.getCitizen()==null) {
+			sql= "insert into Member (ROLE,NAME_L,NAME_F,PHONE,"
+					+ "HEADSHOT,GENDER,ID,BIRTHDAY,"
+					+ "ADDRESS,MAIL,TYPE,TOKEN,"
+					+ "ID_IMGF,ID_IMGB,CREATE_TIME) "
+					+ "values (?,?,?,?,"
+					+ "?,?,?,?"
+					+ ",?,?,?,?,"
+					+ "?,?,?) ";
+		}
+		else {
+			sql= "insert into Member (ROLE,NAME_L,NAME_F,PHONE,"
+					+ "HEADSHOT,GENDER,ID,BIRTHDAY,"
+					+ "ADDRESS,MAIL,TYPE,TOKEN,"
+					+ "ID_IMGF,ID_IMGB,CITIZEN,CREATE_TIME) "
+					+ "values (?,?,?,?,"
+					+ "?,?,?,?"
+					+ ",?,?,?,?,"
+					+ "?,?,?,?) ";
+		}
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			if(member.getCitizen()==null) {
+				pstmt.setInt(1, member.getRole()); 
+				pstmt.setString(2, member.getNameL());
+				pstmt.setString(3, member.getNameF());
+				pstmt.setInt(4, member.getPhone());
+				pstmt.setString(5, member.getHeadshot());
+				pstmt.setInt(6, member.getGender());
+				pstmt.setString(7, member.getId());
+				pstmt.setTimestamp(8, member.getBirthady());
+				pstmt.setString(9, member.getAddress());
+				pstmt.setString(10, member.getMail());				
+				pstmt.setInt(11, member.getType());
+				pstmt.setString(12, member.getToken());
+				pstmt.setString(13, member.getIdImgf());
+				pstmt.setString(14, member.getIdImgb());
+				pstmt.setTimestamp(15,new Timestamp(System.currentTimeMillis()));
+				return pstmt.executeUpdate();
+			}
+			else {
+				pstmt.setInt(1, member.getRole()); 
+				pstmt.setString(2, member.getNameL());
+				pstmt.setString(3, member.getNameF());
+				pstmt.setInt(4, member.getPhone());
+				pstmt.setString(5, member.getHeadshot());
+				pstmt.setInt(6, member.getGender());
+				pstmt.setString(7, member.getId());
+				pstmt.setTimestamp(8, member.getBirthady());
+				pstmt.setString(9, member.getAddress());
+				pstmt.setString(10, member.getMail());				
+				pstmt.setInt(11, member.getType());
+				pstmt.setString(12, member.getToken());
+				pstmt.setString(13, member.getIdImgf());
+				pstmt.setString(14, member.getIdImgb());
+				pstmt.setString(15, member.getCitizen());
+				pstmt.setTimestamp(16,new Timestamp(System.currentTimeMillis()));
+				return pstmt.executeUpdate();
+				
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 	@Override
@@ -106,8 +169,25 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public List<Member> selectAll() {
-		// TODO Auto-generated method stub
+
 		return null;
+	}
+
+	@Override
+	public List<Integer> selectPhone() {
+		final String sql = "select PHONE from FORFUN.member";
+		List<Integer> phones=new ArrayList<>();
+		try (Connection conn = dataSource.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				ResultSet rs = pstmt.executeQuery()) {
+			while (rs.next()) {
+				phones.add(rs.getInt(1));
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return phones;
 	}
 
 }

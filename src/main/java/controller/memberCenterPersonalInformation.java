@@ -19,7 +19,7 @@ import member.bean.Member;
  * Servlet implementation class meberCenterPersonalInformation
  */
 @WebServlet("/meberCenterPersonalInformation")
-public class meberCenterPersonalInformation extends HttpServlet {
+public class memberCenterPersonalInformation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 

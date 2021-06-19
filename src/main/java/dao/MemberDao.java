@@ -19,5 +19,7 @@ public interface MemberDao {
 	
 	List<Member> selectAll();
 	
+	List<Integer> selectPhone();
+	
 
 }
