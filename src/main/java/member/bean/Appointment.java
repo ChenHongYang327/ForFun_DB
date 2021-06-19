@@ -15,7 +15,7 @@ public class Appointment {
 	private Timestamp deleteTime;
 
 	public Appointment(Integer appointmentId, Integer publishId, Integer ownerId, Integer tenantId,
-			Timestamp appointmentTime, Boolean read, Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
+			Timestamp appointmentTime, Boolean read, Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) {
 		super();
 		this.appointmentId = appointmentId;
 		this.publishId = publishId;
@@ -24,7 +24,7 @@ public class Appointment {
 		this.appointmentTime = appointmentTime;
 		this.read = read;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -88,12 +88,12 @@ public class Appointment {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {
@@ -103,5 +103,4 @@ public class Appointment {
 	public void setDeleteTime(Timestamp deleteTime) {
 		this.deleteTime = deleteTime;
 	}
-
 }

@@ -14,15 +14,23 @@ public class Publish {
 	private String publishImg3;
 	private Integer cityId;
 	private Integer areaId;
-	private String sddress;
+	private String address;
 	private Double latitude;
 	private Double longitude;
 	private Integer rent;
+	private Integer deposit;
+    private Integer square;
+    private Integer gender;
+    private Integer type;
+    private String furnished;
+    private Timestamp createTime;
+    private Timestamp updateTime;
+    private Timestamp deleteTime;
 
 	public Publish(Integer publishId, Integer ownerId, String title, String titleImg, String publishInfo,
-			String publishImg1, String publishImg2, String publishImg3, Integer cityId, Integer areaId, String sddress,
-			Double latitude, Double longitude, Integer rent, Integer deposit, Integer souare, Integer gender,
-			Integer type, String furnished, Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
+			String publishImg1, String publishImg2, String publishImg3, Integer cityId, Integer areaId, String address,
+			Double latitude, Double longitude, Integer rent, Integer deposit, Integer square, Integer gender,
+			Integer type, String furnished, Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) {
 		super();
 		this.publishId = publishId;
 		this.ownerId = ownerId;
@@ -34,17 +42,17 @@ public class Publish {
 		this.publishImg3 = publishImg3;
 		this.cityId = cityId;
 		this.areaId = areaId;
-		this.sddress = sddress;
+		this.address = address;
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.rent = rent;
 		this.deposit = deposit;
-		this.souare = souare;
+		this.square = square;
 		this.gender = gender;
 		this.type = type;
 		this.furnished = furnished;
 		this.createTime = createTime;
-		this.updateYime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -132,12 +140,12 @@ public class Publish {
 		this.areaId = areaId;
 	}
 
-	public String getSddress() {
-		return sddress;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setSddress(String sddress) {
-		this.sddress = sddress;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public Double getLatitude() {
@@ -172,12 +180,12 @@ public class Publish {
 		this.deposit = deposit;
 	}
 
-	public Integer getSouare() {
-		return souare;
+	public Integer getSquare() {
+		return square;
 	}
 
-	public void setSouare(Integer souare) {
-		this.souare = souare;
+	public void setSquare(Integer square) {
+		this.square = square;
 	}
 
 	public Integer getGender() {
@@ -212,12 +220,12 @@ public class Publish {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
-		return updateYime;
+	public Timestamp getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateYime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {
@@ -227,14 +235,4 @@ public class Publish {
 	public void setDeleteTime(Timestamp deleteTime) {
 		this.deleteTime = deleteTime;
 	}
-
-	private Integer deposit;
-	private Integer souare;
-	private Integer gender;
-	private Integer type;
-	private String furnished;
-	private Timestamp createTime;
-	private Timestamp updateYime;
-	private Timestamp deleteTime;
-
 }
