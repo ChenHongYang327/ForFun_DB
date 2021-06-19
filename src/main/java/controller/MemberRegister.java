@@ -12,11 +12,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import dao.MemberDao;
-import dao.MemberDaoImpl;
+import dao.impl.MemberDaoImpl;
 import member.bean.Member;
 
 @WebServlet("/register")
-public class memberRegister extends HttpServlet {
+public class MemberRegister extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");

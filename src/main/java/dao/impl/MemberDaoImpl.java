@@ -1,4 +1,4 @@
-package dao;
+package dao.impl;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,6 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import commend.ServiceLocator;
+import dao.MemberDao;
 import member.bean.Member;
 
 public class MemberDaoImpl implements MemberDao {
