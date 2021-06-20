@@ -138,11 +138,10 @@ public class MemberDaoImpl implements MemberDao {
 
 			pstmt.setInt(1, MEMBER_ID);
 			ResultSet rs = pstmt.executeQuery();
-
 			Member member = new Member();
+			
 			while (rs.next()) {
 				member.setMemberId(rs.getInt("MEMBER_ID"));
-				;
 				member.setRole(rs.getInt("ROLE"));
 				member.setNameL(rs.getString("NAME_L"));
 				member.setNameF(rs.getString("NAME_F"));
@@ -159,6 +158,8 @@ public class MemberDaoImpl implements MemberDao {
 				member.setIdImgb(rs.getString("ID_IMGB"));
 				member.setCitizen(rs.getString("CITIZEN"));
 				member.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				member.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				member.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
 
 			}
 			return member;
