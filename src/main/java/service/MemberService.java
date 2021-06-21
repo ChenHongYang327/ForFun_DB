@@ -34,8 +34,8 @@ public class MemberService {
 		return memberDao.selectAll();
 	}
 	
-	public List<Integer> selectPhone(){
-		return memberDao.selectPhone();
+	public List<Integer> selectAllPhone(){
+		return memberDao.selectAllPhone();
 	}
 	
 

@@ -1,6 +1,8 @@
 package controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -34,16 +36,26 @@ public class MemberCenterPersonalInformation extends HttpServlet {
 			member=memberService.selectById(member_id);
 			String respJson = gson.toJson(member);
 			System.out.println("伺服器的回應:" + respJson);
-			response.getWriter().print(respJson); 
+			try(PrintWriter writer=response.getWriter()) {
+				writer.print(respJson); 
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
 		}
 		else if(clientReq.get("action").getAsString().equals("updateMember")){
 			String member = clientReq.get("member").getAsString();
 			Member updatemMember = new Gson().fromJson(member, Member.class);
-			if(memberService.update(updatemMember)==1) {
-				response.getWriter().write("true");
-			} else {
-				response.getWriter().write("false");
+			try(PrintWriter writer=response.getWriter()) {
+				if(memberService.update(updatemMember)==1) {
+					writer.write("true");
+				} else {
+					writer.write("false");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
+			
 			
 		}
 	}

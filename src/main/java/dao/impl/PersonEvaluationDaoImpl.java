@@ -40,10 +40,10 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
 	@Override
 	public List<PersonEvaluation> selectByCommented(int COMMENTED) {
 		final String sql = "select * from FORFUN.person_evaluation where COMMENTED = ?";
-		List<PersonEvaluation> personEvaluations=new ArrayList<>();
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
-			ResultSet rs = pstmt.executeQuery();
 			pstmt.setInt(1, COMMENTED);
+			ResultSet rs = pstmt.executeQuery();
+			List<PersonEvaluation> personEvaluations=new ArrayList<>();
 			while (rs.next()) {
 				PersonEvaluation personEvaluation=new PersonEvaluation();
 				personEvaluation.setPersonEvaluationId(rs.getInt("PERSON＿EVALUATION_ID"));
@@ -55,7 +55,7 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
 				personEvaluation.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				personEvaluation.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
 				personEvaluation.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
-				
+				personEvaluations.add(personEvaluation);
 			}
 			
 			return personEvaluations;
@@ -68,13 +68,13 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
 	}
 	
 	
-	//取得評論者的資料
+	//取得評論者的用戶資料
 	@Override
 	public Member selectMemberByCommentId(int Commenter) { 
-		final String sql = "select * from FORFUN.member where Comment_ID = ?";
+		final String sql = "select * from FORFUN.member where MEMBER_ID = ?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
-			ResultSet rs = pstmt.executeQuery();
 			pstmt.setInt(1, Commenter);
+			ResultSet rs = pstmt.executeQuery();
 			Member member = new Member();
 			while (rs.next()) {
 				member.setMemberId(rs.getInt("MEMBER_ID"));

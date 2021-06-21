@@ -176,7 +176,7 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public List<Integer> selectPhone() {
+	public List<Integer> selectAllPhone() {
 		final String sql = "select PHONE from FORFUN.member";
 		List<Integer> phones=new ArrayList<>();
 		try (Connection conn = dataSource.getConnection(); 
