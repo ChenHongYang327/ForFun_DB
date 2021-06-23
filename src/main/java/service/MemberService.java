@@ -26,6 +26,14 @@ public class MemberService {
 		return memberDao.update(member);
 	}
 	
+	public int updateToken(Member member) {
+		return memberDao.updateToken(member);
+	}
+	
+	public int clearTokenById(int MEMBER_ID){
+		return memberDao.clearTokenById(MEMBER_ID);
+	}
+	
 	public Member selectById(int MEMBER_ID) {
 		return memberDao.selectById(MEMBER_ID);
 	}

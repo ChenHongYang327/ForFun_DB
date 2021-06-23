@@ -81,18 +81,18 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
 				member.setRole(rs.getInt("ROLE"));
 				member.setNameL(rs.getString("NAME_L"));
 				member.setNameF(rs.getString("NAME_F"));
-				member.setPhone(rs.getInt("PHONE"));
+//				member.setPhone(rs.getInt("PHONE"));
 				member.setHeadshot(rs.getString("HEADSHOT"));
 				member.setGender(rs.getInt("GENDER"));
-				member.setId(rs.getString("ID"));
-				member.setBirthady(rs.getTimestamp("BIRTHDAY"));
+//				member.setId(rs.getString("ID"));
+//				member.setBirthady(rs.getTimestamp("BIRTHDAY"));
 				member.setAddress(rs.getString("ADDRESS"));
-				member.setMail(rs.getString("MAIL"));
-				member.setType(rs.getInt("TYPE"));
-				member.setToken(rs.getString("TOKEN"));
-				member.setIdImgf(rs.getString("ID_IMGF"));
-				member.setIdImgb(rs.getString("ID_IMGB"));
-				member.setCitizen(rs.getString("CITIZEN"));
+//				member.setMail(rs.getString("MAIL"));
+//				member.setType(rs.getInt("TYPE"));
+//				member.setToken(rs.getString("TOKEN"));
+//				member.setIdImgf(rs.getString("ID_IMGF"));
+//				member.setIdImgb(rs.getString("ID_IMGB"));
+//				member.setCitizen(rs.getString("CITIZEN"));
 				member.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 			
 			}

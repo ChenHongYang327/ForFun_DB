@@ -36,8 +36,7 @@ public class PersonalSnapshot extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		PersonEvaluationService pEvaluationService=new PersonEvaluationService();
 		OrderService orderService=new OrderService();
-		Gson gson=new Gson();
-		JsonObject clientReq = gson.fromJson(request.getReader(), JsonObject.class);
+		JsonObject clientReq = new Gson().fromJson(request.getReader(), JsonObject.class);
 		System.out.println("客戶端的請求:" + clientReq);
 		//取得評論者帳號資料
 		if(clientReq.get("action").getAsString().equals("getCommenter")) {
@@ -54,12 +53,12 @@ public class PersonalSnapshot extends HttpServlet {
 		//取得此 受評論者 的所有評論資料
 		else if(clientReq.get("action").getAsString().equals("getAllEvaluation")) {
 			int commentedID=clientReq.get("commentedID").getAsInt();//受評論者
-			List<PersonEvaluation> personEvaluations=pEvaluationService.selectByCommented(commentedID);//受評論的所有資料
+			List<PersonEvaluation> personEvaluations=pEvaluationService.selectByCommented(commentedID);//受評論者的所有資料
 			List<PersonEvaluation> tenantstatus=new ArrayList<>();//房客身分
 			List<PersonEvaluation> landlordstatus=new ArrayList<>();//房東身分
 			//將評論資料分類資料
 			for(PersonEvaluation personEvaluation:personEvaluations) {
-				int ordetTenantID =orderService.selectTenantByID(personEvaluation.getOrderId());//此訂單的房客用戶ID
+				int ordetTenantID =orderService.selectTenantByID(personEvaluation.getOrderId());//取得此訂單的房客用戶ID
 				if(ordetTenantID==commentedID) {
 					tenantstatus.add(personEvaluation);//房客身分
 				}
@@ -82,6 +81,19 @@ public class PersonalSnapshot extends HttpServlet {
 				e.printStackTrace();
 			}
 					
+		}
+		else if(clientReq.get("action").getAsString().equals("personalSnapshot")) {
+			int memberID=clientReq.get("memberID").getAsInt();
+			Member member=pEvaluationService.selectMemberByCommentId(memberID); //共用查尋會員
+			String address=member.getAddress().substring(0,3);//第三個字元不取
+			member.setAddress(address);
+			String resp=new Gson().toJson(member,Member.class);
+			try (PrintWriter writer=response.getWriter())
+			{
+				writer.print(resp);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 

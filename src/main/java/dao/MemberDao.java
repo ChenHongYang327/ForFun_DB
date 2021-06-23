@@ -15,6 +15,10 @@ public interface MemberDao {
 	
 	int update(Member member);
 	
+	int updateToken(Member member);
+	
+	int clearTokenById(int MEMBER_ID);
+	
 	Member selectById(int MEMBER_ID);
 	
 	List<Member> selectAll();
