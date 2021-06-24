@@ -32,4 +32,8 @@ public class PublishService {
     public List<Publish> selectAll() {
         return dao.selectAll();
     }
+    
+    public int getNewId() {
+        return dao.getNewId();
+    }
 }

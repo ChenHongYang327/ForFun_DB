@@ -20,15 +20,18 @@ public class CityAreaController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    request.setCharacterEncoding("UTF-8");
-	    response.setContentType("application/json;charset=UTF-8");
-	    
-	    Gson gson = new Gson();
-	    CityService cityService = new CityService();
-	    AreaService areaService = new AreaService();
-	    
-	    try (
-	        PrintWriter writer = response.getWriter();
+        response.setContentType("application/json;charset=UTF-8");
+        
+        Gson gson = new Gson();
+        CityService cityService = new CityService();
+        AreaService areaService = new AreaService();
+        
+        try (
+            PrintWriter writer = response.getWriter();
         ) {
             JsonObject object = new JsonObject();
             object.addProperty("city", gson.toJson(cityService.selectAll()));
@@ -38,9 +41,6 @@ public class CityAreaController extends HttpServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
 
 }

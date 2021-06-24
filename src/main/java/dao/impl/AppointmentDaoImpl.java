@@ -22,7 +22,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
     @Override
     public int insert(Appointment appointment) {
-        final String sql = "INSERT INTO appointment (PUBLISH_ID, OWNER_ID, TENANT_ID, APPOINTMENT_TIME, READ, CREATE_TIME, UPDATE_TIME, DELETE_TIME) VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
+        final String sql = "INSERT INTO appointment (PUBLISH_ID, OWNER_ID, TENANT_ID, APPOINTMENT_TIME, READ, CREATE_TIME) VALUES (?, ?, ?, ?, ?, ?);";
         
         try (
             Connection conn = dataSource.getConnection();
@@ -34,8 +34,6 @@ public class AppointmentDaoImpl implements AppointmentDao {
             stmt.setTimestamp(4, appointment.getAppointmentTime());
             stmt.setBoolean(5, appointment.getRead());
             stmt.setTimestamp(6, appointment.getCreateTime());
-            stmt.setTimestamp(7, appointment.getUpdateTime());
-            stmt.setTimestamp(8, appointment.getDeleteTime());
             
             return stmt.executeUpdate();
         } catch (Exception e) {
@@ -66,7 +64,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
     @Override
     public int update(Appointment appointment) {
-        final String sql = "UPDATE appointment SET PUBLISH_ID = ?, OWNER_ID = ?, TENANT_ID = ?, APPOINTMENT_TIME = ?, READ = ?, CREATE_TIME = ?, UPDATE_TIME = ?, DELETE_TIME = ? WHERE APPOINTMENT_ID = ?;";
+        final String sql = "UPDATE appointment SET PUBLISH_ID = ?, OWNER_ID = ?, TENANT_ID = ?, APPOINTMENT_TIME = ?, READ = ?, UPDATE_TIME = ? WHERE APPOINTMENT_ID = ?;";
         
         try (
             Connection conn = dataSource.getConnection();
@@ -77,10 +75,8 @@ public class AppointmentDaoImpl implements AppointmentDao {
             stmt.setInt(3, appointment.getTenantId());
             stmt.setTimestamp(4, appointment.getAppointmentTime());
             stmt.setBoolean(5, appointment.getRead());
-            stmt.setTimestamp(6, appointment.getCreateTime());
-            stmt.setTimestamp(7, appointment.getUpdateTime());
-            stmt.setTimestamp(8, appointment.getDeleteTime());
-            stmt.setInt(9, appointment.getAppointmentId());
+            stmt.setTimestamp(6, appointment.getUpdateTime());
+            stmt.setInt(7, appointment.getAppointmentId());
             
             return stmt.executeUpdate();
         } catch (Exception e) {

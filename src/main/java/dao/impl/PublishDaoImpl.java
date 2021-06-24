@@ -22,7 +22,7 @@ public class PublishDaoImpl implements PublishDao {
     
     @Override
     public int insert(Publish publish) {
-        final String sql = "INSERT INTO publish (OWNER_ID, TITLE, TITLE_IMG, PUBLISH_INFO, PUBLISH_IMG1, PUBLISH_IMG2, PUBLISH_IMG3, CITY_ID, AREA_ID, ADDRESS, LATITUDE, LONGITUDE, RENT, DEPOSIT, SQUARE, GENDER, TYPE, FURNISHED, CREATE_TIME, UPDATE_TIME, DELETE_TIME) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+        final String sql = "INSERT INTO publish (OWNER_ID, TITLE, TITLE_IMG, PUBLISH_INFO, PUBLISH_IMG1, PUBLISH_IMG2, PUBLISH_IMG3, CITY_ID, AREA_ID, ADDRESS, LATITUDE, LONGITUDE, RENT, DEPOSIT, SQUARE, GENDER, TYPE, FURNISHED, CREATE_TIME) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
         
         try (
             Connection conn = dataSource.getConnection();
@@ -47,8 +47,6 @@ public class PublishDaoImpl implements PublishDao {
             stmt.setInt(17, publish.getType());
             stmt.setString(18, publish.getFurnished());
             stmt.setTimestamp(19, publish.getCreateTime());
-            stmt.setTimestamp(20, publish.getUpdateTime());
-            stmt.setTimestamp(21, publish.getDeleteTime());
             
             return stmt.executeUpdate();
         } catch (Exception e) {
@@ -78,7 +76,7 @@ public class PublishDaoImpl implements PublishDao {
 
     @Override
     public int update(Publish publish) {
-        final String sql = "UPDATE publish SET OWNER_ID = ?, TITLE = ?, TITLE_IMG = ?, PUBLISH_INFO = ?, PUBLISH_IMG1 = ?, PUBLISH_IMG2 = ?, PUBLISH_IMG3 = ?, CITY_ID = ?, AREA_ID = ?, ADDRESS = ?, LATITUDE = ?, LONGITUDE = ?, RENT = ?, DEPOSIT = ?, SQUARE = ?, GENDER = ?, TYPE = ?, FURNISHED = ?, CREATE_TIME = ?, UPDATE_TIME = ?, DELETE_TIME = ? WHERE PUBLISH_ID = ?;";
+        final String sql = "UPDATE publish SET OWNER_ID = ?, TITLE = ?, TITLE_IMG = ?, PUBLISH_INFO = ?, PUBLISH_IMG1 = ?, PUBLISH_IMG2 = ?, PUBLISH_IMG3 = ?, CITY_ID = ?, AREA_ID = ?, ADDRESS = ?, LATITUDE = ?, LONGITUDE = ?, RENT = ?, DEPOSIT = ?, SQUARE = ?, GENDER = ?, TYPE = ?, FURNISHED = ?, UPDATE_TIME = ? WHERE PUBLISH_ID = ?;";
 
         try (
             Connection conn = dataSource.getConnection();
@@ -102,10 +100,8 @@ public class PublishDaoImpl implements PublishDao {
             stmt.setInt(16, publish.getGender());
             stmt.setInt(17, publish.getType());
             stmt.setString(18, publish.getFurnished());
-            stmt.setTimestamp(19, publish.getCreateTime());
-            stmt.setTimestamp(20, publish.getUpdateTime());
-            stmt.setTimestamp(21, publish.getDeleteTime());
-            stmt.setInt(22, publish.getPublishId());
+            stmt.setTimestamp(19, publish.getUpdateTime());
+            stmt.setInt(20, publish.getPublishId());
             
             return stmt.executeUpdate();
         } catch (Exception e) {
@@ -208,6 +204,32 @@ public class PublishDaoImpl implements PublishDao {
         }
         
         return null;
+    }
+
+    @Override
+    public int getNewId() {
+        final String sql = "INSERT INTO publish (OWNER_ID, CREATE_TIME) VALUES (?, ?);";
+        
+        try (
+            Connection conn = dataSource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql, new String[]{"PUBLISH_ID"}); // 指定自動增值的欄位名稱
+        ) {
+            stmt.setInt(1, 1);
+            stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            
+            if (stmt.executeUpdate() > 0) {
+                try (
+                    ResultSet rs = stmt.getGeneratedKeys();
+                ) {
+                    if (rs.next()) {
+                        return rs.getInt("GENERATED_KEY");
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
 }

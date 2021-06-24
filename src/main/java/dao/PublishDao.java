@@ -14,4 +14,6 @@ public interface PublishDao {
     Publish selectById(int publishId);
     
     List<Publish> selectAll();
+    
+    int getNewId();
 }
