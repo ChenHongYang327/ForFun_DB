@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -20,14 +21,14 @@ import service.PostService;
 
 public class DiscussionBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	PostDao postDao = null;
-       
+	PostService postService = null;   
 
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		
 		response.setContentType("application/json;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
-		PostService postService = new PostService();
+		
 		Gson gson = new Gson();
 		BufferedReader br = request.getReader();
 		StringBuilder jsonIn = new StringBuilder();
@@ -37,24 +38,48 @@ public class DiscussionBoardController extends HttpServlet {
 		}
 		
 		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
-		if(postDao == null) {
-			 postDao = new PostDaolmpl();
+		if(postService == null) {
+			postService = new PostService();
 		}
 		String action = jsonObject.get("action").getAsString();
-		
-		if (action.equals("postInsert") || action.equals("postUpdate")) {
-			String postJson = jsonObject.get("post").getAsString();
+		if (action.equals("getAll")) {
+			// 將輸入資料列印出來除錯用
+			System.out.println("input: " + jsonIn);
+			List<Post> postList = postService.selectAll();
+			writeText(response, gson.toJson(postList));
 			
+		} else if (action.equals("getImage")){
+			System.out.println("input: " + jsonIn);
+			PrintWriter pw = response.getWriter();
+			String imagePath = jsonObject.get("imagePath").getAsString();
+			int imageSize = jsonObject.get("imageSize").getAsInt();
+			System.out.println("imagePath:" + imagePath.toString());
+			pw.write(imagePath);
+			
+		}else if (action.equals("postInsert") || action.equals("postUpdate")) {
+			String postJson = jsonObject.get("post").getAsString();
 			System.out.println("postJson = " + postJson);
 			Post post = gson.fromJson(postJson, Post.class);
 			
 			int count = 0;
 			if (action.equals("postInsert")) {
-				count = postDao.insert(post);
+				count = postService.insert(post);
+				
 			} else if (action.equals("postUpdate")) {
-				count = postDao.update(post);
+				count = postService.update(post);
 			}
 			writeText(response, String.valueOf(count));
+			
+		} else if (action.equals("postDelete")){
+			int postId = jsonObject.get("postId").getAsShort();
+			int count = postService.deleteById(postId);
+			writeText(response, String.valueOf(count));
+		} else if (action.equals("getImagePath")) {
+			int postId = jsonObject.get("postId").getAsShort();
+			String postImagePath = postService.getImagePath(postId);
+			writeText(response, gson.toJson(postImagePath));
+		} else {
+			writeText(response, "");
 		}
 		
 	}
@@ -68,10 +93,10 @@ public class DiscussionBoardController extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		if (postDao == null) {
-			postDao = new PostDaolmpl();
+		if (postService == null) {
+			postService = new PostService();
 		}
-		List<Post> posts = postDao.selectAll();
+		List<Post> posts = postService.selectAll();
 		writeText(response, new Gson().toJson(posts));
 	}
 }
