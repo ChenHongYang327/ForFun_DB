@@ -16,4 +16,9 @@ public class CityService {
     public List<City> selectAll() {
         return dao.selectAll();
     }
+    
+    public String selectNameById(int cityId) {
+    	return dao.selectNameById(cityId);
+    }
+    
 }

@@ -62,7 +62,7 @@ public class PersonalSnapshot extends HttpServlet {
 				if(ordetTenantID==commentedID) {
 					tenantstatus.add(personEvaluation);//房客身分
 				}
-				else {
+				else if(ordetTenantID!=commentedID){
 					landlordstatus.add(personEvaluation);//房東身分
 				}
 			}
@@ -85,7 +85,7 @@ public class PersonalSnapshot extends HttpServlet {
 		else if(clientReq.get("action").getAsString().equals("personalSnapshot")) {
 			int memberID=clientReq.get("memberID").getAsInt();
 			Member member=pEvaluationService.selectMemberByCommentId(memberID); //共用查尋會員
-			String address=member.getAddress().substring(0,3);//第三個字元不取
+			String address=member.getAddress().substring(0,3);//第三個字元後不取
 			member.setAddress(address);
 			String resp=new Gson().toJson(member,Member.class);
 			try (PrintWriter writer=response.getWriter())

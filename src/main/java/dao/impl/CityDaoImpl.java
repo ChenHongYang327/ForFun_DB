@@ -48,4 +48,23 @@ public class CityDaoImpl implements CityDao {
 
         return null;
     }
+    
+    @Override
+	public String selectNameById(int cityId) {
+		final String sql = "SELECT CITY_NAME FROM FORFUN.city where CITY_ID=?";
+		String cityName = null;
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				) {
+			stmt.setInt(1, cityId);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				cityName=rs.getString("CITY_NAME");
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return cityName;
+	}
 }
