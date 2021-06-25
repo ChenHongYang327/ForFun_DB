@@ -16,5 +16,7 @@ public interface PostDao {
 	
 	List<Post> selectAll();
 	
+	String getImagePath(int POST_ID);
+	
 
 }

@@ -9,7 +9,7 @@ public class Post {
 	private Integer posterId;
 	private String postTitle;
 	private String postImg;
-	private String content;
+	private String postContext;
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
@@ -18,7 +18,7 @@ public class Post {
 		
 	}
 
-	public Post(Integer postId, String boardId, Integer posterId, String postTitle, String postImg, String content,
+	public Post(Integer postId, String boardId, Integer posterId, String postTitle, String postImg, String postContext,
 			Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) 
 	{
 		super();
@@ -27,14 +27,29 @@ public class Post {
 		this.posterId = posterId;
 		this.postTitle = postTitle;
 		this.postImg = postImg;
-		this.content = content;
+		this.postContext = postContext;
 		this.createTime = createTime;
 		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 	
 	
+	
 
+	public Post(Integer postId, String boardId, Integer posterId, String postTitle, String postImg, String postContext,
+			Timestamp createTime) {
+		super();
+		this.postId = postId;
+		this.boardId = boardId;
+		this.posterId = posterId;
+		this.postTitle = postTitle;
+		this.postImg = postImg;
+		this.postContext = postContext;
+		this.createTime = createTime;
+	}
+
+	
+	
 	public Integer getPostId() {
 		return postId;
 	}
@@ -75,12 +90,12 @@ public class Post {
 		this.postImg = postImg;
 	}
 
-	public String getContent() {
-		return content;
+	public String getPostContext() {
+		return postContext;
 	}
 
-	public void setContent(String content) {
-		this.content = content;
+	public void setPostContext(String postContext) {
+		this.postContext = postContext;
 	}
 
 	public Timestamp getCreateTime() {
