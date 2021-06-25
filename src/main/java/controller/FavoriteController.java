@@ -44,7 +44,7 @@ public class FavoriteController extends HttpServlet {
 				publishs.add(publishService.selectById(favorite.getPublishId()));
 			}
 			for (Publish publish : publishs) {
-				cityNames.add(cityService.selectNameById(publish.getCityId())); // _______________________
+				cityNames.add(cityService.selectNameById(publish.getCityId()));
 			}
 			try (PrintWriter writer = response.getWriter()) {
 				JsonObject resp = new JsonObject();
@@ -52,7 +52,7 @@ public class FavoriteController extends HttpServlet {
 				resp.addProperty("cityName", new Gson().toJson(cityNames));
 				resp.addProperty("favoriteId", new Gson().toJson(favorites));
 				writer.print(resp.toString());
-				System.out.println("伺服器的回應:" + resp.toString());
+//				System.out.println("伺服器的回應:" + resp.toString());
 			}
 
 		} else if (clientreq.get("action").getAsString().equals("remove")) {

@@ -22,7 +22,7 @@ public class MemberRegister extends HttpServlet {
 		MemberService memberService=new MemberService();
 		Gson gson=new Gson();
 		JsonObject clientReq = gson.fromJson(request.getReader(), JsonObject.class);
-		System.out.println("客戶端的請求:" + clientReq);
+//		System.out.println("客戶端的請求:" + clientReq);
 		if(clientReq.get("action").getAsString().equals("register")) {
 			Member member=new Member();
 			member=new Gson().fromJson(clientReq.get("member").getAsString(), Member.class);
@@ -49,7 +49,7 @@ public class MemberRegister extends HttpServlet {
 					respJson.addProperty("status", false);
 				}
 			}
-			System.out.println("伺服器的回應:" + respJson);
+//			System.out.println("伺服器的回應:" + respJson);
 			PrintWriter printWriter=response.getWriter();
 			printWriter.print(respJson.toString()); 
 			printWriter.flush();
@@ -59,7 +59,7 @@ public class MemberRegister extends HttpServlet {
 			Member member=new Member();
 			PrintWriter printWriter=response.getWriter();
 			member=new Gson().fromJson(clientReq.get("member").getAsString(), Member.class);
-			System.out.println("客戶端的請求:" + new Gson().toJson(member));
+//			System.out.println("客戶端的請求:" + new Gson().toJson(member));
 			JsonObject respJson=new JsonObject(); //伺服器回覆
 			for(int phone:memberService.selectAllPhone()) {
 				if(phone==member.getPhone()){
@@ -73,7 +73,7 @@ public class MemberRegister extends HttpServlet {
 
 			}
 			respJson.addProperty("pass", true);
-			System.out.println("伺服器的回應:" + respJson);
+//			System.out.println("伺服器的回應:" + respJson);
 			response.getWriter().print(respJson.toString());
 			printWriter.flush();
 			printWriter.close();

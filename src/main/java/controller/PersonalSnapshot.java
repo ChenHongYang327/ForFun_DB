@@ -2,7 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import com.google.gson.reflect.TypeToken;
 
-import dao.PersonEvaluationDao;
-import dao.impl.PersonEvaluationDaoImpl;
 import member.bean.Member;
-import member.bean.Order;
 import member.bean.PersonEvaluation;
 import service.OrderService;
 import service.PersonEvaluationService;
@@ -37,7 +32,7 @@ public class PersonalSnapshot extends HttpServlet {
 		PersonEvaluationService pEvaluationService=new PersonEvaluationService();
 		OrderService orderService=new OrderService();
 		JsonObject clientReq = new Gson().fromJson(request.getReader(), JsonObject.class);
-		System.out.println("客戶端的請求:" + clientReq);
+//		System.out.println("客戶端的請求:" + clientReq);
 		//取得評論者帳號資料
 		if(clientReq.get("action").getAsString().equals("getCommenter")) {
 			int commenterID=clientReq.get("commenterID").getAsInt();
@@ -69,12 +64,12 @@ public class PersonalSnapshot extends HttpServlet {
 			try (PrintWriter writer=response.getWriter()){
 				if(clientReq.get("status").getAsString().equals("tenantStatus")) {
 					String resp=new Gson().toJson(tenantstatus);
-					System.out.println("伺服器的回應:" + resp);
+//					System.out.println("伺服器的回應:" + resp);
 					writer.print(resp);
 				}
 				else if(clientReq.get("status").getAsString().equals("landlordStatus")) {
 					String resp=new Gson().toJson(landlordstatus);
-					System.out.println("伺服器的回應:" + resp);
+//					System.out.println("伺服器的回應:" + resp);
 					writer.print(resp);
 				}
 			} catch (Exception e) {

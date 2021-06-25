@@ -28,7 +28,7 @@ public class SignInController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		JsonObject clientReq = new Gson().fromJson(request.getReader(), JsonObject.class);
 		MemberService memberService = new MemberService();
-		System.out.println("客戶端的請求:" + clientReq);
+//		System.out.println("客戶端的請求:" + clientReq);
 		if (clientReq.get("action").getAsString().equals("singIn")) {
 			JsonObject respJson=new JsonObject(); //伺服器回覆
 			int inputPhone = clientReq.get("phone").getAsInt();
