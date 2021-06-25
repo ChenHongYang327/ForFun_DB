@@ -2,7 +2,7 @@ package member.bean;
 
 import java.sql.Timestamp;
 
-public class Person_Evaluation {
+public class PersonEvaluation {
 
 	private Integer personEvaluationId;
 	private Integer orderId;
@@ -14,8 +14,8 @@ public class Person_Evaluation {
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
-	public Person_Evaluation(Integer personEvaluationId, Integer orderId, Integer commented, Integer commentedBy,
-			Integer personStar, String personComment, Timestamp createTime, Timestamp updateYime,
+	public PersonEvaluation(Integer personEvaluationId, Integer orderId, Integer commented, Integer commentedBy,
+			Integer personStar, String personComment, Timestamp createTime, Timestamp updateTime,
 			Timestamp deleteTime) {
 		super();
 		this.personEvaluationId = personEvaluationId;
@@ -25,11 +25,11 @@ public class Person_Evaluation {
 		this.personStar = personStar;
 		this.personComment = personComment;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 
-	public Person_Evaluation() {
+	public PersonEvaluation() {
 
 	}
 
@@ -89,12 +89,12 @@ public class Person_Evaluation {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {

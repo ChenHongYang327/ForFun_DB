@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: FORFUN
+-- Host: localhost    Database: FORFUN1
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -127,7 +127,6 @@ CREATE TABLE `chatroom` (
   `CREATE_TIME` datetime DEFAULT NULL,
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
-  `MEMBER_IMG` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`CHATROOM_ID`),
   KEY `FK_MEMBER1_ID_idx` (`MEMBER_ID_1`),
   KEY `FK_MEMBER2_ID_idx` (`MEMBER_ID_2`),
@@ -188,7 +187,6 @@ CREATE TABLE `comment` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
   `READ` tinyint NOT NULL DEFAULT '0',
-  `COMMENT_MEMBER_IMG` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`COMMENT_ID`),
   KEY `FK_MEMBER_ID_idx` (`MEMBER_ID`),
   KEY `FK_POST_ID_idx` (`POST_ID`),
@@ -326,7 +324,7 @@ CREATE TABLE `member` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`MEMBER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -335,7 +333,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,0,'admin','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2021-06-12 19:46:24',NULL,NULL),(2,1,'李','文賢',922877662,NULL,1,'A189271911','2019-03-20 00:00:00','台北市信義區基隆路一段245號','ngdqzmhndh@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:11:05',NULL,NULL),(3,1,'陳','怡吟',921371162,'Project_ForFun/Person/3/testphoto.jpg',2,'F205861001','2020-06-01 00:00:00','台北市內湖區康寧路三段202號','test1@email.com',1,NULL,'Project_ForFun/Person/3/ROC_mibunsho.jpg',NULL,'Project_ForFun/Person/3/goodpeople.png','2021-06-12 20:30:21',NULL,NULL),(4,1,'溫','俊宏',924545884,NULL,1,'F187277081','1992-09-05 00:00:00','新北市板橋區林園街129巷15號2樓','hoyaqojnnt@iubridge.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL),(5,1,'林','玉玲',952894963,NULL,2,'A256873907','1992-12-01 00:00:00','台北市萬華區和平西路三段177號','jsubwpjsju@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL),(6,1,'錢','立奇',960917393,NULL,1,'F197272310','2020-02-01 00:00:00','新北市永和區秀朗路一段36巷17號1樓','lbkodplfdq@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL),(7,1,'陳','良',929458421,NULL,1,'A196363871','2020-11-11 00:00:00','新北市板橋區四維路84號','fqzsmsvcen@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL),(8,1,'李','炳揚',921526256,NULL,1,'A106831868','1992-09-20 00:00:00','台北市大安區和平東路二段83號','oaepshjtds@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL),(9,2,'陳','宛真',930362802,NULL,2,'A222223386','2020-10-05 00:00:00','新北市三重區龍濱路7巷1號','peejdyvlxx@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL),(10,2,'陳','美惠',930553563,NULL,2,'A272995506','2019-06-01 00:00:00','台北市大安區敦化南路一段188巷17號','srwkfxesds@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL),(11,2,'Lee','Jack',916366024,NULL,1,'F197272310','2020-01-05 00:00:00','台北市北投區中山路71號  台北市北投區中山路71號 ','mvxcffbhty@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:30:21',NULL,NULL);
+INSERT INTO `member` VALUES (1,0,'admin','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2021-06-12 19:46:24',NULL,NULL),(2,1,'李','文賢',922877662,'/Project_ForFun/Person/922877662/ian-dooley-d1UPkiFd04A-unsplash.jpg',1,'A189271911','2019-03-20 00:00:00','台北市信義區基隆路一段245號','ngdqzmhndh@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:11:05',NULL,NULL),(3,1,'林','怡吟',921371162,'/Project_ForFun/Person/921371162/testphoto.jpg',2,'F205861001','2020-06-01 00:00:00','台北市內湖區康寧路三段202號','test1@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/921371162/goodpeople.png','2021-06-12 20:30:21','2021-06-23 02:35:23',NULL),(4,1,'溫','俊宏',924545884,'/Project_ForFun/Person/924545884/ivana-cajina-_7LbC5J-jw4-unsplash.jpg',1,'F187277081','1992-09-05 00:00:00','新北市板橋區林園街129巷15號2樓','hoyaqojnnt@iubridge.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(5,1,'林','玉玲',952894963,'/Project_ForFun/Person/952894963/rafaella-mendes-diniz-et_78QkMMQs-unsplash.jpg',2,'A256873907','1992-12-01 00:00:00','台北市萬華區和平西路三段177號','jsubwpjsju@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(6,1,'錢','立奇',960917393,'/Project_ForFun/Person/960917393/bruce-mars-8YG31Xn4dSw-unsplash.jpg',1,'F197272310','2020-02-01 00:00:00','新北市永和區秀朗路一段36巷17號1樓','lbkodplfdq@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(7,1,'陳','良',929458421,'/Project_ForFun/Person/929458421/lachlan-dempsey-6VPEOdpFNAs-unsplash.jpg',1,'A196363871','2020-11-11 00:00:00','新北市板橋區四維路84號','fqzsmsvcen@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(8,1,'李','炳揚',921526256,'/Project_ForFun/Person/921526256/ayo-ogunseinde-sibVwORYqs0-unsplash.jpg',1,'A106831868','1992-09-20 00:00:00','台北市大安區和平東路二段83號','oaepshjtds@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(9,2,'陳','宛真',930362802,'/Project_ForFun/Person/930362802/karsten-winegeart-yPwpLYepiz0-unsplash.jpg',2,'A222223386','2020-10-05 00:00:00','新北市三重區龍濱路7巷1號','peejdyvlxx@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/930553563/Group 287.png/Group 286.png','2021-06-12 20:30:21',NULL,NULL),(10,2,'陳','美惠',930553563,'/Project_ForFun/Person/930553563/warren-wong-uuVguyksViA-unsplash.jpg',2,'A272995506','2019-06-01 00:00:00','台北市大安區敦化南路一段188巷17號','srwkfxesds@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/930553563/Group 287.png','2021-06-12 20:30:21',NULL,NULL),(11,2,'Lee','Jack',916366024,'/Project_ForFun/Person/bruce-mars-AndE50aaHn4-unsplash.jpg',1,'F197272310','2020-01-05 00:00:00','台北市北投區中山路71號  台北市北投區中山路71號 ','mvxcffbhty@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/916366024/Group 285.png','2021-06-12 20:30:21',NULL,NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,7 +431,7 @@ CREATE TABLE `order` (
   KEY `FK_PUBLISH_ID_idx` (`PUBLISH_ID`),
   CONSTRAINT `FK_MBERID` FOREIGN KEY (`TENANT_ID`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `FK_PUBLISH_ID` FOREIGN KEY (`PUBLISH_ID`) REFERENCES `publish` (`PUBLISH_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -442,6 +440,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
+INSERT INTO `order` VALUES (1,1,4,3,'還可以,就是吵了點',1,1,'2021-06-21 21:11:59',NULL,NULL),(2,2,2,3,'還行,房租有點貴',1,1,'2019-06-21 19:31:59',NULL,NULL),(3,3,3,4,'環境好',1,0,'2018-06-21 16:31:59',NULL,NULL),(4,4,3,5,'氣氛佳',1,0,'2018-05-20 21:31:59',NULL,NULL),(5,5,3,5,'環境好氣氛佳',1,1,'2021-06-23 11:20:15',NULL,NULL),(6,1,3,3,'房租太貴',1,0,'2021-06-23 17:20:15',NULL,NULL);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -500,7 +499,7 @@ CREATE TABLE `person_evaluation` (
   CONSTRAINT `COMMENTED_BY` FOREIGN KEY (`COMMENTED_BY`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `COMMENTED_ID` FOREIGN KEY (`COMMENTED`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `PERSON＿EVALUATION_ID_FK_ORDER_ID` FOREIGN KEY (`ORDER_ID`) REFERENCES `order` (`ORDER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -509,6 +508,7 @@ CREATE TABLE `person_evaluation` (
 
 LOCK TABLES `person_evaluation` WRITE;
 /*!40000 ALTER TABLE `person_evaluation` DISABLE KEYS */;
+INSERT INTO `person_evaluation` VALUES (1,5,3,7,4,'房屋不錯 房東人也不錯','2021-06-23 17:25:19',NULL,NULL),(2,1,3,4,4,'屋主還不錯','2021-06-21 21:40:07',NULL,NULL),(3,2,3,2,2,'房租貴,屋主態度差','2021-06-21 21:40:07',NULL,NULL),(4,3,4,3,3,'屋主普通','2021-06-21 21:40:07',NULL,NULL),(5,4,5,3,5,'屋主很照顧房客','2021-06-21 21:40:07',NULL,NULL),(6,1,4,3,4,'房客還行','2021-06-21 21:40:07',NULL,NULL),(7,2,2,3,2,'根本奧客','2021-06-21 21:40:07',NULL,NULL),(8,3,3,4,3,'房客普通','2021-06-21 21:40:07',NULL,NULL),(9,4,3,5,5,'房客nice','2021-06-21 21:40:07',NULL,NULL),(10,1,3,8,4,'房東態度太差','2021-06-23 17:25:19',NULL,NULL);
 /*!40000 ALTER TABLE `person_evaluation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -521,7 +521,7 @@ DROP TABLE IF EXISTS `post`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `post` (
   `POST_ID` int NOT NULL AUTO_INCREMENT,
-  `BOARD_ID` int NOT NULL DEFAULT '0',
+  `BOARD_ID` varchar(500) NOT NULL DEFAULT '0',
   `POSTER_ID` int NOT NULL,
   `POST_TITLE` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `POST_IMG` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
@@ -529,7 +529,6 @@ CREATE TABLE `post` (
   `CREATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
-  `POSTER_IMG` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   PRIMARY KEY (`POST_ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -580,7 +579,7 @@ CREATE TABLE `publish` (
   CONSTRAINT `FK_PUBLISH_AREA` FOREIGN KEY (`AREA_ID`) REFERENCES `area` (`AREA_ID`),
   CONSTRAINT `FK_PUBLISH_CITY` FOREIGN KEY (`CITY_ID`) REFERENCES `city` (`CITY_ID`),
   CONSTRAINT `FK_PUBLISH_MEMBER` FOREIGN KEY (`OWNER_ID`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='刊登';
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='刊登';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -589,6 +588,7 @@ CREATE TABLE `publish` (
 
 LOCK TABLES `publish` WRITE;
 /*!40000 ALTER TABLE `publish` DISABLE KEYS */;
+INSERT INTO `publish` VALUES (1,3,'一般套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(2,3,'超高級套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(3,4,'高級公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(4,5,'高級套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:29:26',NULL,NULL),(5,3,'公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(6,6,'套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(7,7,'雅房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(8,4,'鄰近捷運站套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:17:31',NULL,NULL);
 /*!40000 ALTER TABLE `publish` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -642,4 +642,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-20  0:02:32
+-- Dump completed on 2021-06-23 17:30:48

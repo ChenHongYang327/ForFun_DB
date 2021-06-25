@@ -5,7 +5,7 @@ import java.sql.Timestamp;
 public class Post {
 
 	private Integer postId;
-	private Integer boardId;
+	private String  boardId;
 	private Integer posterId;
 	private String postTitle;
 	private String postImg;
@@ -14,8 +14,13 @@ public class Post {
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
-	public Post(Integer postId, Integer boardId, Integer posterId, String postTitle, String postImg, String content,
-			Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
+	public Post () {
+		
+	}
+
+	public Post(Integer postId, String boardId, Integer posterId, String postTitle, String postImg, String content,
+			Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) 
+	{
 		super();
 		this.postId = postId;
 		this.boardId = boardId;
@@ -24,13 +29,11 @@ public class Post {
 		this.postImg = postImg;
 		this.content = content;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
-
-	public Post() {
-
-	}
+	
+	
 
 	public Integer getPostId() {
 		return postId;
@@ -40,11 +43,11 @@ public class Post {
 		this.postId = postId;
 	}
 
-	public Integer getBoardId() {
+	public String getBoardId() {
 		return boardId;
 	}
 
-	public void setBoardId(Integer boardId) {
+	public void setBoardId(String boardId) {
 		this.boardId = boardId;
 	}
 
@@ -88,12 +91,12 @@ public class Post {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {

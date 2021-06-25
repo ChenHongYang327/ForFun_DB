@@ -26,7 +26,7 @@ public class Member {
 
 	public Member(Integer memberId, Integer role, String nameL, String nameF, Integer phone, String headshot,
 			Integer gender, String id, Timestamp birthady, String address, String mail, Integer type, String token,
-			String idImgf, String idImgb, String citizen, Timestamp createTime, Timestamp updateYime,
+			String idImgf, String idImgb, String citizen, Timestamp createTime, Timestamp updateTime,
 			Timestamp deleteTime) {
 		super();
 		this.memberId = memberId;
@@ -46,7 +46,7 @@ public class Member {
 		this.idImgb = idImgb;
 		this.citizen = citizen;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -190,12 +190,12 @@ public class Member {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {
