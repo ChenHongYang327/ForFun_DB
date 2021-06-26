@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: FORFUN1
+-- Host: localhost    Database: FORFUN
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -71,7 +71,7 @@ CREATE TABLE `appointment` (
   CONSTRAINT `FK_APPOINT_OWNER_ID` FOREIGN KEY (`OWNER_ID`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `FK_APPOINT_TANANT_ID` FOREIGN KEY (`TENANT_ID`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `FK_APPOINTMENT_PUBLISH` FOREIGN KEY (`PUBLISH_ID`) REFERENCES `publish` (`PUBLISH_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='預約單資料表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='預約單資料表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -80,6 +80,7 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
+INSERT INTO `appointment` VALUES (3,4,5,6,'2021-06-26 16:43:15',1,'2021-06-26 16:43:15',NULL,NULL);
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -440,7 +441,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,1,4,3,'還可以,就是吵了點',1,1,'2021-06-21 21:11:59',NULL,NULL),(2,2,2,3,'還行,房租有點貴',1,1,'2019-06-21 19:31:59',NULL,NULL),(3,3,3,4,'環境好',1,0,'2018-06-21 16:31:59',NULL,NULL),(4,4,3,5,'氣氛佳',1,0,'2018-05-20 21:31:59',NULL,NULL),(5,5,3,5,'環境好氣氛佳',1,1,'2021-06-23 11:20:15',NULL,NULL),(6,1,3,3,'房租太貴',1,0,'2021-06-23 17:20:15',NULL,NULL);
+INSERT INTO `order` VALUES (1,1,4,3,'還可以,就是吵了點',1,1,'2021-06-21 21:11:59',NULL,NULL),(2,2,2,3,'還行,房租有點貴',12,1,'2019-06-21 19:31:59',NULL,NULL),(3,3,3,4,'環境好',1,0,'2018-06-21 16:31:59',NULL,NULL),(4,4,3,5,'氣氛佳',1,0,'2018-05-20 21:31:59',NULL,NULL),(5,5,3,5,'環境好氣氛佳',1,1,'2021-06-23 11:20:15',NULL,NULL),(6,1,3,3,'房租太貴',1,0,'2021-06-23 17:20:15',NULL,NULL);
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -525,12 +526,12 @@ CREATE TABLE `post` (
   `POSTER_ID` int NOT NULL,
   `POST_TITLE` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
   `POST_IMG` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL,
-  `CONTEXT` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
+  `POST_CONTEXT` longtext CHARACTER SET utf8 COLLATE utf8_general_ci,
   `CREATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`POST_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -539,6 +540,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
+INSERT INTO `post` VALUES (1,'知識問答',0,'ddddd','Project_ForFun/Discussion_insert/1624696992874','ddddddddd','2021-06-26 16:43:15',NULL,NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -642,4 +644,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-23 17:30:48
+-- Dump completed on 2021-06-26 17:04:42

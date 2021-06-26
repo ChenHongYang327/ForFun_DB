@@ -59,13 +59,14 @@ public class PostDaolmpl implements PostDao {
 	@Override
 	public int update(Post post) {
 		int count = 0;
-		String sql = "UPDATE post SET POST_TITLE = ?, POST_CONTEXT = ?, UPDATE_TIME = ? WHERE POST_ID = ?;";
+		String sql = "UPDATE post SET POST_TITLE = ?, POST_CONTEXT = ?,POST_IMG = ?, UPDATE_TIME = ? WHERE POST_ID = ?;";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setString(1, post.getPostTitle());
 			ps.setString(2, post.getPostContext());
-			ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
-			ps.setInt(4, post.getPostId());
+			ps.setString(3, post.getPostImg());
+			ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(5, post.getPostId());
 			count = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
