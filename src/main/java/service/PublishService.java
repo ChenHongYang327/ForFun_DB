@@ -36,4 +36,8 @@ public class PublishService {
     public int getNewId() {
         return dao.getNewId();
     }
+    
+    public List<Publish> selectByOwnerId(int OWNER_ID){
+    	return dao.selectByOwnerId(OWNER_ID);
+    }
 }

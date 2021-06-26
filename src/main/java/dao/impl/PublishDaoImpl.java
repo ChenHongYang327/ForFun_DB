@@ -232,4 +232,46 @@ public class PublishDaoImpl implements PublishDao {
         return 0;
     }
 
+	@Override
+	public List<Publish> selectByOwnerId(int OWNER_ID) {
+		final String sql = "select * from FORFUN.publish where OWNER_ID=? order by DELETE_TIME ASC";
+		List<Publish> publishs = new ArrayList<>();
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				) {
+			stmt.setInt(1, OWNER_ID);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Publish publish=new Publish();
+				publish.setPublishId(rs.getInt("PUBLISH_ID"));
+				publish.setOwnerId(rs.getInt("OWNER_ID"));
+				publish.setTitle(rs.getString("TITLE"));
+				publish.setTitleImg(rs.getString("TITLE_IMG"));
+				publish.setPublishInfo(rs.getString("PUBLISH_INFO"));
+				publish.setPublishImg1(rs.getString("PUBLISH_IMG1"));
+				publish.setPublishImg2(rs.getString("PUBLISH_IMG2"));
+				publish.setPublishImg3(rs.getString("PUBLISH_IMG3"));
+				publish.setCityId(rs.getInt("CITY_ID"));
+				publish.setAreaId(rs.getInt("AREA_ID"));
+				publish.setAddress(rs.getString("ADDRESS"));
+				publish.setLatitude(rs.getDouble("LATITUDE"));
+				publish.setLongitude(rs.getDouble("LONGITUDE"));
+				publish.setRent(rs.getInt("RENT"));
+				publish.setDeposit(rs.getInt("DEPOSIT"));
+				publish.setSquare(rs.getInt("SQUARE"));
+				publish.setGender(rs.getInt("GENDER"));
+				publish.setType(rs.getInt("TYPE"));
+				publish.setFurnished(rs.getString("FURNISHED"));
+				publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+				publishs.add(publish);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return publishs;
+	}
+
 }

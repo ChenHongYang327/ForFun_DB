@@ -14,6 +14,7 @@ import dao.FavoriteDao;
 import member.bean.Favorite;
 import member.bean.Member;
 import member.bean.Publish;
+import service.PublishService;
 
 public class FavoriteDaoImpl implements FavoriteDao{
 	DataSource dataSource;
@@ -67,7 +68,9 @@ public class FavoriteDaoImpl implements FavoriteDao{
 				favorite.setMemberId(rs.getInt("MEMBER_ID"));
 				favorite.setPublishId(rs.getInt("PUBLISH_ID"));
 				favorite.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				if(new PublishService().selectById(favorite.getPublishId())!=null) {
 				favorites.add(favorite);
+				}
 			}
 			return favorites;
 		

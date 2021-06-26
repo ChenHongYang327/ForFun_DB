@@ -13,6 +13,8 @@ public interface PublishDao {
     
     Publish selectById(int publishId);
     
+    List<Publish> selectByOwnerId(int OWNER_ID);
+    
     List<Publish> selectAll();
     
     int getNewId();
