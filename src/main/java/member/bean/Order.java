@@ -9,21 +9,21 @@ public class Order {
 	private Integer tenantId;
 	private Integer publishStar;
 	private String publishComment;
-	private Integer roderStatus;
+	private Integer orderStatus;
 	private Boolean read;
 	private Timestamp createTime;
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
 	public Order(Integer orderId, Integer publishId, Integer tenantId, Integer publishStar, String publishComment,
-			Integer roderStatus, Boolean read, Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
+			Integer orderStatus, Boolean read, Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
 		super();
 		this.orderId = orderId;
 		this.publishId = publishId;
 		this.tenantId = tenantId;
 		this.publishStar = publishStar;
 		this.publishComment = publishComment;
-		this.roderStatus = roderStatus;
+		this.orderStatus = orderStatus;
 		this.read = read;
 		this.createTime = createTime;
 		this.updateTime = updateYime;
@@ -74,12 +74,12 @@ public class Order {
 		this.publishComment = publishComment;
 	}
 
-	public Integer getRoderStatus() {
-		return roderStatus;
+	public Integer getOrderStatus() {
+		return orderStatus;
 	}
 
-	public void setRoderStatus(Integer roderStatus) {
-		this.roderStatus = roderStatus;
+	public void setOrderStatus(Integer roderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 	public Boolean getRead() {

@@ -4,4 +4,34 @@
 
 <web-app>
   <display-name>Archetype Created Web Application</display-name>
+  <servlet>
+  	<servlet-name>OrderController</servlet-name>
+  	<display-name>OrderController</display-name>
+  	<description></description>
+  	<servlet-class>controller.OrderController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>OtherPayController</servlet-name>
+  	<display-name>OtherPayController</display-name>
+  	<description></description>
+  	<servlet-class>controller.OtherPayController</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>AgreementController</servlet-name>
+  	<display-name>AgreementController</display-name>
+  	<description></description>
+  	<servlet-class>controller.AgreementController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>OrderController</servlet-name>
+  	<url-pattern>/OrderController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>OtherPayController</servlet-name>
+  	<url-pattern>/OtherPayController</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>AgreementController</servlet-name>
+  	<url-pattern>/AgreementController</url-pattern>
+  </servlet-mapping>
 </web-app>
