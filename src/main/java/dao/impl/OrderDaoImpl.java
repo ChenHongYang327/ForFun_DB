@@ -72,5 +72,58 @@ public class OrderDaoImpl implements OrderDao {
 
 		return false;
 	}
+	
+	@Override
+	public Order selectByID(int OrderId) {
+		final String sql = "select * from FORFUN.order where ORDER_ID = ?";
+		Order order=new Order();
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, OrderId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				order.setOrderId(rs.getInt("ORDER_ID"));
+				order.setPublishId(rs.getInt("PUBLISH_ID"));
+				order.setTenantId(rs.getInt("TENANT_ID"));
+				order.setTenantId(rs.getInt("PUBLISH_STAR"));
+				order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+				order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+				order.setRead(rs.getBoolean("READ"));
+				order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				order.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				order.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return order;
+	}
+	
+	@Override
+	public Order selectByPublishID(int PublishId) {
+		final String sql = "select * from FORFUN.order where PUBLISH_ID = ?";
+		Order order=new Order();
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1,PublishId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				order.setOrderId(rs.getInt("ORDER_ID"));
+				order.setPublishId(rs.getInt("PUBLISH_ID"));
+				order.setTenantId(rs.getInt("TENANT_ID"));
+				order.setTenantId(rs.getInt("PUBLISH_STAR"));
+				order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+				order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+				order.setRead(rs.getBoolean("READ"));
+				order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				order.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				order.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return order;
+	}
+
 
 }

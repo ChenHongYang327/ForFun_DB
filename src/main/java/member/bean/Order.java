@@ -16,7 +16,7 @@ public class Order {
 	private Timestamp deleteTime;
 
 	public Order(Integer orderId, Integer publishId, Integer tenantId, Integer publishStar, String publishComment,
-			Integer orderStatus, Boolean read, Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
+			Integer orderStatus, Boolean read, Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) {
 		super();
 		this.orderId = orderId;
 		this.publishId = publishId;
@@ -26,7 +26,7 @@ public class Order {
 		this.orderStatus = orderStatus;
 		this.read = read;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 
@@ -78,7 +78,7 @@ public class Order {
 		return orderStatus;
 	}
 
-	public void setOrderStatus(Integer roderStatus) {
+	public void setOrderStatus(Integer orderStatus) {
 		this.orderStatus = orderStatus;
 	}
 
@@ -98,12 +98,12 @@ public class Order {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {
