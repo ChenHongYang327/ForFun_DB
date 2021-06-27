@@ -54,16 +54,18 @@ public class OtherPayController extends HttpServlet {
 		resultcode = jsonObject_Client.get("RESULTCODE").getAsInt();
 
 		JsonObject jsonWri = new JsonObject();
-		if (resultcode == 1) {
-			// 如果前端新增成功，狀態碼要改成已付款
-			otherPayService.changeOtherpayStatus(otherpayID , 1);
-			jsonWri.addProperty("RESULT", "SUCCESS");
-		} else {
+		if (resultcode == 0) {
 			OtherPay otherPay = otherPayService.selectById(otherpayID);
 
 			jsonWri.addProperty("MONEY", otherPay.getOtherpayMoney());
 			jsonWri.addProperty("NOTEINFO", otherPay.getOtherpayNote());
 			jsonWri.addProperty("IMGPATH", otherPay.getSuggestImg());
+
+		} else {
+
+			// 如果前端新增成功，狀態碼要改成已付款
+			otherPayService.changeOtherpayStatus(otherpayID, resultcode);
+			jsonWri.addProperty("RESULT", 200);
 		}
 
 		try (PrintWriter pw = response.getWriter();) {

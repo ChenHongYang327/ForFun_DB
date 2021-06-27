@@ -58,12 +58,7 @@ public class OrderController extends HttpServlet {
 
 		JsonObject jsonWri = new JsonObject();
 
-		if (resultcode == 1) {
-			// find publish id
-			orderService.changeOrderStatus(orderID, resultcode);
-			jsonWri.addProperty("RESULT", "SUCCESS");
-
-		} else {
+		if (resultcode == 0) {
 			// find publish id
 			int publishId = orderService.selectPublishByID(orderID);
 			// take Publish publish
@@ -72,6 +67,12 @@ public class OrderController extends HttpServlet {
 			jsonWri.addProperty("MONEY", publish.getRent());
 			jsonWri.addProperty("NOTEINFO", publish.getPublishInfo());
 			jsonWri.addProperty("IMGPATH", publish.getTitleImg());
+
+		} else {
+
+			// 回應碼成功 改 訂單狀態
+			orderService.changeOrderStatus(orderID, resultcode);
+			jsonWri.addProperty("RESULT", 200);
 
 		}
 		try (PrintWriter pw = response.getWriter();) {
