@@ -1,5 +1,11 @@
 package dao;
 
-public interface OtherPayDao {
+import member.bean.OtherPay;
 
+public interface OtherPayDao {
+	
+	OtherPay selectById(int otherpayId);
+	
+	public boolean changeOtherpayStatus (int otherpayID, int status);
+	
 }

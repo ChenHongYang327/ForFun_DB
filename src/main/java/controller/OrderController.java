@@ -33,6 +33,9 @@ public class OrderController extends HttpServlet {
 
 		// 收取client端資料
 		request.setCharacterEncoding("UTF-8");
+		// 回傳前端
+		response.setContentType("application/json");
+		response.setCharacterEncoding("UTF-8");
 
 		try (BufferedReader br = request.getReader();) {
 			jsonIn = new StringBuilder();
@@ -50,24 +53,27 @@ public class OrderController extends HttpServlet {
 
 		// 拿值
 		JsonObject jsonObject_Client = gson.fromJson(jsonIn.toString(), JsonObject.class);
-		int orderID = jsonObject_Client.get("order").getAsInt();
-
-		// find publish id
-		int publishId = orderService.selectPublishByID(orderID);
-		// take Publish publish
-
-		Publish publish = publishService.selectById(publishId);
-
-		// 回傳前端
-		response.setContentType("application/json");
-		response.setCharacterEncoding("UTF-8");
+		int orderID = jsonObject_Client.get("ORDER").getAsInt();
+		int resultcode = jsonObject_Client.get("RESULTCODE").getAsInt();
 
 		JsonObject jsonWri = new JsonObject();
 
-		jsonWri.addProperty("MONEY", publish.getRent());
-		jsonWri.addProperty("NOTEINFO", publish.getPublishInfo());
-		jsonWri.addProperty("IMGPATH", publish.getTitleImg());
+		if (resultcode == 1) {
+			// find publish id
+			orderService.changeOrderStatus(orderID, resultcode);
+			jsonWri.addProperty("RESULT", "SUCCESS");
 
+		} else {
+			// find publish id
+			int publishId = orderService.selectPublishByID(orderID);
+			// take Publish publish
+			Publish publish = publishService.selectById(publishId);
+
+			jsonWri.addProperty("MONEY", publish.getRent());
+			jsonWri.addProperty("NOTEINFO", publish.getPublishInfo());
+			jsonWri.addProperty("IMGPATH", publish.getTitleImg());
+
+		}
 		try (PrintWriter pw = response.getWriter();) {
 			pw.println(jsonWri);
 			System.out.println("output: " + jsonWri.toString());

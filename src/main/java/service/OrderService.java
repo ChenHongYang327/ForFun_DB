@@ -18,5 +18,9 @@ public class OrderService {
 		return orderDao.selectPublishByID(orderId);
 	}
 	
+	//修改狀態
+	public boolean changeOrderStatus (int orderID, int status) {
+		return orderDao.changeOrderStatus(orderID, status);
+	}
 	
 }

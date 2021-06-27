@@ -53,4 +53,24 @@ public class OrderDaoImpl implements OrderDao {
 		return -1;
 	}
 
+	@Override
+	public boolean changeOrderStatus(int orderID, int status) {
+	    final String sql = "UPDATE FORFUN.order SET OTHERPAY_STATUS = ? WHERE OTHERPAY_ID = ? ;";
+
+        try (
+                Connection conn = dataSource.getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+            ) {
+        	stmt.setInt(1, status);
+        	stmt.setInt(2, orderID);
+        	
+        	return stmt.execute();
+      
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+		return false;
+	}
+
 }
