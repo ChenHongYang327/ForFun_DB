@@ -113,7 +113,7 @@ public class PublishDaoImpl implements PublishDao {
 
     @Override
     public Publish selectById(int publishId) {
-        final String sql = "SELECT * FROM publish WHERE PUBLISH_ID = ? and DELETE_TIME IS NULL;";
+        final String sql = "SELECT * FROM FORFUN.publish WHERE PUBLISH_ID = ? and DELETE_TIME IS NULL;";
         
         try (
             Connection conn = dataSource.getConnection();

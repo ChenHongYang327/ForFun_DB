@@ -12,4 +12,11 @@ public class OrderService {
 	public int selectTenantByID(int OrderId) {
 		return orderDao.selectTenantByID(OrderId);
 	}
+	
+	//find publish id
+	public int selectPublishByID(int orderId) {
+		return orderDao.selectPublishByID(orderId);
+	}
+	
+	
 }

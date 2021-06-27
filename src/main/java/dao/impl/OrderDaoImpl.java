@@ -35,4 +35,22 @@ public class OrderDaoImpl implements OrderDao {
 		return -1;
 	}
 
+	@Override
+	public int selectPublishByID(int orderId) {
+		final String sql = "select PUBLISH_ID from FORFUN.order where ORDER_ID = ?";
+		try (Connection conn = dataSource.getConnection(); 
+			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, orderId);
+			ResultSet rs = pstmt.executeQuery();
+			int publishID = -1;
+			while (rs.next()) {
+				publishID=rs.getInt(1);
+			}
+			return publishID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
 }
