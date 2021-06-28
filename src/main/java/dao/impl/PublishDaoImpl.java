@@ -274,4 +274,22 @@ public class PublishDaoImpl implements PublishDao {
 		return publishs;
 	}
 
+	@Override
+	public int selectOwnerIdByID(int publishId) {
+		final String sql = "select OWNER_ID from FORFUN.publish where PUBLISH_ID = ?";
+		try (Connection conn = dataSource.getConnection(); 
+			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, publishId);
+			ResultSet rs = pstmt.executeQuery();
+			int ownerID = -1;
+			while (rs.next()) {
+				ownerID = rs.getInt("OWNER_ID");
+			}
+			return ownerID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
 }

@@ -44,7 +44,7 @@ public class OrderDaoImpl implements OrderDao {
 			ResultSet rs = pstmt.executeQuery();
 			int publishID = -1;
 			while (rs.next()) {
-				publishID=rs.getInt(1);
+				publishID=rs.getInt("PUBLISH_ID");
 			}
 			return publishID;
 		} catch (Exception e) {

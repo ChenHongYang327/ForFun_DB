@@ -8,28 +8,32 @@ public class OrderService {
 	OrderDao orderDao;
 
 	public OrderService() {
-		orderDao=new OrderDaoImpl();
+		orderDao = new OrderDaoImpl();
 	}
+
+	// 透過 訂單ID 查詢 房客ID
+	// 假資料待改
 	public int selectTenantByID(int OrderId) {
 		return orderDao.selectTenantByID(OrderId);
 	}
-	
-	//find publish id
+
+	// 透過 訂單ID 查詢 刊登單ID
 	public int selectPublishByID(int orderId) {
 		return orderDao.selectPublishByID(orderId);
 	}
-	
-	//修改狀態
-	public boolean changeOrderStatus (int orderID, int status) {
+
+	// 修改狀態
+	public boolean changeOrderStatus(int orderID, int status) {
 		return orderDao.changeOrderStatus(orderID, status);
 	}
-	
+
 	public Order selectByID(int OrderId) {
 		return orderDao.selectByID(OrderId);
 	}
-	//透過刊登單ID查詢訂單ID
+
+	// 透過 刊登單ID 查詢 訂單ID
 	public Order selectByPublishID(int PublishId) {
 		return orderDao.selectByPublishID(PublishId);
 	}
-	
+
 }

@@ -3,8 +3,6 @@ package controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,18 +13,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
-import member.bean.Publish;
 import service.OrderService;
 import service.PublishService;
 
-@WebServlet("/Order")
-public class OrderController extends HttpServlet {
+@WebServlet("/Evaluation")
+public class EvaluationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private Gson gson = new Gson();
 	private StringBuilder jsonIn = new StringBuilder();
+	private int typecode;
+	private JsonObject jsonWri = new JsonObject();
 	private OrderService orderService = new OrderService();
 	private PublishService publishService = new PublishService();
+	
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -35,7 +35,7 @@ public class OrderController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		try (BufferedReader br = request.getReader();) {
-			
+
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				jsonIn.append(line);
@@ -46,26 +46,56 @@ public class OrderController extends HttpServlet {
 		}
 
 		// 拿值
-		JsonObject jsonObject_Client = gson.fromJson(jsonIn.toString(), JsonObject.class);
-		int orderID = jsonObject_Client.get("ORDER").getAsInt();
-		int resultcode = jsonObject_Client.get("RESULTCODE").getAsInt();
+		JsonObject jsonObj = gson.fromJson(jsonIn.toString(), JsonObject.class); 
 
-		JsonObject jsonWri = new JsonObject();
+		try {
+			typecode = jsonObj.get("TYPECODE").getAsInt(); //判斷碼
+		} catch (Exception e) {
+			typecode = -1;
+		}
 
-		if (resultcode == 0) {
-			// find publish id
-			int publishId = orderService.selectPublishByID(orderID);
-			// take Publish publish
-			Publish publish = publishService.selectById(publishId);
+		if (typecode == 0) {
+			// Tenant Event
+			int srars_P = jsonObj.get("STARS_P").getAsInt();
+			String msg_P = jsonObj.get("MSG_P").getAsString();
+			int srars_H = jsonObj.get("STARS_H").getAsInt();
+			String msg_H = jsonObj.get("MSG_H").getAsString();
+			int orderid = jsonObj.get("ORDERID").getAsInt();
+			int signInId = jsonObj.get("SIGNINID").getAsInt(); //房客ID
 
-			jsonWri.addProperty("MONEY", publish.getRent());
-			jsonWri.addProperty("NOTEINFO", publish.getPublishInfo());
-			jsonWri.addProperty("IMGPATH", publish.getTitleImg());
+			int publishId = orderService.selectPublishByID(orderid); //用刊登單ID 找 房東ID
+			int ownerId = publishService.selectOwnerIdByID(publishId); //房東ID
+			
+			// save to PERSON_EVALUATION table
+			
+			
+			// save to ORDER table
+			
+			
+			
+			
+
+		} else if (typecode == 1) {
+			// HouseOwner Event
+			int srars_P = jsonObj.get("STARS_P").getAsInt();
+			String msg_P = jsonObj.get("MSG_P").getAsString();
+			int orderid = jsonObj.get("ORDERID").getAsInt();
+			int signInId = jsonObj.get("SIGNINID").getAsInt(); //房東ID
+			int tenantId = orderService.selectTenantByID(orderid); //房客ID
+	
+			// save to PERSON_EVALUATION table
+			
+			
+			
+			
+			
+			
+			
+			
+			
 
 		} else {
-			// 回應碼成功 改 訂單狀態
-			orderService.changeOrderStatus(orderID, resultcode);
-			jsonWri.addProperty("RESULT", 200);
+			jsonWri.addProperty("RESULT", -1);
 		}
 
 		// 回傳前端
@@ -79,7 +109,6 @@ public class OrderController extends HttpServlet {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 }
