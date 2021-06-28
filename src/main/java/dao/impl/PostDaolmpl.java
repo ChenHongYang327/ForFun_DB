@@ -16,7 +16,7 @@ import member.bean.Post;
 
 public class PostDaolmpl implements PostDao {
 	DataSource dataSource;
-	
+
 	public PostDaolmpl() {
 		dataSource = ServiceLocator.getInstance().getDataSource();
 	}
@@ -24,22 +24,23 @@ public class PostDaolmpl implements PostDao {
 	@Override
 	public int insert(Post post) {
 		int count = 0;
-		final String sql = "INSERT INTO Post (POST_ID, BOARD_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME) VALUES(?, ?, ?, ?, ?, ?, ?);";
+		String sql = "INSERT INTO Post (POST_ID, BOARD_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME) VALUES(?, ?, ?, ?, ?, ?, ?);";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
-				ps.setInt(1, post.getPostId());
-				ps.setString(2, post.getBoardId());
-				ps.setInt(3, post.getPosterId());
-				ps.setString(4, post.getPostTitle());
-				ps.setString(5,post.getPostImg());
-				ps.setString(6, post.getPostContext());
-				ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
-				count = ps.executeUpdate();
-				
+			ps.setInt(1, post.getPostId());
+			ps.setString(2, post.getBoardId());
+			ps.setInt(3, post.getPosterId());
+			ps.setString(4, post.getPostTitle());
+			ps.setString(5, post.getPostImg());
+			ps.setString(6, post.getPostContext());
+			ps.setTimestamp(7, new Timestamp(System.currentTimeMillis()));
+			count = ps.executeUpdate();
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return count;
+
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class PostDaolmpl implements PostDao {
 			ps.setInt(1, POST_ID);
 			count = ps.executeUpdate();
 		} catch (SQLException e) {
-				e.printStackTrace();
+			e.printStackTrace();
 		}
 		return count;
 	}
@@ -80,8 +81,8 @@ public class PostDaolmpl implements PostDao {
 		Post post = null;
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setInt(1,POST_ID);
-			
+			ps.setInt(1, POST_ID);
+
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				String boardId = rs.getString(1);
@@ -92,7 +93,7 @@ public class PostDaolmpl implements PostDao {
 				Timestamp postCreatTime = rs.getTimestamp(6);
 				post = new Post(POST_ID, boardId, posterId, postTitle, postImg, postContext, postCreatTime);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -104,7 +105,7 @@ public class PostDaolmpl implements PostDao {
 		String sql = "SELECT POST_ID, BOARD_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  FROM Post;";
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection connection = dataSource.getConnection();
-			 PreparedStatement ps = connection.prepareStatement(sql);) {
+				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				int postId = rs.getInt(1);
@@ -116,14 +117,14 @@ public class PostDaolmpl implements PostDao {
 				Timestamp postCreatTime = rs.getTimestamp(7);
 				Post post = new Post(postId, boardId, posterId, postTitle, postImg, postContext, postCreatTime);
 				postList.add(post);
-				
+
 			}
 			return postList;
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return postList;
 	}
 
@@ -139,7 +140,7 @@ public class PostDaolmpl implements PostDao {
 				imagePath = rs.getString(1);
 			}
 		} catch (Exception e) {
-			 e.printStackTrace();
+			e.printStackTrace();
 		}
 		return imagePath;
 	}
