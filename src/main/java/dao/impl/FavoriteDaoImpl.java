@@ -12,8 +12,6 @@ import javax.sql.DataSource;
 import commend.ServiceLocator;
 import dao.FavoriteDao;
 import member.bean.Favorite;
-import member.bean.Member;
-import member.bean.Publish;
 import service.PublishService;
 
 public class FavoriteDaoImpl implements FavoriteDao{

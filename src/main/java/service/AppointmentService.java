@@ -32,4 +32,8 @@ public class AppointmentService {
     public List<Appointment> selectAll() {
         return dao.selectAll();
     }
+    //取得insert的Id失敗會得到-1
+    public int getInsertId() {
+    	return dao.getInsertId();
+    }
 }

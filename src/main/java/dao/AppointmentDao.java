@@ -14,4 +14,6 @@ public interface AppointmentDao {
     Appointment selectById(int appointmentId);
     
     List<Appointment> selectAll();
+    
+    int getInsertId();
 }

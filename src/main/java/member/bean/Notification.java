@@ -5,23 +5,29 @@ import java.sql.Timestamp;
 public class Notification {
 
 	private Integer notificationId;
+	private Integer notified;
 	private Integer commentId;
 	private Integer appointmentId;
 	private Integer orderId;
 	private Integer messageId;
 	private Boolean read;
 	private Timestamp createTime;
+	private Timestamp deleteTime;
 
-	public Notification(Integer notificationId, Integer commentId, Integer appointmentId, Integer orderId,
-			Integer messageId, Boolean read, Timestamp createTime) {
+	
+
+	public Notification(Integer notificationId, Integer notified, Integer commentId, Integer appointmentId,
+			Integer orderId, Integer messageId, Boolean read, Timestamp createTime, Timestamp deleteTime) {
 		super();
 		this.notificationId = notificationId;
+		this.notified = notified;
 		this.commentId = commentId;
 		this.appointmentId = appointmentId;
 		this.orderId = orderId;
 		this.messageId = messageId;
 		this.read = read;
 		this.createTime = createTime;
+		this.deleteTime = deleteTime;
 	}
 
 	public Notification() {
@@ -83,5 +89,22 @@ public class Notification {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
+	
+	public Integer getNotified() {
+		return notified;
+	}
+
+	public void setNotified(Integer notified) {
+		this.notified = notified;
+	}
+
+	public Timestamp getDeleteTime() {
+		return deleteTime;
+	}
+
+	public void setDeleteTime(Timestamp deleteTime) {
+		this.deleteTime = deleteTime;
+	}
+
 
 }
