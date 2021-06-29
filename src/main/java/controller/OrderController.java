@@ -35,7 +35,7 @@ public class OrderController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 
 		try (BufferedReader br = request.getReader();) {
-			
+
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				jsonIn.append(line);
@@ -52,6 +52,8 @@ public class OrderController extends HttpServlet {
 
 		JsonObject jsonWri = new JsonObject();
 
+		// resultcode 0-> 要拿值。
+		// resultcode != 0 -> 要更改的”訂單狀態“碼
 		if (resultcode == 0) {
 			// find publish id
 			int publishId = orderService.selectPublishByID(orderID);

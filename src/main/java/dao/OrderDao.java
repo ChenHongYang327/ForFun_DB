@@ -12,4 +12,6 @@ public interface OrderDao {
 	Order selectByID(int OrderId);
 	
 	Order selectByPublishID(int PublishId);
+	
+	int insertEvaluation(Order evaluation, int orderId);
 }
