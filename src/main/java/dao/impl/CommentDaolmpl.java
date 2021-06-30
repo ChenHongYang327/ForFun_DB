@@ -25,7 +25,7 @@ public class CommentDaolmpl implements CommentDao {
 	@Override
 	public int insert(Comment comment) {
 		int count = 0;
-		String sql = "INSERT INTO Comment (COMMENT_ID, MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME, READ) VALUES(?, ?, ?, ?, ?, ? );";
+		String sql = "INSERT INTO Comment (COMMENT_ID, MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME) VALUES(?, ?, ?, ?, ?);";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setInt(1, comment.getCommentId());
@@ -33,7 +33,6 @@ public class CommentDaolmpl implements CommentDao {
 			ps.setInt(3, comment.getPostId());
 			ps.setString(4, comment.getCommentMsg());
 			ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-			ps.setBoolean(6, false);
 			count = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
