@@ -3,6 +3,7 @@ package dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,7 @@ import member.bean.Appointment;
 
 public class AppointmentDaoImpl implements AppointmentDao {
     private DataSource dataSource;
-    
+    private int insertId=-1;
     public AppointmentDaoImpl() {
         dataSource = ServiceLocator.getInstance().getDataSource();
     }
@@ -26,7 +27,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
         
         try (
             Connection conn = dataSource.getConnection();
-            PreparedStatement stmt = conn.prepareStatement(sql);
+        	PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
         ) {
             stmt.setInt(1, appointment.getPublishId());
             stmt.setInt(2, appointment.getOwnerId());
@@ -34,8 +35,14 @@ public class AppointmentDaoImpl implements AppointmentDao {
             stmt.setTimestamp(4, appointment.getAppointmentTime());
             stmt.setBoolean(5, appointment.getRead());
             stmt.setTimestamp(6, appointment.getCreateTime());
-            
-            return stmt.executeUpdate();
+            int result = stmt.executeUpdate();
+            if (result == 1) {
+				ResultSet rs = stmt.getGeneratedKeys();
+				while (rs.next()) {
+					insertId = rs.getInt(1);
+				}
+			}
+            return result;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -154,4 +161,9 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
         return null;
     }
+
+	@Override
+	public int getInsertId() {
+		return insertId;
+	}
 }

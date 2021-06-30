@@ -29,13 +29,13 @@ public class MemberCenterPersonalInformation extends HttpServlet {
 		MemberService memberService=new MemberService();
 		Gson gson=new Gson();
 		JsonObject clientReq = gson.fromJson(request.getReader(), JsonObject.class);
-		System.out.println("客戶端的請求:" + clientReq);
+//		System.out.println("客戶端的請求:" + clientReq);
 		if(clientReq.get("action").getAsString().equals("getMember")) {
 			int member_id=clientReq.get("member_id").getAsInt();
 			Member member=new Member();
 			member=memberService.selectById(member_id);
 			String respJson = gson.toJson(member);
-			System.out.println("伺服器的回應:" + respJson);
+//			System.out.println("伺服器的回應:" + respJson);
 			try(PrintWriter writer=response.getWriter()) {
 				writer.print(respJson); 
 			} catch (Exception e) {

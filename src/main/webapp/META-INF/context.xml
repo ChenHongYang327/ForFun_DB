@@ -3,7 +3,7 @@
 
     <Resource name="jdbc/example" type="javax.sql.DataSource"
         factory="com.zaxxer.hikari.HikariJNDIFactory"
-        jdbcUrl="jdbc:mysql://localhost:3306/FORFUN"
+        jdbcUrl="jdbc:mysql://localhost:3306/FORFUN?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=true&amp;serverTimezone=Asia/Taipei" 
         username="root"
         password="password"
         driverClassName="com.mysql.cj.jdbc.Driver"

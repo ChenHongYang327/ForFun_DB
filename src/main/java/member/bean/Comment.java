@@ -13,6 +13,10 @@ public class Comment {
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
+	public Comment() {
+		
+	}
+	
 	public Comment(Integer commentId, Integer memberId, Integer postId, String commentMsg, Boolean read,
 			Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
 		super();
@@ -26,10 +30,18 @@ public class Comment {
 		this.deleteTime = deleteTime;
 	}
 
-	public Comment() {
+	
 
+	public Comment(Integer commentId, Integer memberId, Integer postId, String commentMsg, Timestamp createTime) {
+		super();
+		this.commentId = commentId;
+		this.memberId = memberId;
+		this.postId = postId;
+		this.commentMsg = commentMsg;
+		this.createTime = createTime;
 	}
 
+	
 	public Integer getCommentId() {
 		return commentId;
 	}

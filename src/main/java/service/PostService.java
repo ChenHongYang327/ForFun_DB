@@ -40,4 +40,8 @@ public class PostService {
 		return postDao.selectAll();
 	}
 	
+	public String getImagePath(int POST_ID) {
+		
+		return postDao.getImagePath(POST_ID);
+	}
 }

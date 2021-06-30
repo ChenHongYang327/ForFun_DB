@@ -114,7 +114,7 @@ public class PublishDaoImpl implements PublishDao {
 
     @Override
     public Publish selectById(int publishId) {
-        final String sql = "SELECT * FROM publish WHERE PUBLISH_ID = ? and DELETE_TIME IS NULL;";
+        final String sql = "SELECT * FROM FORFUN.publish WHERE PUBLISH_ID = ? and DELETE_TIME IS NULL;";
         
         try (
             Connection conn = dataSource.getConnection();
@@ -233,6 +233,66 @@ public class PublishDaoImpl implements PublishDao {
         return 0;
     }
 
+	@Override
+	public List<Publish> selectByOwnerId(int OWNER_ID) {
+		final String sql = "select * from FORFUN.publish where OWNER_ID=? order by DELETE_TIME ASC";
+		List<Publish> publishs = new ArrayList<>();
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				) {
+			stmt.setInt(1, OWNER_ID);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Publish publish=new Publish();
+				publish.setPublishId(rs.getInt("PUBLISH_ID"));
+				publish.setOwnerId(rs.getInt("OWNER_ID"));
+				publish.setTitle(rs.getString("TITLE"));
+				publish.setTitleImg(rs.getString("TITLE_IMG"));
+				publish.setPublishInfo(rs.getString("PUBLISH_INFO"));
+				publish.setPublishImg1(rs.getString("PUBLISH_IMG1"));
+				publish.setPublishImg2(rs.getString("PUBLISH_IMG2"));
+				publish.setPublishImg3(rs.getString("PUBLISH_IMG3"));
+				publish.setCityId(rs.getInt("CITY_ID"));
+				publish.setAreaId(rs.getInt("AREA_ID"));
+				publish.setAddress(rs.getString("ADDRESS"));
+				publish.setLatitude(rs.getDouble("LATITUDE"));
+				publish.setLongitude(rs.getDouble("LONGITUDE"));
+				publish.setRent(rs.getInt("RENT"));
+				publish.setDeposit(rs.getInt("DEPOSIT"));
+				publish.setSquare(rs.getInt("SQUARE"));
+				publish.setGender(rs.getInt("GENDER"));
+				publish.setType(rs.getInt("TYPE"));
+				publish.setFurnished(rs.getString("FURNISHED"));
+				publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+				publishs.add(publish);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return publishs;
+	}
+
+	@Override
+	public int selectOwnerIdByID(int publishId) {
+		final String sql = "select OWNER_ID from FORFUN.publish where PUBLISH_ID = ?";
+		try (Connection conn = dataSource.getConnection(); 
+			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, publishId);
+			ResultSet rs = pstmt.executeQuery();
+			int ownerID = -1;
+			while (rs.next()) {
+				ownerID = rs.getInt("OWNER_ID");
+			}
+			return ownerID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
     @Override
     public List<Publish> selectAllByParam(Map<String, String> paramMap) {
         final StringBuilder sql = new StringBuilder("SELECT * FROM publish WHERE DELETE_TIME IS NULL");
@@ -289,5 +349,4 @@ public class PublishDaoImpl implements PublishDao {
         
         return null;
     }
-
 }

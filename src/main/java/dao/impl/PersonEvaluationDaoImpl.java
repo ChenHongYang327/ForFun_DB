@@ -13,16 +13,32 @@ import dao.PersonEvaluationDao;
 import member.bean.Member;
 import member.bean.PersonEvaluation;
 
-public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
+public class PersonEvaluationDaoImpl implements PersonEvaluationDao {
 	DataSource dataSource;
 
 	public PersonEvaluationDaoImpl() {
 		dataSource = ServiceLocator.getInstance().getDataSource();
 	}
+
 	@Override
 	public int insert(PersonEvaluation personEvaluation) {
-		// TODO Auto-generated method stub
-		return 0;
+		final String sql = "insert into FORFUN.person_evaluation(ORDER_ID, COMMENTED, COMMENTED_BY, PERSON_STAR, PERSON_COMMENT) values(?, ?, ?, ?, ?); ";
+
+		try (Connection conn = dataSource.getConnection(); 
+			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+			pstmt.setInt(1, personEvaluation.getOrderId());
+			pstmt.setInt(2, personEvaluation.getCommented());
+			pstmt.setInt(3, personEvaluation.getCommentedBy());
+			pstmt.setInt(4, personEvaluation.getPersonStar());
+			pstmt.setString(5, personEvaluation.getPersonComment());
+			
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
 	}
 
 	@Override
@@ -36,16 +52,17 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
 		// TODO Auto-generated method stub
 		return 0;
 	}
-	//取得評論此用戶的所有評價資料
+
+	// 取得評論此用戶的所有評價資料
 	@Override
 	public List<PersonEvaluation> selectByCommented(int COMMENTED) {
 		final String sql = "select * from FORFUN.person_evaluation where COMMENTED = ?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, COMMENTED);
 			ResultSet rs = pstmt.executeQuery();
-			List<PersonEvaluation> personEvaluations=new ArrayList<>();
+			List<PersonEvaluation> personEvaluations = new ArrayList<>();
 			while (rs.next()) {
-				PersonEvaluation personEvaluation=new PersonEvaluation();
+				PersonEvaluation personEvaluation = new PersonEvaluation();
 				personEvaluation.setPersonEvaluationId(rs.getInt("PERSON＿EVALUATION_ID"));
 				personEvaluation.setOrderId(rs.getInt("ORDER_ID"));
 				personEvaluation.setCommented(rs.getInt("COMMENTED"));
@@ -57,20 +74,18 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
 				personEvaluation.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
 				personEvaluations.add(personEvaluation);
 			}
-			
+
 			return personEvaluations;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
+
 		return null;
 	}
-	
-	
-	//取得評論者的用戶資料
+
+	// 取得評論者的用戶資料
 	@Override
-	public Member selectMemberByCommentId(int Commenter) { 
+	public Member selectMemberByCommentId(int Commenter) {
 		final String sql = "select * from FORFUN.member where MEMBER_ID = ?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, Commenter);
@@ -94,15 +109,14 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao{
 //				member.setIdImgb(rs.getString("ID_IMGB"));
 //				member.setCitizen(rs.getString("CITIZEN"));
 				member.setCreateTime(rs.getTimestamp("CREATE_TIME"));
-			
+
 			}
-			
+
 			return member;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-			
+
 		return null;
 	}
 
