@@ -23,7 +23,8 @@ public class OtherPayController extends HttpServlet {
 	private Gson gson = new Gson();
 	private StringBuilder jsonIn;
 	private OtherPayService otherPayService = new OtherPayService();
-	private int resultcode, otherpayID;
+	private JsonObject jsonWri = new JsonObject();
+	private int otherpayID;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -49,28 +50,53 @@ public class OtherPayController extends HttpServlet {
 		}
 
 		// 拿值
-		JsonObject jsonObject_Client = gson.fromJson(jsonIn.toString(), JsonObject.class);
-		otherpayID = jsonObject_Client.get("OTHERPAYID").getAsInt();
-		resultcode = jsonObject_Client.get("RESULTCODE").getAsInt();
+		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
 
-		JsonObject jsonWri = new JsonObject();
-		if (resultcode == 0) {
+		int resultcode = jsonObject.get("RESULTCODE").getAsInt();
+
+		switch (resultcode) {
+
+		case 0: // TapPay fragment use
+			otherpayID = jsonObject.get("OTHERPAYID").getAsInt();
 			OtherPay otherPay = otherPayService.selectById(otherpayID);
 
 			jsonWri.addProperty("MONEY", otherPay.getOtherpayMoney());
 			jsonWri.addProperty("NOTEINFO", otherPay.getOtherpayNote());
 			jsonWri.addProperty("IMGPATH", otherPay.getSuggestImg());
+			jsonWri.addProperty("RESULT", 200);
+			break;
 
-		} else {
+		case 1: // otherpay fragment use
+			int agreementId = jsonObject.get("AGREEMENTID").getAsInt();
+			int account = jsonObject.get("ACCOUNT").getAsInt();
+			String note = jsonObject.get("NOTE").getAsString();
+			String imgPath = jsonObject.get("IMGPATH").getAsString();
 
+			OtherPay otherPays = new OtherPay();
+			otherPays.setAgreementId(agreementId);
+			otherPays.setOtherpayMoney(account);
+			otherPays.setOtherpayNote(note);
+			otherPays.setSuggestImg(imgPath);
+
+			int result = otherPayService.insert(otherPays);
+
+			if (result < 0) {
+				jsonWri.addProperty("RESULT", -1);
+			} else {
+				jsonWri.addProperty("RESULT", 200);
+			}
+			break;
+
+		default: // TapPay fragment use
+			otherpayID = jsonObject.get("OTHERPAYID").getAsInt();
 			// 如果前端新增成功，狀態碼要改成已付款
 			otherPayService.changeOtherpayStatus(otherpayID, resultcode);
 			jsonWri.addProperty("RESULT", 200);
+			break;
 		}
 
 		try (PrintWriter pw = response.getWriter();) {
 			pw.println(jsonWri);
-
 			System.out.println("output: " + jsonWri.toString());
 
 		} catch (Exception e) {

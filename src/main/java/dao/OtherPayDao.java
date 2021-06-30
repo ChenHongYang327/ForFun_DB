@@ -8,4 +8,6 @@ public interface OtherPayDao {
 	
 	public boolean changeOtherpayStatus (int otherpayID, int status);
 	
+	public int insert (OtherPay otherPay);
+	
 }

@@ -20,4 +20,9 @@ public class OtherPayService {
 		return dao.changeOtherpayStatus(otherpayID,status);
 	}
 	
+	//新增一筆資料
+	public int insert (OtherPay otherPay) {
+		return dao.insert(otherPay);
+	}
+	
 }

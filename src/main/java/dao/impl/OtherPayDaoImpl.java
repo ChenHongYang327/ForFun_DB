@@ -23,10 +23,8 @@ public class OtherPayDaoImpl implements OtherPayDao {
 	public OtherPay selectById(int otherpayId) {
 		final String sql = "SELECT * FROM FORFUN.otherpay WHERE OTHERPAY_ID = ? ;";
 
-		try (Connection conn = dataSource.getConnection(); 
-				PreparedStatement stmt = conn.prepareStatement(sql);
-			) {
-			
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+
 			stmt.setInt(1, otherpayId);
 
 			try (ResultSet rs = stmt.executeQuery();) {
@@ -51,26 +49,42 @@ public class OtherPayDaoImpl implements OtherPayDao {
 		return null;
 	}
 
-	
-	
 	@Override
 	public boolean changeOtherpayStatus(int otherpayID, int status) {
-        final String sql = "UPDATE otherpay SET OTHERPAY_STATUS = ? WHERE OTHERPAY_ID = ? ;";
+		final String sql = "UPDATE otherpay SET OTHERPAY_STATUS = ? WHERE OTHERPAY_ID = ? ;";
 
-        try (
-                Connection conn = dataSource.getConnection();
-                PreparedStatement stmt = conn.prepareStatement(sql);
-            ) {
-        	stmt.setInt(1, status);
-        	stmt.setInt(2, otherpayID);
-        	
-        	return stmt.execute();
-      
-        }catch (Exception e) {
-            e.printStackTrace();
-        }
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setInt(1, status);
+			stmt.setInt(2, otherpayID);
+
+			return stmt.execute();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 		return false;
+	}
+
+	@Override
+	public int insert(OtherPay otherPay) {
+
+		final String sql = "insert into FORFUN.otherpay (AGREEMENT_ID, OTHERPAY_MONEY, OTHERPAY_NOTE, SUGGEST_IMG) values (?, ?, ?, ?); ";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+			stmt.setInt(1, otherPay.getAgreementId());
+			stmt.setInt(2, otherPay.getOtherpayMoney());
+			stmt.setString(3, otherPay.getOtherpayNote());
+			stmt.setString(4, otherPay.getSuggestImg());
+
+			return stmt.executeUpdate();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
 	}
 
 }
