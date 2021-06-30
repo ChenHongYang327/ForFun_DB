@@ -3,7 +3,8 @@ package controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.Timestamp;
+import java.lang.reflect.Type;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,12 +14,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
-import member.bean.Publish;
 import service.PublishService;
 
-@WebServlet("/publishHouse")
-public class PublishHouseController extends HttpServlet {
+@WebServlet("/getPublishData")
+public class PublishController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -39,29 +40,18 @@ public class PublishHouseController extends HttpServlet {
             JsonObject object = gson.fromJson(reader, JsonObject.class);
             String action = object.get("action").getAsString();
             
-            if("getNewId".equals(action)) {
-                // 取得新ID
+            if("getAll".equals(action)) {
+                // 取得全部刊登資料
                 JsonObject result = new JsonObject();
-                result.addProperty("newId", publishService.getNewId());
+                result.addProperty("publishList", gson.toJson(publishService.selectAll()));
                 writer.write(gson.toJson(result));
-                
-            } else if ("publishHouse".equals(action)) {
-                // 刊登/修改房屋資訊
-                Publish publish = gson.fromJson(object.get("publish").getAsString(), Publish.class);
-            
-                // 該資料存在進行update，否則insert
-                int count = 0;
-                
-                if (publishService.selectById(publish.getPublishId()) != null) {
-                    publish.setUpdateTime(new Timestamp(System.currentTimeMillis()));
-                    count = publishService.update(publish);
-                } else {
-                    publish.setCreateTime(new Timestamp(System.currentTimeMillis()));
-                    count = publishService.insert(publish);
-                }
+            } else if ("getBySearch".equals(action)) {
+                // 根據條件取得刊登資料
+                Type paramMap = new TypeToken<Map<String, String>>() {}.getType();
+                Map<String, String> map = gson.fromJson(object.get("searchParam").getAsString(), paramMap);
                 
                 JsonObject result = new JsonObject();
-                result.addProperty("result_code", count > 0 ? 1 : 0);
+                result.addProperty("publishList", gson.toJson(publishService.selectAllByParam(map)));
                 writer.write(gson.toJson(result));
             }
         } catch (Exception e) {

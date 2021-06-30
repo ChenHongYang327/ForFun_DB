@@ -1,6 +1,7 @@
 package dao;
 
 import java.util.List;
+import java.util.Map;
 
 import member.bean.Publish;
 
@@ -16,4 +17,6 @@ public interface PublishDao {
     List<Publish> selectAll();
     
     int getNewId();
+    
+    List<Publish> selectAllByParam(Map<String, String> paramMap);
 }

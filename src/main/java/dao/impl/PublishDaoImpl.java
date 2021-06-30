@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
@@ -230,6 +231,63 @@ public class PublishDaoImpl implements PublishDao {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    @Override
+    public List<Publish> selectAllByParam(Map<String, String> paramMap) {
+        final StringBuilder sql = new StringBuilder("SELECT * FROM publish WHERE DELETE_TIME IS NULL");
+        sql.append(" AND CITY_ID = " + paramMap.get("cityId"));
+        sql.append(" AND AREA_ID = " + paramMap.get("areaId"));
+        sql.append(" AND RENT >= " + paramMap.get("rentLower"));
+        sql.append(" AND RENT <= " + paramMap.get("rentUpper"));
+        if (!"0".equals(paramMap.get("gender"))) {
+            sql.append(" AND GENDER = " + paramMap.get("gender"));
+        }
+        if (!"-1".equals(paramMap.get("type"))) {
+            sql.append(" AND TYPE = " + paramMap.get("type"));
+        }
+
+        try (
+            Connection conn = dataSource.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql.toString());
+            ResultSet rs = stmt.executeQuery();
+        ) {
+            List<Publish> pibList = new ArrayList<Publish>();
+            
+            while (rs.next()) {
+                Publish publish = new Publish();
+                publish.setPublishId(rs.getInt("PUBLISH_ID"));
+                publish.setOwnerId(rs.getInt("OWNER_ID"));
+                publish.setTitle(rs.getString("TITLE"));
+                publish.setTitleImg(rs.getString("TITLE_IMG"));
+                publish.setPublishInfo(rs.getString("PUBLISH_INFO"));
+                publish.setPublishImg1(rs.getString("PUBLISH_IMG1"));
+                publish.setPublishImg2(rs.getString("PUBLISH_IMG2"));
+                publish.setPublishImg3(rs.getString("PUBLISH_IMG3"));
+                publish.setCityId(rs.getInt("CITY_ID"));
+                publish.setAreaId(rs.getInt("AREA_ID"));
+                publish.setAddress(rs.getString("ADDRESS"));
+                publish.setLatitude(rs.getDouble("LATITUDE"));
+                publish.setLongitude(rs.getDouble("LONGITUDE"));
+                publish.setRent(rs.getInt("RENT"));
+                publish.setDeposit(rs.getInt("DEPOSIT"));
+                publish.setSquare(rs.getInt("SQUARE"));
+                publish.setGender(rs.getInt("GENDER"));
+                publish.setType(rs.getInt("TYPE"));
+                publish.setFurnished(rs.getString("FURNISHED"));
+                publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+                publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+                publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+
+                pibList.add(publish);
+            }
+            
+            return pibList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return null;
     }
 
 }

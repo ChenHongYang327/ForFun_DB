@@ -1,6 +1,7 @@
 package service;
 
 import java.util.List;
+import java.util.Map;
 
 import dao.PublishDao;
 import dao.impl.PublishDaoImpl;
@@ -35,5 +36,9 @@ public class PublishService {
     
     public int getNewId() {
         return dao.getNewId();
+    }
+    
+    public List<Publish> selectAllByParam(Map<String, String> paramMap) {
+        return dao.selectAllByParam(paramMap);
     }
 }

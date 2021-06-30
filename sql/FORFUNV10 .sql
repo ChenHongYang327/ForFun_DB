@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: FORFUN1
+-- Host: localhost    Database: FORFUN
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -579,7 +579,7 @@ CREATE TABLE `publish` (
   CONSTRAINT `FK_PUBLISH_AREA` FOREIGN KEY (`AREA_ID`) REFERENCES `area` (`AREA_ID`),
   CONSTRAINT `FK_PUBLISH_CITY` FOREIGN KEY (`CITY_ID`) REFERENCES `city` (`CITY_ID`),
   CONSTRAINT `FK_PUBLISH_MEMBER` FOREIGN KEY (`OWNER_ID`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='刊登';
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='刊登';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -588,7 +588,7 @@ CREATE TABLE `publish` (
 
 LOCK TABLES `publish` WRITE;
 /*!40000 ALTER TABLE `publish` DISABLE KEYS */;
-INSERT INTO `publish` VALUES (1,3,'一般套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(2,3,'超高級套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(3,4,'高級公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(4,5,'高級套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:29:26',NULL,NULL),(5,3,'公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(6,6,'套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(7,7,'雅房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(8,4,'鄰近捷運站套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:17:31',NULL,NULL);
+INSERT INTO `publish` VALUES (1,3,'一般套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(2,3,'超高級套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(3,4,'高級公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:28:47',NULL,NULL),(4,5,'高級套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-21 21:29:26',NULL,NULL),(5,3,'公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(6,6,'套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(7,7,'雅房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:16:33',NULL,NULL),(8,4,'鄰近捷運站套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-23 17:17:31',NULL,NULL),(9,3,'大坪數高級公寓','Project_ForFun/Publish/9/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/9/Info1.jpg','Project_ForFun/Publish/9/Info2.jpg','Project_ForFun/Publish/9/Info3.jpg',1,3,'台北市中山區南京東路三段219號4-5F',25.052128,121.54325290000001,1000,1,100,2,1,'1|0|1|1|0|1|1|0|1','2021-06-24 21:08:09','2021-06-24 21:09:16',NULL),(10,3,'MMM大坪數高級公寓','Project_ForFun/Publish/10/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/10/Info1.jpg','Project_ForFun/Publish/10/Info2.jpg','Project_ForFun/Publish/10/Info3.jpg',1,3,'台北市中山區南京東路三段210號1樓',25.0517732,121.54334379999999,9999,1,100,1,0,'1|1|1|1|1|1|1|1|1','2021-06-27 11:01:12','2021-06-27 11:01:12',NULL),(11,3,'熊派餐廳','Project_ForFun/Publish/11/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/11/Info1.jpg','Project_ForFun/Publish/11/Info2.jpg','Project_ForFun/Publish/11/Info3.jpg',1,3,'台北市中山區南京東路三段194巷1號',25.0514287,121.5429303,100,1,100,0,1,'1|1|1|1|1|1|1|1|1','2021-06-27 11:03:59','2021-06-27 11:03:59',NULL),(12,3,'樂憩球早午餐','Project_ForFun/Publish/12/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/12/Info1.jpg','Project_ForFun/Publish/12/Info2.jpg','Project_ForFun/Publish/12/Info3.jpg',1,3,'台北市中山區遼寧街155巷41號',25.052579599999998,121.54335490000001,399,3,20,1,1,'1|1|1|1|1|1|1|1|1','2021-06-27 11:05:47','2021-06-27 11:05:47',NULL),(13,3,'藍格印刷','Project_ForFun/Publish/13/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/13/Info1.jpg','Project_ForFun/Publish/13/Info2.jpg','Project_ForFun/Publish/13/Info3.jpg',1,3,'台北市中山區遼寧街155巷2號',25.0524414,121.5422744,5050,1,500,0,0,'1|1|1|1|1|1|1|1|1','2021-06-27 11:07:46','2021-06-27 11:07:46',NULL),(14,3,'財團法人國防工業發展基金會','Project_ForFun/Publish/14/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/14/Info1.jpg','Project_ForFun/Publish/14/Info2.jpg','Project_ForFun/Publish/14/Info3.jpg',1,3,'台北市中山區北安路409號B1樓',25.0798854,121.543127,8888,3,88,1,0,'1|1|1|0|1|1|0|1|1','2021-06-29 22:33:30','2021-06-29 22:35:40',NULL),(15,3,'北安休閒運動中心','Project_ForFun/Publish/15/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/15/Info1.jpg','Project_ForFun/Publish/15/Info2.jpg','Project_ForFun/Publish/15/Info3.jpg',1,3,'台北市中山區北安路400巷1弄12號',25.079226,121.54226899999999,3000,1,50,2,1,'1|1|1|1|1|0|1|0|0','2021-06-29 22:37:23','2021-06-29 22:37:23',NULL),(16,3,'大直市場什錦麵/ 什錦炒飯','Project_ForFun/Publish/16/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利\ngood','Project_ForFun/Publish/16/Info1.jpg','Project_ForFun/Publish/16/Info2.jpg','Project_ForFun/Publish/16/Info3.jpg',1,3,'台北市中山區北安路476巷3號',25.079524199999998,121.545111,81000,1,100,1,1,'1|1|1|0|1|1|0|1|1','2021-06-29 22:39:17','2021-06-29 22:39:17',NULL);
 /*!40000 ALTER TABLE `publish` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -642,4 +642,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-23 17:30:48
+-- Dump completed on 2021-06-30 15:53:11
