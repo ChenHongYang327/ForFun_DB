@@ -62,6 +62,8 @@ public class CommentDaolmpl implements CommentDao {
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setString(1, comment.getCommentMsg());
 			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(3, comment.getCommentId());
+			count = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
