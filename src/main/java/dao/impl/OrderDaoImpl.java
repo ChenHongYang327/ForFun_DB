@@ -3,11 +3,14 @@ package dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import commend.ServiceLocator;
 import dao.OrderDao;
+import member.bean.Appointment;
 import member.bean.Order;
 
 public class OrderDaoImpl implements OrderDao {
@@ -125,8 +128,7 @@ public class OrderDaoImpl implements OrderDao {
 	public int insertEvaluation(Order evaluation, int orderId) {
 		final String sql = "UPDATE FORFUN.order SET PUBLISH_STAR = ?, PUBLISH_COMMENT = ? WHERE ORDER_ID = ? ; ";
 
-		try (Connection conn = dataSource.getConnection(); 
-			PreparedStatement stmt = conn.prepareStatement(sql);) {
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
 			stmt.setInt(1, evaluation.getPublishStar());
 			stmt.setString(2, evaluation.getPublishComment());
 			stmt.setInt(3, orderId);
@@ -138,6 +140,34 @@ public class OrderDaoImpl implements OrderDao {
 		}
 
 		return -1;
+	}
+
+	@Override
+	public List<Order> selectAllBySatus(int orderStatus) {
+		final String sql = "SELECT * FROM FORFUN.order WHERE ORDER_STSTUS = ?;";
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);
+				ResultSet rs = stmt.executeQuery();) {
+			List<Order> orders = new ArrayList<Order>();
+			while (rs.next()) {
+				Order order = new Order();
+				order.setOrderId(rs.getInt("ORDER_ID"));
+				order.setPublishId(rs.getInt("PUBLISH_ID"));
+				order.setTenantId(rs.getInt("TENANT_ID"));
+				order.setPublishStar(rs.getInt("PUBLISH_STAR"));
+				order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+				order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+				order.setRead(rs.getBoolean("READ"));
+				order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+
+				orders.add(order);
+			}
+			return orders;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

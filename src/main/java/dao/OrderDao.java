@@ -1,6 +1,7 @@
 package dao;
 
 import member.bean.Order;
+import java.util.List;
 
 public interface OrderDao {
 	int selectTenantByID(int OrderId);
@@ -14,4 +15,8 @@ public interface OrderDao {
 	Order selectByPublishID(int PublishId);
 	
 	int insertEvaluation(Order evaluation, int orderId);
+	
+	List<Order> selectAllBySatus (int orderStatus);
+	
+
 }

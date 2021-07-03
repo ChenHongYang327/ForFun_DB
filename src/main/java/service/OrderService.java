@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import dao.OrderDao;
 import dao.impl.OrderDaoImpl;
 import member.bean.Order;
@@ -39,6 +41,10 @@ public class OrderService {
 	// 透過 訂單ID 存房子物件評價＆星數
 	public int insertEvaluation(Order evaluation, int orderId) {
 		return orderDao.insertEvaluation(evaluation, orderId);
+	}
+	
+	public List<Order> selectAllBySatus (int orderStatus){
+		return orderDao.selectAllBySatus(orderStatus);
 	}
 
 }
