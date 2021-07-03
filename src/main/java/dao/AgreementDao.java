@@ -4,6 +4,10 @@ import member.bean.Agreement;
 
 public interface AgreementDao {
 	
-	public Agreement sellectById (int agreementId);
+	Agreement sellectById (int agreementId);
+	
+	int insertHouseOwner(Agreement agreement);
+	
+	int updateTenant (String tenantSignPath, int agreementId);
 
 }

@@ -3,6 +3,7 @@ package dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -44,6 +45,38 @@ public class AgreementDaoImpl implements AgreementDao {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int insertHouseOwner(Agreement agreement) {
+		final String sql = "INSERT INTO FORFUN.agreement (ORDER_ID, START_DATE, END_DATE, AGREEMENT_MONEY, LANDLORD_SIGN) VALUES (?, ?, ?, ?, ?);";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setInt(1, agreement.getOrderId());
+			stmt.setTimestamp(2, agreement.getStartDate());
+			stmt.setTimestamp(3, agreement.getEndDate());
+			stmt.setInt(4, agreement.getAgreementMoney());
+			stmt.setString(5, agreement.getLandlordSign());
+
+			return stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	@Override
+	public int updateTenant(String tenantSignPath, int agreementId) {
+		final String sql = "UPDATE FORFUN.agreement SET TENANT_SIGN = ? WHERE AGREEMENT_ID = ?;";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setString(1, tenantSignPath);
+			stmt.setInt(2, agreementId);
+			return stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 }

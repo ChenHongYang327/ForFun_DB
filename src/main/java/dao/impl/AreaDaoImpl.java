@@ -50,18 +50,18 @@ public class AreaDaoImpl implements AreaDao {
 
 	@Override
 	public String selectNameById(int areaId) {
-		final String sql = " SELECT AREA_NAME FROM FORFUN.area where AREA_ID = ? ";
+		final String sql = " SELECT AREA_NAME FROM FORFUN.area where AREA_ID = ?; ";
 		String areaName = null;
-		try (Connection conn = dataSource.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				ResultSet rs = stmt.executeQuery();) {
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
 			stmt.setInt(1, areaId);
-			while (rs.next()) {
-				areaName = rs.getString("CITY_NAME");
+
+			try (ResultSet rs = stmt.executeQuery();) {
+
+				while (rs.next()) {
+					areaName = rs.getString("AREA_NAME");
+				}
+				return areaName;
 			}
-
-			return areaName;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

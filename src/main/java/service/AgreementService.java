@@ -14,5 +14,13 @@ public class AgreementService {
 	public Agreement sellectById(int agreementId) {
 		return dao.sellectById(agreementId);
 	}
+	
+	public int insertHouseOwner (Agreement agreement) {
+		return dao.insertHouseOwner(agreement);
+	}
+	
+	public int updateTenant (String tenantSignPath, int agreementId) {
+		return dao.updateTenant(tenantSignPath, agreementId);
+	}
 
 }
