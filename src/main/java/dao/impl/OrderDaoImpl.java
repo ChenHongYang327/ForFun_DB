@@ -80,7 +80,7 @@ public class OrderDaoImpl implements OrderDao {
 				order.setOrderId(rs.getInt("ORDER_ID"));
 				order.setPublishId(rs.getInt("PUBLISH_ID"));
 				order.setTenantId(rs.getInt("TENANT_ID"));
-				order.setTenantId(rs.getInt("PUBLISH_STAR"));
+				order.setPublishStar(rs.getInt("PUBLISH_STAR"));
 				order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
 				order.setOrderStatus(rs.getInt("ORDER_STATUS"));
 				order.setRead(rs.getBoolean("READ"));
