@@ -138,12 +138,16 @@ public class NotificationImpl implements NotificationDao {
 	@Override
 	public List<Notification> selectByMemberID(int notifiedId) {
 		//顯示已讀過的
-		final String sql = "select * from FORFUN.notification where NOTIFIED_ID = ? and FORFUN.notification.READ =0 and DELETE_TIME is null or FORFUN.notification.READ =1 order by notification.READ ASC,CREATE_TIME DESC";
+		final String sql = "select * from FORFUN.notification where "
+				+ "NOTIFIED_ID = ? and FORFUN.notification.READ =1 and DELETE_TIME is not null "
+				+ "or"
+				+ " NOTIFIED_ID = ? and FORFUN.notification.READ =0 and DELETE_TIME is null order by notification.READ ASC,CREATE_TIME DESC";
 		//已讀的不再顯示
 //		final String sql = "select * from FORFUN.notification where NOTIFIED_ID = ? and DELETE_TIME is null order by notification.READ ASC,CREATE_TIME DESC";
 		List<Notification> notifications=new ArrayList<Notification>();
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, notifiedId);
+			pstmt.setInt(2, notifiedId);
 			ResultSet rs=pstmt.executeQuery();
 			while(rs.next()) {
 				Notification notification=new Notification();
