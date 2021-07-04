@@ -33,9 +33,9 @@ public int insert(Comment comment) {
 		return commentDao.selectById(COMMENT_ID);
 	}
 	
-	public List<Comment> selectAll() {
+	public List<Comment> selectAllByPostId(int postId) {
 		
-		return commentDao.selectAll();
+		return commentDao.selectAllByPostId(postId);
 	}
 
 }

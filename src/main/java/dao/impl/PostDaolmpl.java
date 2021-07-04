@@ -101,21 +101,22 @@ public class PostDaolmpl implements PostDao {
 	}
 
 	@Override
-	public List<Post> selectAll() {
-		String sql = "SELECT POST_ID, BOARD_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  FROM Post;";
+	public List<Post> selectAll(String BOARD_ID) {
+		String sql = "SELECT POST_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  FROM Post WHERE BOARD_ID = ?;";
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
+			ps.setString(1, BOARD_ID);
+			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				int postId = rs.getInt(1);
-				String boardId = rs.getString(2);
-				int posterId = rs.getInt(3);
-				String postTitle = rs.getString(4);
-				String postImg = rs.getString(5);
-				String postContext = rs.getString(6);
-				Timestamp postCreatTime = rs.getTimestamp(7);
-				Post post = new Post(postId, boardId, posterId, postTitle, postImg, postContext, postCreatTime);
+				int posterId = rs.getInt(2);
+				String postTitle = rs.getString(3);
+				String postImg = rs.getString(4);
+				String postContext = rs.getString(5);
+				Timestamp postCreatTime = rs.getTimestamp(6);
+				Post post = new Post(BOARD_ID, postId, posterId, postTitle, postImg, postContext, postCreatTime);
 				postList.add(post);
 
 			}
@@ -145,4 +146,11 @@ public class PostDaolmpl implements PostDao {
 		return imagePath;
 	}
 
+	@Override
+	public String getBoardId(int POST_ID) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
 }

@@ -41,9 +41,9 @@ public class CommentController extends HttpServlet {
 		}
 		String action = jsonObject.get("action").getAsString();
 		if (action.equals("getAll")) {
-		
+			int postId = jsonObject.get("postId").getAsShort();
 			System.out.println("input: " + jsonIn);
-			List<Comment> commentList = commentService.selectAll();
+			List<Comment> commentList = commentService.selectAllByPostId(postId);
 			writeText(response, gson.toJson(commentList));
 			
 		} else if (action.equals("commentInsert") || action.equals("commentUpdate")) {
@@ -78,10 +78,21 @@ public class CommentController extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Gson gson = new Gson();
+		BufferedReader br = request.getReader();
+		StringBuilder jsonIn = new StringBuilder();
+		String line = null;
+		while ((line = br.readLine()) != null) {
+			jsonIn.append(line);
+		}
+		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
+		int postId = jsonObject.get("commentId").getAsShort();
 		if (commentService == null) {
 			commentService = new CommentService();
 		}
-		List<Comment> comments = commentService.selectAll();
+		
+		List<Comment> comments = commentService.selectAllByPostId(postId);
 		writeText(response, new Gson().toJson(comments));
 	}
 	

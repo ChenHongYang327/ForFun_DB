@@ -35,13 +35,18 @@ public class PostService {
 		return postDao.selectById(POST_ID);
 	}
 	
-	public List<Post> selectAll() {
+	public List<Post> selectAll(String BOARD_ID) {
 		
-		return postDao.selectAll();
+		return postDao.selectAll(BOARD_ID);
 	}
 	
 	public String getImagePath(int POST_ID) {
 		
 		return postDao.getImagePath(POST_ID);
+	}
+	
+	public String getBoardId(int POST_ID) {
+		
+		return postDao.getBoardId(POST_ID);
 	}
 }

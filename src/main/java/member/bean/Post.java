@@ -14,9 +14,11 @@ public class Post {
 	private Timestamp updateTime;
 	private Timestamp deleteTime;
 
-	public Post () {
+	public  Post() {
 		
 	}
+	
+	
 
 	public Post(Integer postId, String boardId, Integer posterId, String postTitle, String postImg, String postContext,
 			Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) 
@@ -34,9 +36,23 @@ public class Post {
 	}
 	
 	
+	public Post(Integer postId, String boardId, Integer posterId, String postTitle, String postImg, String postContext,
+			Timestamp createTime) 
+	{
+		super();
+		this.postId = postId;
+		this.boardId = boardId;
+		this.posterId = posterId;
+		this.postTitle = postTitle;
+		this.postImg = postImg;
+		this.postContext = postContext;
+		this.createTime = createTime;
+		
+	}
+	
 	
 
-	public Post(Integer postId, String boardId, Integer posterId, String postTitle, String postImg, String postContext,
+	public Post(String boardId, Integer postId,  Integer posterId, String postTitle, String postImg, String postContext,
 			Timestamp createTime) {
 		super();
 		this.postId = postId;
