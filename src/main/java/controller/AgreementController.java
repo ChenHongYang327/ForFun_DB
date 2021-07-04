@@ -77,7 +77,7 @@ public class AgreementController extends HttpServlet {
 			Publish publish = publishService.selectById(publishId);
 //			int cityId = publish.getCityId();
 //			int areaId = publish.getAreaId();
-//			System.out.println("cityid"+cityId+"areaid"+areaId);
+
 			String wholeAdress = publish.getAddress();
 			
 			JsonObject jsonWri = new JsonObject();

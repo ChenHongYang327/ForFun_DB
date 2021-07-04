@@ -16,7 +16,7 @@ public interface OrderDao {
 	
 	int insertEvaluation(Order evaluation, int orderId);
 	
-	List<Order> selectAllBySatus (int orderStatus);
+	List<Order> selectAllBySatus (int orderStatus, int tenantId);
 	
 
 }

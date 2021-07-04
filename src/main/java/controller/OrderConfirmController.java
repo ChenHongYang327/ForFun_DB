@@ -15,7 +15,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import member.bean.Order;
+import member.bean.Publish;
 import service.OrderService;
+import service.PublishService;
 
 @WebServlet("/OrderConfirm")
 public class OrderConfirmController extends HttpServlet {
@@ -24,6 +26,7 @@ public class OrderConfirmController extends HttpServlet {
 	private Gson gson = new Gson();
 	private int resultcode = -1; // 判斷碼
 	private OrderService orderService = new OrderService();
+	private PublishService publishService = new PublishService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -57,11 +60,24 @@ public class OrderConfirmController extends HttpServlet {
 		
 		JsonObject jsonWri = new JsonObject();
 		switch (resultcode) {
-		case 1:
+		case 1: //房客流程
 			int statusCode = jsonObj.get("STATUS").getAsInt();
-			List<Order> orders = orderService.selectAllBySatus(statusCode);
+			int signinId = jsonObj.get("SIGNINID").getAsInt(); //房客ＩＤ
+			List<Order> orders = orderService.selectAllBySatus(statusCode,signinId);
 			
 			jsonWri.addProperty("ORDERLIST", gson.toJson(orders));
+			jsonWri.addProperty("RESULT", 200);
+			
+			break;
+			
+		case 2: //房客流程
+			int publishId = jsonObj.get("PUBLISHID").getAsInt();
+			Publish publish = publishService.selectById(publishId);
+			String publStr = gson.toJson(publish);
+//			int cityId = publish.getCityId();
+//			int areaId = publish.getAreaId();
+			
+			jsonWri.addProperty("PUBLISH", publStr);
 			jsonWri.addProperty("RESULT", 200);
 			
 			break;

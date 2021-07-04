@@ -51,5 +51,9 @@ public class PublishService {
 	public List<Publish> selectAllByParam(Map<String, String> paramMap) {
         return dao.selectAllByParam(paramMap);
     }
+	
+	public Publish selectByPublishID(int publishId) {
+		return dao.selectById(publishId);
+	}
 
 }

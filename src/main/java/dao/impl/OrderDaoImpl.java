@@ -143,27 +143,31 @@ public class OrderDaoImpl implements OrderDao {
 	}
 
 	@Override
-	public List<Order> selectAllBySatus(int orderStatus) {
-		final String sql = "SELECT * FROM FORFUN.order WHERE ORDER_STSTUS = ?;";
+	public List<Order> selectAllBySatus(int orderStatus, int tenantId) {
+		final String sql = "SELECT * FROM FORFUN.order WHERE ORDER_STATUS = ? AND TENANT_ID = ? ;";
 		try (Connection conn = dataSource.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				ResultSet rs = stmt.executeQuery();) {
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+			stmt.setInt(1, orderStatus);
+			stmt.setInt(2, tenantId);
+
 			List<Order> orders = new ArrayList<Order>();
-			while (rs.next()) {
-				Order order = new Order();
-				order.setOrderId(rs.getInt("ORDER_ID"));
-				order.setPublishId(rs.getInt("PUBLISH_ID"));
-				order.setTenantId(rs.getInt("TENANT_ID"));
-				order.setPublishStar(rs.getInt("PUBLISH_STAR"));
-				order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
-				order.setOrderStatus(rs.getInt("ORDER_STATUS"));
-				order.setRead(rs.getBoolean("READ"));
-				order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+			try (ResultSet rs = stmt.executeQuery();) {
+				while (rs.next()) {
+					Order order = new Order();
+					order.setOrderId(rs.getInt("ORDER_ID"));
+					order.setPublishId(rs.getInt("PUBLISH_ID"));
+					order.setTenantId(rs.getInt("TENANT_ID"));
+					order.setPublishStar(rs.getInt("PUBLISH_STAR"));
+					order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+					order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+					order.setRead(rs.getBoolean("READ"));
+					order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 
-				orders.add(order);
+					orders.add(order);
+				}
+				return orders;
 			}
-			return orders;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

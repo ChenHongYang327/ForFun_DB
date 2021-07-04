@@ -43,8 +43,8 @@ public class OrderService {
 		return orderDao.insertEvaluation(evaluation, orderId);
 	}
 	
-	public List<Order> selectAllBySatus (int orderStatus){
-		return orderDao.selectAllBySatus(orderStatus);
+	public List<Order> selectAllBySatus (int orderStatus, int tenantId){
+		return orderDao.selectAllBySatus(orderStatus,tenantId);
 	}
 
 }
