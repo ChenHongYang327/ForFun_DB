@@ -25,7 +25,7 @@ public class CommentDaolmpl implements CommentDao {
 	@Override
 	public int insert(Comment comment) {
 		int count = 0;
-		String sql = "INSERT INTO Comment (COMMENT_ID, MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME, READ) VALUES(?, ?, ?, ?, ?, ? );";
+		String sql = "INSERT INTO Comment (COMMENT_ID, MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME) VALUES(?, ?, ?, ?, ?);";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setInt(1, comment.getCommentId());
@@ -33,7 +33,6 @@ public class CommentDaolmpl implements CommentDao {
 			ps.setInt(3, comment.getPostId());
 			ps.setString(4, comment.getCommentMsg());
 			ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
-			ps.setBoolean(6, false);
 			count = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -63,6 +62,8 @@ public class CommentDaolmpl implements CommentDao {
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setString(1, comment.getCommentMsg());
 			ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(3, comment.getCommentId());
+			count = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -73,42 +74,42 @@ public class CommentDaolmpl implements CommentDao {
 	@Override
 	public Comment selectById(int COMMENT_ID) {
 		String sql = "SELECT MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME  WHERE COMMENT_ID = ?;";
-		Comment comment = null;
+
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setInt(1, COMMENT_ID);
-
+			Comment comment = new Comment();	
 			ResultSet rs = ps.executeQuery();
-			if (rs.next()) {
-				int memberId = rs.getInt(1);
-				int postId = rs.getInt(2);
-				String commentMsg = rs.getString(3);
-				Timestamp commentCreatTime = rs.getTimestamp(4);
-				comment = new Comment(COMMENT_ID, memberId, postId, commentMsg, commentCreatTime);
-
+			while (rs.next()) {
+				
+				comment.setMemberId(rs.getInt("MEMBER_ID"));
+				comment.setPostId(rs.getInt("POST_ID"));
+				comment.setCommentMsg(rs.getString("COMMENT_MSG"));
+				comment.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 			}
-
+			return comment;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return comment;
+		return null;
 
 	}
 
 	@Override
-	public List<Comment> selectAll() {
-		String sql = "SELECT COMMENT_ID, MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME FROM Comment;";
+	public List<Comment> selectAllByPostId(int POST_ID) {
+		String sql = "SELECT MEMBER_ID, COMMENT_ID, COMMENT_MSG, CREATE_TIME FROM Comment WHERE POST_ID = ?;";
 		List<Comment> commentList = new ArrayList<Comment>();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
+				ps.setInt(1, POST_ID);
+				
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				int commentId = rs.getInt(1);
-				int memberId = rs.getInt(2);
-				int postId = rs.getInt(3);
-				String commentMsg = rs.getString(4);
-				Timestamp commentCreatTime = rs.getTimestamp(5);
-				Comment comment = new Comment(commentId, memberId, postId, commentMsg, commentCreatTime);
+				Comment comment = new Comment();
+				comment.setMemberId(rs.getInt("MEMBER_ID"));
+				comment.setCommentId(rs.getInt("COMMENT_ID"));
+				comment.setCommentMsg(rs.getString("COMMENT_MSG"));
+				comment.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				commentList.add(comment);
 
 			}
@@ -118,7 +119,7 @@ public class CommentDaolmpl implements CommentDao {
 			e.printStackTrace();
 		}
 
-		return commentList;
+		return null;
 	}
 
 }

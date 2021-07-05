@@ -57,6 +57,7 @@ public class CityDaoImpl implements CityDao {
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				) {
 			stmt.setInt(1, cityId);
+			
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				cityName=rs.getString("CITY_NAME");

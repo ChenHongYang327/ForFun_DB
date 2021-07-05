@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,43 +31,54 @@ public class SignInController extends HttpServlet {
 		MemberService memberService = new MemberService();
 //		System.out.println("客戶端的請求:" + clientReq);
 		if (clientReq.get("action").getAsString().equals("singIn")) {
-			JsonObject respJson=new JsonObject(); //伺服器回覆
+			JsonObject respJson = new JsonObject(); // 伺服器回覆
 			int inputPhone = clientReq.get("phone").getAsInt();
 			try (PrintWriter writer = response.getWriter()) {
-			for (Member member : memberService.selectAll()) {
-					if (inputPhone==member.getPhone()) {
+				for (Member member : memberService.selectAll()) {
+					if (inputPhone == member.getPhone()) {
 						respJson.addProperty("pass", true);
 						respJson.addProperty("imformation", new Gson().toJson(member));
 						writer.print(respJson);
 						return;
 					}
 				}
-			respJson.addProperty("pass", false);
-			writer.print(respJson);
+				respJson.addProperty("pass", false);
+				writer.print(respJson);
 			}
-		}
-		else if(clientReq.get("action").getAsString().equals("updateToken")) {
-			Member member=new Gson().fromJson(clientReq.get("member").getAsString(), Member.class);
-			JsonObject respJson=new JsonObject();
-			if(memberService.updateToken(member)==1) {
+		} else if (clientReq.get("action").getAsString().equals("updateToken")) {
+			Member member = new Gson().fromJson(clientReq.get("member").getAsString(), Member.class);
+			JsonObject respJson = new JsonObject();
+			if (memberService.updateToken(member) == 1) {
 				respJson.addProperty("status", true);
-			}
-			else {
+			} else {
 				respJson.addProperty("status", false);
 			}
-			
-		}
-		else if(clientReq.get("action").getAsString().equals("clearToken")) {
-			int memberid=clientReq.get("memberId").getAsInt();
-			JsonObject respJson=new JsonObject();
-			if(memberService.clearTokenById(memberid)==1) {
-				respJson.addProperty("status", true);
-			}
-			else {
-				respJson.addProperty("status", false);
-			}
-			
-		}
-	}
 
+		} else if (clientReq.get("action").getAsString().equals("clearToken")) {
+			int memberid = clientReq.get("memberId").getAsInt();
+			JsonObject respJson = new JsonObject();
+			if (memberService.clearTokenById(memberid) == 1) {
+				respJson.addProperty("status", true);
+			} else {
+				respJson.addProperty("status", false);
+			}
+
+		} else if (clientReq.get("action").getAsString().equals("checkRole")) {
+			String phone = clientReq.get("phone").getAsString();
+			List<Member> members = memberService.selectAll();
+			int role = -1;
+			for (Member member : members) {
+				if (member.getPhone() == Integer.parseInt(phone)) {
+					role = member.getRole();
+					break;
+				}
+			}
+			try (PrintWriter writer = response.getWriter()) {
+					writer.print(role);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
 }

@@ -14,9 +14,11 @@ public interface PostDao {
 	
 	Post selectById(int POST_ID);
 	
-	List<Post> selectAll();
+	List<Post> selectAll(String BOARD_ID);
 	
 	String getImagePath(int POST_ID);
+
+	String getBoardId(int POST_ID);
 	
 
 }

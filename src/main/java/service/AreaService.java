@@ -16,4 +16,9 @@ public class AreaService {
     public List<Area> selectAll() {
         return dao.selectAll();
     }
+    
+    //找地區名
+    public String selectNameById(int areaId) {
+    	return dao.selectNameById(areaId);
+    }
 }

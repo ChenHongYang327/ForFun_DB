@@ -29,17 +29,7 @@ public class Comment {
 		this.updateTime = updateYime;
 		this.deleteTime = deleteTime;
 	}
-
 	
-
-	public Comment(Integer commentId, Integer memberId, Integer postId, String commentMsg, Timestamp createTime) {
-		super();
-		this.commentId = commentId;
-		this.memberId = memberId;
-		this.postId = postId;
-		this.commentMsg = commentMsg;
-		this.createTime = createTime;
-	}
 
 	
 	public Integer getCommentId() {

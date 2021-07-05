@@ -44,6 +44,7 @@ public class PublishManage extends HttpServlet {
 				resp.addProperty("publishes", new Gson().toJson(publishes));
 				resp.addProperty("cityNames", new Gson().toJson(cityNames));
 				pw.print(resp.toString());
+//				System.out.println(resp.toString());
 
 			}
 			else if(clientReq.get("action").getAsString().equals("pubishDelete")) {

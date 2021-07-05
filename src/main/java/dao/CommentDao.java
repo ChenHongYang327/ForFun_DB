@@ -14,6 +14,6 @@ int insert(Comment comment);
 	
 	Comment selectById(int COMMENT_ID);
 	
-	List<Comment> selectAll();
+	List<Comment> selectAllByPostId(int postId);
 	
 }

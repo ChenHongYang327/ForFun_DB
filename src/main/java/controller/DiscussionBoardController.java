@@ -46,8 +46,9 @@ public class DiscussionBoardController extends HttpServlet {
 		String action = jsonObject.get("action").getAsString();
 		if (action.equals("getAll")) {
 			// 將輸入資料列印出來除錯用
+			String boardId = jsonObject.get("boardId").getAsString();
 			System.out.println("input: " + jsonIn);
-			List<Post> postList = postService.selectAll();
+			List<Post> postList = postService.selectAll(boardId);
 			writeText(response, gson.toJson(postList));
 			
 		} else if (action.equals("getImage")){
@@ -80,7 +81,7 @@ public class DiscussionBoardController extends HttpServlet {
 			int postId = jsonObject.get("postId").getAsShort();
 			String postImagePath = postService.getImagePath(postId);
 			writeText(response, gson.toJson(postImagePath));
-		} else {
+		}  else {
 			writeText(response, "");
 		}
 		
@@ -95,10 +96,20 @@ public class DiscussionBoardController extends HttpServlet {
 	}
 
 	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Gson gson = new Gson();
+		BufferedReader br = request.getReader();
+		StringBuilder jsonIn = new StringBuilder();
+		String line = null;
+		while ((line = br.readLine()) != null) {
+			jsonIn.append(line);
+		}
+		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
+		String boardId = jsonObject.get("boardId").getAsString();
 		if (postService == null) {
 			postService = new PostService();
 		}
-		List<Post> posts = postService.selectAll();
+		List<Post> posts = postService.selectAll(boardId);
 		writeText(response, new Gson().toJson(posts));
 	}
 }
