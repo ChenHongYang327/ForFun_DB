@@ -17,6 +17,28 @@ public class OrderDaoImpl implements OrderDao {
 		dataSource = ServiceLocator.getInstance().getDataSource();
 	}
 
+    @Override
+    public int insert(Order order) {
+        final String sql = "INSERT INTO FORFUN.order (PUBLISH_ID, TENANT_ID, ORDER_STATUS, `READ`, CREATE_TIME) values (?, ?, ?, ?, ?) ; ";
+
+        try (Connection conn = dataSource.getConnection(); 
+            PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+            stmt.setInt(1, order.getPublishId());
+            stmt.setInt(2, order.getTenantId());
+            stmt.setInt(3, order.getOrderStatus());
+            stmt.setBoolean(4, order.getRead());
+            stmt.setTimestamp(5, order.getCreateTime());
+            
+            return stmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return -1;
+    }
+	
 	// 取得訂單的房客
 	@Override
 	public int selectTenantByID(int OrderId) {
@@ -139,5 +161,4 @@ public class OrderDaoImpl implements OrderDao {
 
 		return -1;
 	}
-
 }

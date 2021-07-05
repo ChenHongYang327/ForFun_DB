@@ -23,7 +23,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
     @Override
     public int insert(Appointment appointment) {
-        final String sql = "INSERT INTO appointment (PUBLISH_ID, OWNER_ID, TENANT_ID, APPOINTMENT_TIME, READ, CREATE_TIME) VALUES (?, ?, ?, ?, ?, ?);";
+        final String sql = "INSERT INTO appointment (PUBLISH_ID, OWNER_ID, TENANT_ID, APPOINTMENT_TIME, `READ`, CREATE_TIME) VALUES (?, ?, ?, ?, ?, ?);";
         
         try (
             Connection conn = dataSource.getConnection();
@@ -71,7 +71,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
     @Override
     public int update(Appointment appointment) {
-        final String sql = "UPDATE appointment SET PUBLISH_ID = ?, OWNER_ID = ?, TENANT_ID = ?, APPOINTMENT_TIME = ?, READ = ?, UPDATE_TIME = ? WHERE APPOINTMENT_ID = ?;";
+        final String sql = "UPDATE appointment SET PUBLISH_ID = ?, OWNER_ID = ?, TENANT_ID = ?, APPOINTMENT_TIME = ?, `READ` = ?, UPDATE_TIME = ? WHERE APPOINTMENT_ID = ?;";
         
         try (
             Connection conn = dataSource.getConnection();

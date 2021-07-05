@@ -11,6 +11,10 @@ public class OrderService {
 		orderDao = new OrderDaoImpl();
 	}
 
+	public int insert(Order order) {
+	    return orderDao.insert(order);
+	}
+	
 	// 透過 訂單ID 查詢 房客ID
 	// 假資料待改
 	public int selectTenantByID(int OrderId) {

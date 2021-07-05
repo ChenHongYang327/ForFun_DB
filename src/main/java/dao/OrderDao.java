@@ -3,6 +3,8 @@ package dao;
 import member.bean.Order;
 
 public interface OrderDao {
+    int insert(Order order);
+    
 	int selectTenantByID(int OrderId);
 	
 	int selectPublishByID(int orderId);

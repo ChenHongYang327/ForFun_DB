@@ -53,6 +53,13 @@ public class PublishController extends HttpServlet {
                 JsonObject result = new JsonObject();
                 result.addProperty("publishList", gson.toJson(publishService.selectAllByParam(map)));
                 writer.write(gson.toJson(result));
+            } else if ("getByPublishId".equals(action)) {
+                // 根據刊登ID取得資料
+                int publishId = object.get("publishId").getAsInt();
+                
+                JsonObject result = new JsonObject();
+                result.addProperty("publish", gson.toJson(publishService.selectById(publishId)));
+                writer.write(gson.toJson(result));
             }
         } catch (Exception e) {
             e.printStackTrace();
