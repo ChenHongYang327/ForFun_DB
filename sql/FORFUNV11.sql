@@ -335,7 +335,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,0,'admin','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2021-06-12 19:46:24',NULL,NULL),(2,1,'李','文賢',922877662,'/Project_ForFun/Person/922877662/ian-dooley-d1UPkiFd04A-unsplash.jpg',1,'A189271911','2019-03-20 00:00:00','台北市信義區基隆路一段245號','ngdqzmhndh@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:11:05',NULL,NULL),(3,2,'林','怡吟',921371162,'/Project_ForFun/Person/921371162/testphoto.jpg',2,'F205861001','2020-06-01 00:00:00','台北市內湖區康寧路三段202號','test1@email.com',1,'e-XTI7L7S2-pN7S-1L6b92:APA91bGrfGaWau07OnDZIhqm4lh6e3FvRnw_Uccmf7fBa10zDXyQ-sN8erZd3V2LdtTBEVm5EO_yEPRPAorBH0rpb21nkJBdEaSDRLJkqahBSnAtVj_gfDlm0SRlBkCoJxN_C9pcHaP2','/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/921371162/goodpeople.png','2021-06-12 20:30:21','2021-06-26 19:51:34',NULL),(4,1,'溫','俊宏',924545884,'/Project_ForFun/Person/924545884/ivana-cajina-_7LbC5J-jw4-unsplash.jpg',1,'F187277081','1992-09-05 00:00:00','新北市板橋區林園街129巷15號2樓','hoyaqojnnt@iubridge.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(5,1,'林','玉玲',952894963,'/Project_ForFun/Person/952894963/rafaella-mendes-diniz-et_78QkMMQs-unsplash.jpg',2,'A256873907','1992-12-01 00:00:00','台北市萬華區和平西路三段177號','jsubwpjsju@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(6,1,'錢','立奇',960917393,'/Project_ForFun/Person/960917393/bruce-mars-8YG31Xn4dSw-unsplash.jpg',1,'F197272310','2020-02-01 00:00:00','新北市永和區秀朗路一段36巷17號1樓','lbkodplfdq@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(7,1,'陳','良',929458421,'/Project_ForFun/Person/929458421/lachlan-dempsey-6VPEOdpFNAs-unsplash.jpg',1,'A196363871','2020-11-11 00:00:00','新北市板橋區四維路84號','fqzsmsvcen@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(8,1,'李','炳揚',921526256,'/Project_ForFun/Person/921526256/ayo-ogunseinde-sibVwORYqs0-unsplash.jpg',1,'A106831868','1992-09-20 00:00:00','台北市大安區和平東路二段83號','oaepshjtds@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(9,2,'陳','宛真',930362802,'/Project_ForFun/Person/930362802/karsten-winegeart-yPwpLYepiz0-unsplash.jpg',2,'A222223386','2020-10-05 00:00:00','新北市三重區龍濱路7巷1號','peejdyvlxx@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/930553563/Group 287.png/Group 286.png','2021-06-12 20:30:21',NULL,NULL),(10,2,'陳','美惠',930553563,'/Project_ForFun/Person/930553563/warren-wong-uuVguyksViA-unsplash.jpg',2,'A272995506','2019-06-01 00:00:00','台北市大安區敦化南路一段188巷17號','srwkfxesds@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/930553563/Group 287.png','2021-06-12 20:30:21',NULL,NULL),(11,2,'Lee','Jack',916366024,'/Project_ForFun/Person/930553563/bruce-mars-AndE50aaHn4-unsplash.jpg',1,'F197272310','2020-01-05 00:00:00','台北市北投區中山路71號  台北市北投區中山路71號 ','mvxcffbhty@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/916366024/Group 285.png','2021-06-12 20:30:21',NULL,NULL);
+INSERT INTO `member` VALUES (1,0,'admin','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2021-06-12 19:46:24',NULL,NULL),(2,1,'李','文賢',922877662,'/Project_ForFun/Person/922877662/ian-dooley-d1UPkiFd04A-unsplash.jpg',1,'A189271911','1987-03-20 00:00:00','台北市信義區基隆路一段245號','ngdqzmhndh@email.com',1,NULL,NULL,NULL,NULL,'2021-06-12 20:11:05',NULL,NULL),(3,2,'林','怡吟',921371162,'/Project_ForFun/Person/921371162/testphoto.jpg',2,'F205861001','1999-06-01 00:00:00','台北市內湖區康寧路三段202號','test1@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/921371162/goodpeople.png','2021-06-12 20:30:21',NULL,NULL),(4,2,'溫','俊宏',924545884,'/Project_ForFun/Person/924545884/ivana-cajina-_7LbC5J-jw4-unsplash.jpg',1,'F187277081','1992-09-05 00:00:00','新北市板橋區林園街129巷15號2樓','hoyaqojnnt@iubridge.com',1,'f-X_YK3tRr-EgU-LWxXL0f:APA91bEMHyhdG5hZGKviUwsVQUiJtw87z9-YF-Nle75fhr0I6MfpBOIWm_RjrT-_Cs0Vw3a_HICbhDFLs34L5wP9BEh_8L3iVMda243X3PP4F8IaBsP7WeMYXjd-iKwMCHpSKHi4xxXB','/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/924545884/Group 287.png','2021-06-12 20:30:21',NULL,NULL),(5,2,'林','玉玲',952894963,'/Project_ForFun/Person/952894963/rafaella-mendes-diniz-et_78QkMMQs-unsplash.jpg',2,'A256873907','1992-12-01 00:00:00','台北市萬華區和平西路三段177號','jsubwpjsju@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/952894963/Group 285.png','2021-06-12 20:30:21',NULL,NULL),(6,2,'錢','立奇',960917393,'/Project_ForFun/Person/960917393/bruce-mars-8YG31Xn4dSw-unsplash.jpg',1,'F197272310','1988-02-01 00:00:00','新北市永和區秀朗路一段36巷17號1樓','lbkodplfdq@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/960917393/Group 286.png','2021-06-12 20:30:21',NULL,NULL),(7,2,'陳','良',929458421,'/Project_ForFun/Person/929458421/lachlan-dempsey-6VPEOdpFNAs-unsplash.jpg',1,'A196363871','1991-11-11 00:00:00','新北市板橋區四維路84號','fqzsmsvcen@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/929458421/Group 288.png','2021-06-12 20:30:21',NULL,NULL),(8,1,'李','炳揚',921526256,'/Project_ForFun/Person/921526256/ayo-ogunseinde-sibVwORYqs0-unsplash.jpg',1,'A106831868','1992-09-20 00:00:00','台北市大安區和平東路二段83號','oaepshjtds@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(9,1,'陳','宛真',930362802,'/Project_ForFun/Person/930362802/karsten-winegeart-yPwpLYepiz0-unsplash.jpg',2,'A222223386','1980-10-05 00:00:00','新北市三重區龍濱路7巷1號','peejdyvlxx@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(10,1,'陳','美惠',930553563,'/Project_ForFun/Person/930553563/warren-wong-uuVguyksViA-unsplash.jpg',2,'A272995506','2002-06-01 00:00:00','台北市大安區敦化南路一段188巷17號','srwkfxesd@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(11,1,'蔡','宜名',916366024,'/Project_ForFun/Person/916366024/bruce-mars-AndE50aaHn4-unsplash.jpg',1,'F197272310','2000-01-05 00:00:00','台北市北投區中山路71號','mvxcffbhty@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -411,7 +411,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (1,3,NULL,NULL,1,NULL,0,'2021-06-27 18:17:29',NULL),(2,3,NULL,NULL,2,NULL,0,'2021-06-27 18:17:29',NULL),(3,3,NULL,NULL,5,NULL,0,'2021-06-27 18:17:29',NULL),(4,3,NULL,1,NULL,NULL,0,'2021-06-27 19:51:49',NULL);
+INSERT INTO `notification` VALUES (1,3,NULL,NULL,1,NULL,1,'2021-06-27 18:17:29','2021-07-03 19:54:36'),(2,3,NULL,NULL,2,NULL,1,'2021-06-27 18:17:29','2021-07-03 19:54:36'),(3,3,NULL,NULL,5,NULL,1,'2021-06-27 18:17:29','2021-07-03 19:54:36'),(4,3,NULL,1,NULL,NULL,1,'2021-06-27 19:51:49','2021-07-03 19:54:36');
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -490,16 +490,16 @@ DROP TABLE IF EXISTS `person_evaluation`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `person_evaluation` (
-  `PERSON＿EVALUATION_ID` int NOT NULL AUTO_INCREMENT,
+  `PERSON_EVALUATION_ID` int NOT NULL AUTO_INCREMENT,
   `ORDER_ID` int NOT NULL,
   `COMMENTED` int NOT NULL COMMENT '受評論者',
   `COMMENTED_BY` int NOT NULL COMMENT '評論者',
-  `PERSON＿STAR` int DEFAULT NULL,
+  `PERSON_STAR` int DEFAULT NULL,
   `PERSON_COMMENT` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci DEFAULT NULL COMMENT '留言',
   `CREATE_TIME` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
-  PRIMARY KEY (`PERSON＿EVALUATION_ID`),
+  PRIMARY KEY (`PERSON_EVALUATION_ID`),
   KEY `PERSON＿EVALUATION_ID_FK_ORDER_ID_idx` (`ORDER_ID`),
   KEY `COMMENTED_ID_idx` (`COMMENTED`),
   KEY `COMMENTED_BY_idx` (`COMMENTED_BY`),
@@ -537,7 +537,7 @@ CREATE TABLE `post` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`POST_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -546,7 +546,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'知識問答',0,'ddddd','Project_ForFun/Discussion_insert/1624696992874','ddddddddd','2021-06-26 16:43:15',NULL,NULL);
+INSERT INTO `post` VALUES (1,'知識問答',0,'ddddd','Project_ForFun/Discussion_insert/1624696992874','ddddddddd','2021-06-26 16:43:15',NULL,NULL),(3,'需求單',0,'ttt','Project_ForFun/Discussion_insert/1625383127581','ttttt','2021-07-04 15:18:53',NULL,NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -650,4 +650,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-07-03 15:12:03
+-- Dump completed on 2021-07-06 19:03:12

@@ -63,11 +63,11 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao {
 			List<PersonEvaluation> personEvaluations = new ArrayList<>();
 			while (rs.next()) {
 				PersonEvaluation personEvaluation = new PersonEvaluation();
-				personEvaluation.setPersonEvaluationId(rs.getInt("PERSON＿EVALUATION_ID"));
+				personEvaluation.setPersonEvaluationId(rs.getInt("PERSON_EVALUATION_ID"));
 				personEvaluation.setOrderId(rs.getInt("ORDER_ID"));
 				personEvaluation.setCommented(rs.getInt("COMMENTED"));
 				personEvaluation.setCommentedBy(rs.getInt("COMMENTED_BY"));
-				personEvaluation.setPersonStar(rs.getInt("PERSON＿STAR"));
+				personEvaluation.setPersonStar(rs.getInt("PERSON_STAR"));
 				personEvaluation.setPersonComment(rs.getString("PERSON_COMMENT"));
 				personEvaluation.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				personEvaluation.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
