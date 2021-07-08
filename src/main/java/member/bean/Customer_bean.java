@@ -2,20 +2,20 @@ package member.bean;
 
 import java.sql.Timestamp;
 
-public class Customer_Service {
+public class Customer_bean {
 
 	private Integer customerId;
 	private Integer type;
 	private Integer memberId;
 	private String nickName;
 	private String mail;
-	private Integer phone;
+	private String phone;
 	private String mag;
 	private Timestamp createTime;
 	private Timestamp deleteTime;
 
-	public Customer_Service(Integer customerId, Integer type, Integer memberId, String nickName, String mail,
-			Integer phone, String mag, Timestamp createTime, Timestamp deleteTime) {
+	public Customer_bean(Integer customerId, Integer type, Integer memberId, String nickName, String mail,
+			String phone, String mag, Timestamp createTime, Timestamp deleteTime) {
 		super();
 		this.customerId = customerId;
 		this.type = type;
@@ -28,7 +28,7 @@ public class Customer_Service {
 		this.deleteTime = deleteTime;
 	}
 
-	public Customer_Service() {
+	public Customer_bean() {
 
 	}
 
@@ -72,11 +72,11 @@ public class Customer_Service {
 		this.mail = mail;
 	}
 
-	public Integer getPhone() {
+	public String getPhone() {
 		return phone;
 	}
 
-	public void setPhone(Integer phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
