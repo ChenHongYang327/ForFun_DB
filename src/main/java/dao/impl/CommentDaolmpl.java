@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,7 @@ import member.bean.Post;
 
 public class CommentDaolmpl implements CommentDao {
 	DataSource dataSource;
+	private int insertId=-1;
 
 	public CommentDaolmpl() {
 		dataSource = ServiceLocator.getInstance().getDataSource();
@@ -27,13 +29,19 @@ public class CommentDaolmpl implements CommentDao {
 		int count = 0;
 		String sql = "INSERT INTO Comment (COMMENT_ID, MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME) VALUES(?, ?, ?, ?, ?);";
 		try (Connection connection = dataSource.getConnection();
-				PreparedStatement ps = connection.prepareStatement(sql);) {
+				PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);) {
 			ps.setInt(1, comment.getCommentId());
 			ps.setInt(2, comment.getMemberId());
 			ps.setInt(3, comment.getPostId());
 			ps.setString(4, comment.getCommentMsg());
 			ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
 			count = ps.executeUpdate();
+			 if (count  == 1) {
+					ResultSet rs = ps.getGeneratedKeys();
+					while (rs.next()) {
+						insertId = rs.getInt(1);
+					}
+				}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -120,6 +128,11 @@ public class CommentDaolmpl implements CommentDao {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int getInsertId() {
+		return insertId;
 	}
 
 }

@@ -3,7 +3,6 @@ package dao;
 import java.util.List;
 
 import member.bean.Favorite;
-import member.bean.Publish;
 
 
 public interface FavoriteDao {
