@@ -77,7 +77,7 @@ public class PostDaolmpl implements PostDao {
 
 	@Override
 	public Post selectById(int POST_ID) {
-		String sql = "SELECT BOARD_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  WHERE POST_ID = ?;";
+		String sql = "SELECT BOARD_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME FROM Post WHERE POST_ID = ?;";
 		Post post = null;
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
