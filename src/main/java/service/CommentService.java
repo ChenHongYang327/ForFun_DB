@@ -37,5 +37,10 @@ public int insert(Comment comment) {
 		
 		return commentDao.selectAllByPostId(postId);
 	}
+	
+	//取得insert的Id失敗會得到-1
+    public int getInsertId() {
+    	return commentDao.getInsertId();
+    }
 
 }

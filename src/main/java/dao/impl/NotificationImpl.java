@@ -77,7 +77,7 @@ public class NotificationImpl implements NotificationDao {
 	}
 
 	@Override
-	public int upadteComment(int notifiedId, int commentId) {
+	public int updateComment(int notifiedId, int commentId) {
 		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =? and COMMENT_ID=?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
@@ -90,9 +90,24 @@ public class NotificationImpl implements NotificationDao {
 
 		return -1;
 	}
-
+	
 	@Override
-	public int upadteAppointment(int notifiedId, int appointmenId) {
+	public int updateCommentByPost(int commentId) {
+		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE COMMENT_ID=?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(2, commentId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+	
+	
+	@Override
+	public int updateAppointment(int notifiedId, int appointmenId) {
 		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =? and APPOINTMENT_ID=?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
@@ -107,7 +122,7 @@ public class NotificationImpl implements NotificationDao {
 	}
 
 	@Override
-	public int upadteOreder(int notifiedId, int orederId) {
+	public int updateOreder(int notifiedId, int orederId) {
 		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =? and ORDER_ID=?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
@@ -122,7 +137,7 @@ public class NotificationImpl implements NotificationDao {
 	}
 
 	@Override
-	public int upadteMessage(int notifiedId, int messageId) {
+	public int updateMessage(int notifiedId, int messageId) {
 		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =? and MESSAGE_ID=?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
@@ -183,5 +198,6 @@ public class NotificationImpl implements NotificationDao {
 		}
 		return -1;
 	}
+
 
 }

@@ -17,7 +17,10 @@ import com.google.gson.JsonObject;
 
 import dao.PostDao;
 import dao.impl.PostDaolmpl;
+import member.bean.Comment;
 import member.bean.Post;
+import service.CommentService;
+import service.NotificationService;
 import service.PostService;
 
 @WebServlet("/DiscussionBoardController")
@@ -77,6 +80,13 @@ public class DiscussionBoardController extends HttpServlet {
 			int postId = jsonObject.get("postId").getAsShort();
 			int count = postService.deleteById(postId);
 			writeText(response, String.valueOf(count));
+			//刪除文章更新留言通知的狀態
+			List<Comment> comments=new CommentService().selectAllByPostId(postId);
+			for(Comment comment:comments) {
+				new NotificationService().updateCommentByPost(comment.getCommentId());
+			}
+			//----------------------
+		
 		} else if (action.equals("getImagePath")) {
 			int postId = jsonObject.get("postId").getAsShort();
 			String postImagePath = postService.getImagePath(postId);

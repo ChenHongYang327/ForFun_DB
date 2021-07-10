@@ -13,13 +13,15 @@ public interface NotificationDao {
 	
 	int insertMessage(int notifiedId, int messageId);
 	
-	int upadteComment(int notifiedId, int commentId);
+	int updateComment(int notifiedId, int commentId);
 	
-	int upadteAppointment(int notifiedId,int appointmenId);
+	int updateCommentByPost(int commentId);
+		
+	int updateAppointment(int notifiedId,int appointmenId);
 	
-	int upadteOreder(int notifiedId, int orederId);
+	int updateOreder(int notifiedId, int orederId);
 	
-	int upadteMessage(int notifiedId, int messageId);
+	int updateMessage(int notifiedId, int messageId);
 	
 	List<Notification> selectByMemberID(int notifiedId);
 	

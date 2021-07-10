@@ -29,20 +29,24 @@ public class NotificationService {
 		return notificationDao.insertMessage(notifiedId, messageId);
 	}
 	//已讀刊登單留言
-	public int upadteComment(int notifiedId, int commentId) {
-		return notificationDao.upadteComment(notifiedId, commentId);
+	public int updateComment(int notifiedId, int commentId) {
+		return notificationDao.updateComment(notifiedId, commentId);
+	}
+	//文章被刪除已讀刊登單留言
+	public int updateCommentByPost(int commentId) {
+		return notificationDao.updateCommentByPost(commentId);
 	}
 	//已讀預約單
-	public int upadteAppointment(int notifiedId,int appointmenId) {
-		return notificationDao.upadteAppointment(notifiedId, appointmenId);
+	public int updateAppointment(int notifiedId,int appointmenId) {
+		return notificationDao.updateAppointment(notifiedId, appointmenId);
 	}
 	//已讀訂單
-	public int upadteOreder(int notifiedId, int orederId) {
-		return notificationDao.upadteOreder(notifiedId, orederId);
+	public int updateOreder(int notifiedId, int orederId) {
+		return notificationDao.updateOreder(notifiedId, orederId);
 	}
 	//已讀私訊
-	public int upadteMessage(int notifiedId, int messageId) {
-		return notificationDao.upadteMessage(notifiedId, messageId);
+	public int updateMessage(int notifiedId, int messageId) {
+		return notificationDao.updateMessage(notifiedId, messageId);
 	}
 	//查找還未讀的通知
 	public List<Notification> selectByMemberID(int notifiedId){
