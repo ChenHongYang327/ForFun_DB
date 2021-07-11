@@ -16,6 +16,8 @@ import com.google.gson.JsonObject;
 
 import member.bean.Comment;
 import service.CommentService;
+import service.NotificationService;
+import service.PostService;
 
 @WebServlet("/CommentController")
 public class CommentController extends HttpServlet {
@@ -54,6 +56,13 @@ public class CommentController extends HttpServlet {
 			int count = 0;
 			if (action.equals("commentInsert")) {
 				count = commentService.insert(comment);
+				//新增通知功能-------
+				int insertId=commentService.getInsertId();
+				int notified=new PostService().selectById(comment.getPostId()).getPosterId();				
+				if(count>0) {
+				new NotificationService().insertComment(notified, insertId);		
+				}
+				//-----------------
 				
 			} else if (action.equals("commentUpdate")) {
 				count = commentService.update(comment);
