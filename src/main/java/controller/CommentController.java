@@ -43,7 +43,7 @@ public class CommentController extends HttpServlet {
 		}
 		String action = jsonObject.get("action").getAsString();
 		if (action.equals("getAll")) {
-			int postId = jsonObject.get("postId").getAsShort();
+			int postId = jsonObject.get("postId").getAsInt();
 			System.out.println("input: " + jsonIn);
 			List<Comment> commentList = commentService.selectAllByPostId(postId);
 			writeText(response, gson.toJson(commentList));

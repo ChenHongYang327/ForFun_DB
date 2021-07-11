@@ -81,7 +81,7 @@ public class CommentDaolmpl implements CommentDao {
 
 	@Override
 	public Comment selectById(int COMMENT_ID) {
-		String sql = "SELECT MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME  WHERE COMMENT_ID = ?;";
+		String sql = "SELECT MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME FROM Comment WHERE COMMENT_ID = ?;";
 
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
