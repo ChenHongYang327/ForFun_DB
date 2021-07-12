@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
+import service.OrderService;
 import service.PublishService;
 
 @WebServlet("/getPublishData")
@@ -59,6 +60,15 @@ public class PublishController extends HttpServlet {
                 
                 JsonObject result = new JsonObject();
                 result.addProperty("publish", gson.toJson(publishService.selectById(publishId)));
+                writer.write(gson.toJson(result));
+            } else if ("getOrderList".equals(action)) {
+                // 取得刊登單評價
+                int publishId = object.get("publishId").getAsInt();
+                
+                OrderService orderService = new OrderService();
+                
+                JsonObject result = new JsonObject();
+                result.addProperty("orderList", gson.toJson(orderService.selectAllByPublishID(publishId)));
                 writer.write(gson.toJson(result));
             }
         } catch (Exception e) {
