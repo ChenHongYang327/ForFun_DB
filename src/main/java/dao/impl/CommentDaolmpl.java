@@ -51,10 +51,12 @@ public class CommentDaolmpl implements CommentDao {
 	@Override
 	public int deleteById(int COMMENT_ID) {
 		int count = 0;
-		String sql = "DELETE FROM Comment WHERE COMMENT_ID = ?;";
+//		String sql = "DELETE FROM Comment WHERE COMMENT_ID = ?;";
+		String sql = "UPDATE Comment SET DELETE_TIME = ? WHERE COMMENT_ID = ?;";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setInt(1, COMMENT_ID);
+			ps.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(2, COMMENT_ID);
 			count = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -105,7 +107,7 @@ public class CommentDaolmpl implements CommentDao {
 
 	@Override
 	public List<Comment> selectAllByPostId(int POST_ID) {
-		String sql = "SELECT MEMBER_ID, COMMENT_ID, COMMENT_MSG, CREATE_TIME FROM Comment WHERE POST_ID = ?;";
+		String sql = "SELECT MEMBER_ID, COMMENT_ID, COMMENT_MSG, CREATE_TIME FROM Comment WHERE POST_ID = ? AND DELETE_TIME IS NULL;";
 		List<Comment> commentList = new ArrayList<Comment>();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {

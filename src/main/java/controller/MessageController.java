@@ -22,21 +22,24 @@ public class MessageController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     MessageService messageService = null;   
 
+    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		
 		Gson gson = new Gson();
 		BufferedReader br = request.getReader();
-		StringBuilder jsoin = new StringBuilder();
+		StringBuilder jsonIn = new StringBuilder();
 		String line = null;
 		while ((line = br.readLine()) != null) {
-			jsoin.append(line);
+			jsonIn.append(line);
 		}
 		
-		JsonObject jsonObject = gson.fromJson(jsoin.toString(), JsonObject.class);
+		
+		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
 		if (messageService == null) {
 			messageService = new MessageService();
+			
 		}
 		String action = jsonObject.get("action").getAsString();
 		if (action.equals("getAll")) {
@@ -46,6 +49,7 @@ public class MessageController extends HttpServlet {
 			
 		} else if (action.equals("messageInsert")) {
 			String messageJson = jsonObject.get("chatRoomMessage").getAsString();
+			
 			System.out.println("messageJson = " + messageJson);
 			Message message = gson.fromJson(messageJson, Message.class);
 			
@@ -71,6 +75,25 @@ public class MessageController extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		Gson gson = new Gson();
+		BufferedReader br = request.getReader();
+		StringBuilder jsonIn = new StringBuilder();
+		String line = null;
+		while ((line = br.readLine()) != null) {
+			jsonIn.append(line);
+		}
+		
+		
+		JsonObject jsonObject = gson.fromJson(jsonIn.toString(), JsonObject.class);
+		int memberId = jsonObject.get("MEMBER_ID").getAsInt();
+		if (messageService == null) {
+			messageService = new MessageService();
+			
+		}
+		
+		List<Message> messageList = messageService.selectAll(memberId);
+		writeText(response, new Gson().toJson(messageList));
 	}
 	
 }

@@ -33,6 +33,7 @@ public class MessageDaolmpl implements MessageDao{
 			ps.setInt(3, message.getMemberId());
 			ps.setString(4, message.getMsgChat());
 			ps.setTimestamp(5, new Timestamp(System.currentTimeMillis()));
+			count = ps.executeUpdate();
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
