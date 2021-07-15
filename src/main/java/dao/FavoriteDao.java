@@ -16,4 +16,6 @@ public interface FavoriteDao {
 	Favorite selectById(int favoriteId);
 	
 	List<Favorite> selectByMemberId(int memberId);
+	
+	Favorite selectByMemberIdAndPublishId(int memberId, int publishId);
 }

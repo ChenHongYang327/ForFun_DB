@@ -23,8 +23,20 @@ public class FavoriteDaoImpl implements FavoriteDao{
 	
 	@Override
 	public int insert(Favorite favorite) {
-		// TODO Auto-generated method stub
-		return 0;
+	    final String sql = "INSERT INTO FORFUN.favorite (MEMBER_ID, PUBLISH_ID, CREATE_TIME) VALUES (?, ?, ?);";
+        try (
+            Connection connection = dataSource.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(sql);
+        ) {
+            pstmt.setInt(1, favorite.getMemberId());
+            pstmt.setInt(2, favorite.getPublishId());
+            pstmt.setTimestamp(3, favorite.getCreateTime());
+            
+            return pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        return -1;
 	}
 
 	@Override
@@ -78,8 +90,35 @@ public class FavoriteDaoImpl implements FavoriteDao{
 		}
 		return null;
 	}
-	
-	
 
-
+    @Override
+    public Favorite selectByMemberIdAndPublishId(int memberId, int publishId) {
+        final String sql = "SELECT * FROM FORFUN.favorite WHERE MEMBER_ID = ? and PUBLISH_ID = ?;";
+        
+        try (
+            Connection conn = dataSource.getConnection(); 
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) {
+            pstmt.setInt(1, memberId);
+            pstmt.setInt(2, publishId);
+            
+            try (
+                ResultSet rs = pstmt.executeQuery();
+            ) {
+                if(rs.next()) {
+                    Favorite favorite = new Favorite();
+                    favorite.setFavoriteId(rs.getInt("FAVORITE_ID"));
+                    favorite.setMemberId(rs.getInt("MEMBER_ID"));
+                    favorite.setPublishId(rs.getInt("PUBLISH_ID"));
+                    favorite.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+                    
+                    return favorite;
+                }
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

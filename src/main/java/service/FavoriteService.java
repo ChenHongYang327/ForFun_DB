@@ -19,4 +19,11 @@ public class FavoriteService {
 		return favoriteDao.deleteById(favoriteId);
 	}
 	
+	public int insert(Favorite favorite) {
+	    return favoriteDao.insert(favorite);
+	}
+	
+	public Favorite selectByMemberIdAndPublishId(int memberId, int publishId) {
+	    return favoriteDao.selectByMemberIdAndPublishId(memberId, publishId);
+	}
 }

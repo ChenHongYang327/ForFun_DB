@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,7 +67,41 @@ public class FavoriteController extends HttpServlet {
 				}
 				writer.print(resp.toString());
 			}
-		}
+		} else if (clientreq.get("action").getAsString().equals("addMyFavorite")) {
+            int memberId = clientreq.get("userId").getAsInt();
+            int publishId = clientreq.get("publishId").getAsInt();
+            
+            Favorite favorite = new Favorite();
+            favorite.setMemberId(memberId);
+            favorite.setPublishId(publishId);
+            favorite.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            
+            JsonObject resp = new JsonObject();
+            try (PrintWriter writer = response.getWriter()) {
+                if (favoriteService.insert(favorite) > 0) {
+                    // 為了取得包含favoriteId的物件
+                    Favorite respFavorite = favoriteService.selectByMemberIdAndPublishId(memberId, publishId);
+                    resp.addProperty("favorite", new Gson().toJson(respFavorite));
+                } else {
+                    resp.addProperty("favorite", new Gson().toJson(null));
+                }
+                writer.print(resp.toString());
+            }
+        } else if (clientreq.get("action").getAsString().equals("getMyFavoriteByPublishId")) {
+            int memberId = clientreq.get("userId").getAsInt();
+            int publishId = clientreq.get("publishId").getAsInt();
+            
+            Favorite favorite = new Favorite();
+            favorite.setMemberId(memberId);
+            favorite.setPublishId(publishId);
+            favorite.setCreateTime(new Timestamp(System.currentTimeMillis()));
+            
+            try (PrintWriter writer = response.getWriter()) {
+                JsonObject resp = new JsonObject();
+                resp.addProperty("favorite", new Gson().toJson(favoriteService.selectByMemberIdAndPublishId(memberId, publishId)));
+                writer.print(resp.toString());
+            }
+        }
 
 	}
 
