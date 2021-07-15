@@ -38,7 +38,7 @@ public class MemberRegister extends HttpServlet {
 			if(member.getCitizen()==null) {
 				System.out.println("申請房客");
 				member.setRole(1);//房客
-				member.setType(1);//帳號權限
+				member.setType(1);//帳號狀態權限
 				if(memberService.insert(member)==1) {
 					respJson.addProperty("status", true);
 				}
@@ -48,8 +48,9 @@ public class MemberRegister extends HttpServlet {
 			}
 			else {
 				System.out.println("申請房東");
-				member.setRole(2);
-				member.setType(1);
+//				member.setRole(2);//房東權限
+				member.setRole(1);//房客權限
+				member.setType(1);//帳號狀態權限
 				if(memberService.insert(member)==1) {
 					respJson.addProperty("status", true);
 				}

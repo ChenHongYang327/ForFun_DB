@@ -21,8 +21,8 @@ import service.PublishService;
 /**
  * Servlet implementation class PublishManage
  */
-@WebServlet("/publishManage")
-public class PublishManage extends HttpServlet {
+@WebServlet("/publishListController")
+public class PublishListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -46,17 +46,33 @@ public class PublishManage extends HttpServlet {
 				pw.print(resp.toString());
 //				System.out.println(resp.toString());
 
-			}
-			else if(clientReq.get("action").getAsString().equals("pubishDelete")) {
-				int publishId=clientReq.get("publishId").getAsInt();
+			} else if (clientReq.get("action").getAsString().equals("pubishDelete")) {
+				int publishId = clientReq.get("publishId").getAsInt();
 				JsonObject resp = new JsonObject();
-				if(publishService.deleteById(publishId)==1) {
+				if (publishService.deleteById(publishId) == 1) {
 					resp.addProperty("result", true);
-				}
-				else {
+				} else {
 					resp.addProperty("result", false);
 				}
 				pw.print(resp.toString());
+			} else if (clientReq.get("action").getAsString().equals("updateStatus")) {
+				int publishId = clientReq.get("publishId").getAsInt();
+				int status = -1;
+				if (clientReq.get("status").getAsString().equals("close")) {
+					status = 2;
+				} 
+				else if (clientReq.get("status").getAsString().equals("open")) {
+					status = 3;
+				}
+				if (status != -1) {
+					JsonObject resp = new JsonObject();
+					if (publishService.updateStatus(status, publishId) == 1) {
+						resp.addProperty("result", true);
+					} else {
+						resp.addProperty("result", false);
+					}
+					pw.print(resp.toString());
+				}
 			}
 		}
 	}

@@ -11,6 +11,8 @@ public interface PublishDao {
 	int deleteById(int publishId);
 
 	int update(Publish publish);
+	
+	int updateStatus(int status,int publishId);
 
 	Publish selectById(int publishId);
 

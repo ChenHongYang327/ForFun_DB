@@ -46,10 +46,11 @@ public class PostDaolmpl implements PostDao {
 	@Override
 	public int deleteById(int POST_ID) {
 		int count = 0;
-		String sql = "DELETE FROM Post WHERE POST_ID = ?;";
+		String sql = "UPDATE Post SET DELETE_TIME = ? WHERE POST_ID = ?;";
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setInt(1, POST_ID);
+			ps.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(2, POST_ID);
 			count = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -102,7 +103,7 @@ public class PostDaolmpl implements PostDao {
 
 	@Override
 	public List<Post> selectAll(String BOARD_ID) {
-		String sql = "SELECT POST_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  FROM Post WHERE BOARD_ID = ?;";
+		String sql = "SELECT POST_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  FROM Post WHERE BOARD_ID = ? AND DELETE_TIME IS NULL;";
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {

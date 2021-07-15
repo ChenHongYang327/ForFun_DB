@@ -111,6 +111,23 @@ public class PublishDaoImpl implements PublishDao {
         
         return 0;
     }
+    
+    @Override
+	public int updateStatus(int status,int publishId) {
+    	 final String sql = "UPDATE publish SET STATUS = ? WHERE PUBLISH_ID = ?;";
+         try (
+             Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+         ) {
+        	 stmt.setInt(1, status);
+        	 stmt.setInt(2,	publishId);
+        	 return stmt.executeUpdate();
+         }
+         catch (Exception e) {
+        	 e.printStackTrace();
+         }
+		return -1;
+	}
 
     @Override
     public Publish selectById(int publishId) {
@@ -146,6 +163,7 @@ public class PublishDaoImpl implements PublishDao {
                     publish.setGender(rs.getInt("GENDER"));
                     publish.setType(rs.getInt("TYPE"));
                     publish.setFurnished(rs.getString("FURNISHED"));
+                    publish.setStatus(rs.getInt("STATUS"));
                     publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
                     publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
                     publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
@@ -192,6 +210,7 @@ public class PublishDaoImpl implements PublishDao {
                 publish.setGender(rs.getInt("GENDER"));
                 publish.setType(rs.getInt("TYPE"));
                 publish.setFurnished(rs.getString("FURNISHED"));
+                publish.setStatus(rs.getInt("STATUS"));
                 publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
                 publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
                 publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
@@ -235,8 +254,8 @@ public class PublishDaoImpl implements PublishDao {
 
 	@Override
 	public List<Publish> selectByOwnerId(int OWNER_ID) {
-		final String sql = "select * from FORFUN.publish where OWNER_ID=? order by DELETE_TIME ASC";
-		List<Publish> publishs = new ArrayList<>();
+		final String sql = "select * from FORFUN.publish where OWNER_ID=? and DELETE_TIME is null order by STATUS desc";
+		List<Publish> publishes = new ArrayList<>();
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
 				) {
@@ -263,16 +282,17 @@ public class PublishDaoImpl implements PublishDao {
 				publish.setGender(rs.getInt("GENDER"));
 				publish.setType(rs.getInt("TYPE"));
 				publish.setFurnished(rs.getString("FURNISHED"));
+				publish.setStatus(rs.getInt("STATUS"));
 				publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
 				publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
-				publishs.add(publish);
+				publishes.add(publish);
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return publishs;
+		return publishes;
 	}
 
 	@Override
@@ -349,4 +369,5 @@ public class PublishDaoImpl implements PublishDao {
         
         return null;
     }
+
 }

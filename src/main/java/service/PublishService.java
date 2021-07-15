@@ -26,6 +26,10 @@ public class PublishService {
 	public int update(Publish publish) {
 		return dao.update(publish);
 	}
+	//更新刊登單的狀態
+	public int updateStatus(int status,int publishId) {
+		return dao.updateStatus(status, publishId);
+	}
 
 	public Publish selectById(int publishId) {
 		return dao.selectById(publishId);

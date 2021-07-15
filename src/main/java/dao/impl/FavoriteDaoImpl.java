@@ -14,13 +14,13 @@ import dao.FavoriteDao;
 import member.bean.Favorite;
 import service.PublishService;
 
-public class FavoriteDaoImpl implements FavoriteDao{
+public class FavoriteDaoImpl implements FavoriteDao {
 	DataSource dataSource;
 
 	public FavoriteDaoImpl() {
 		dataSource = ServiceLocator.getInstance().getDataSource();
 	}
-	
+
 	@Override
 	public int insert(Favorite favorite) {
 	    final String sql = "INSERT INTO FORFUN.favorite (MEMBER_ID, PUBLISH_ID, CREATE_TIME) VALUES (?, ?, ?);";
@@ -48,7 +48,7 @@ public class FavoriteDaoImpl implements FavoriteDao{
 			return pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} 
+		}
 		return -1;
 	}
 
@@ -64,28 +64,28 @@ public class FavoriteDaoImpl implements FavoriteDao{
 		return null;
 	}
 
-
 	@Override
 	public List<Favorite> selectByMemberId(int memberId) {
-		final String sql="SELECT * FROM FORFUN.favorite WHERE MEMBER_ID = ? order by CREATE_TIME DESC";
+		final String sql = "SELECT * FROM FORFUN.favorite WHERE MEMBER_ID = ? order by CREATE_TIME DESC";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, memberId);
 			ResultSet rs = pstmt.executeQuery();
-			List<Favorite>favorites=new ArrayList<>();
-			while(rs.next()) {
-				Favorite favorite=new Favorite();
+			List<Favorite> favorites = new ArrayList<>();
+			while (rs.next()) {
+				Favorite favorite = new Favorite();
 				favorite.setFavoriteId(rs.getInt("FAVORITE_ID"));
 				favorite.setMemberId(rs.getInt("MEMBER_ID"));
 				favorite.setPublishId(rs.getInt("PUBLISH_ID"));
 				favorite.setCreateTime(rs.getTimestamp("CREATE_TIME"));
-				if(new PublishService().selectById(favorite.getPublishId())!=null) {
-				favorites.add(favorite);
+				if (new PublishService().selectById(favorite.getPublishId()) != null) {
+					if (new PublishService().selectById(favorite.getPublishId()).getStatus() == 3) {
+						favorites.add(favorite);
+					}
 				}
 			}
 			return favorites;
-		
-		}
-		catch (Exception e) {
+
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
