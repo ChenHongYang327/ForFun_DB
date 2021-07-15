@@ -163,6 +163,7 @@ public class PublishDaoImpl implements PublishDao {
                     publish.setGender(rs.getInt("GENDER"));
                     publish.setType(rs.getInt("TYPE"));
                     publish.setFurnished(rs.getString("FURNISHED"));
+                    publish.setStatus(rs.getInt("STATUS"));
                     publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
                     publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
                     publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
@@ -209,6 +210,7 @@ public class PublishDaoImpl implements PublishDao {
                 publish.setGender(rs.getInt("GENDER"));
                 publish.setType(rs.getInt("TYPE"));
                 publish.setFurnished(rs.getString("FURNISHED"));
+                publish.setStatus(rs.getInt("STATUS"));
                 publish.setCreateTime(rs.getTimestamp("CREATE_TIME"));
                 publish.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
                 publish.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
