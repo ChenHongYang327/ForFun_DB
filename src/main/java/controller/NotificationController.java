@@ -16,11 +16,13 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import member.bean.Notification;
+import member.bean.Post;
 import service.AppointmentService;
 import service.CommentService;
 import service.MemberService;
 import service.NotificationService;
 import service.OrderService;
+import service.PostService;
 import service.PublishService;
 
 @WebServlet("/NotificationController")
@@ -35,6 +37,7 @@ public class NotificationController extends HttpServlet {
 		PublishService publishService = new PublishService();
 		AppointmentService appointmentService = new AppointmentService();
 		CommentService commentService = new CommentService();
+		PostService postService=new PostService();
 		OrderService orderService = new OrderService();
 		MemberService memberService = new MemberService();
 		try (BufferedReader reader = request.getReader(); PrintWriter writer = response.getWriter()) {
@@ -105,6 +108,13 @@ public class NotificationController extends HttpServlet {
 					resp.addProperty("result", false);
 				}
 				writer.print(resp.toString());
+			}
+			else if (req.get("action").getAsString().equals("getPostId")) {
+				int commentId=req.get("commentId").getAsInt();
+				int postId=commentService.selectById(commentId).getPostId();
+				Post post=postService.selectById(postId);
+				String resp=new Gson().toJson(post);
+				writer.print(resp);
 			}
 		}
 	}
