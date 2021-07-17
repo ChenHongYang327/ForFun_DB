@@ -9,5 +9,7 @@ public interface AgreementDao {
 	int insertHouseOwner(Agreement agreement);
 	
 	int updateTenant (String tenantSignPath, int agreementId);
+	
+	int selectAgmtidByOrderid(int orderId) ;
 
 }

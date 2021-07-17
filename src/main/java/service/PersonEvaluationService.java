@@ -37,4 +37,8 @@ public class PersonEvaluationService {
 		return pEvaluationDao.selectAll();
 	}
 	
+	public boolean isEvaluationExist(int signinId) {
+		return pEvaluationDao.isEvaluationExist(signinId);
+	}
+	
 }

@@ -22,5 +22,9 @@ public class AgreementService {
 	public int updateTenant (String tenantSignPath, int agreementId) {
 		return dao.updateTenant(tenantSignPath, agreementId);
 	}
+	
+	public int selectAgmtidByOrderid(int orderId) {
+		return dao.selectAgmtidByOrderid(orderId);
+	}
 
 }

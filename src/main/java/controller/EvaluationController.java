@@ -58,7 +58,8 @@ public class EvaluationController extends HttpServlet {
 			typecode = -1;
 		}
 
-		if (typecode == 0) {
+		switch (typecode) {
+		case 0:
 			// Tenant Event
 			int strars_P = jsonObj.get("STARS_P").getAsInt();
 			String msg_P = jsonObj.get("MSG_P").getAsString();
@@ -92,33 +93,49 @@ public class EvaluationController extends HttpServlet {
 			} else {
 				jsonWri.addProperty("RESULT", 200);
 			}
-
-		} else if (typecode == 1) {
+			break;
+		case 1:
 			// HouseOwner Event
-			int strars_P = jsonObj.get("STARS_P").getAsInt();
-			String msg_P = jsonObj.get("MSG_P").getAsString();
-			int orderid = jsonObj.get("ORDERID").getAsInt();
-			int signInId = jsonObj.get("SIGNINID").getAsInt(); // 房東ID
-			int tenantId = orderService.selectTenantByID(orderid); // 房客ID
+			int strars_P_ = jsonObj.get("STARS_P").getAsInt();
+			String msg_P_ = jsonObj.get("MSG_P").getAsString();
+			int orderid_ = jsonObj.get("ORDERID").getAsInt();
+			int signInId_ = jsonObj.get("SIGNINID").getAsInt(); // 房東ID
+			int tenantId_ = orderService.selectTenantByID(orderid_); // 房客ID
 
 			// save to PERSON_EVALUATION table
-			PersonEvaluation personEvaluation = new PersonEvaluation();
-			personEvaluation.setOrderId(orderid);
-			personEvaluation.setCommented(tenantId);
-			personEvaluation.setCommentedBy(signInId);
-			personEvaluation.setPersonStar(strars_P);
-			personEvaluation.setPersonComment(msg_P);
+			PersonEvaluation personEvaluation_ = new PersonEvaluation();
+			personEvaluation_.setOrderId(orderid_);
+			personEvaluation_.setCommented(tenantId_);
+			personEvaluation_.setCommentedBy(signInId_);
+			personEvaluation_.setPersonStar(strars_P_);
+			personEvaluation_.setPersonComment(msg_P_);
 
-			int sqlResult = personEvaluationService.insert(personEvaluation);
+			int sqlResult = personEvaluationService.insert(personEvaluation_);
 
 			if (sqlResult <= 0) {
 				jsonWri.addProperty("RESULT", -1);
 			} else {
 				jsonWri.addProperty("RESULT", 200);
 			}
+			break;
+		case 2:
+			int signinId_2 = jsonObj.get("SIGNINID").getAsInt();
 
-		} else {
+			// 用評價人來判斷是否有評價過!但有個BUG 房客如果只評價房子的話，會無限新增！
+			// TODO:
+			boolean isExist = personEvaluationService.isEvaluationExist(signinId_2);
+			if (isExist == true) {
+				jsonWri.addProperty("EXIST", true);
+			} else {
+				jsonWri.addProperty("EXIST", false);
+			}
+			jsonWri.addProperty("RESULT", 200);
+
+			break;
+
+		default:
 			jsonWri.addProperty("RESULT", -1);
+			break;
 		}
 
 		// 回傳前端

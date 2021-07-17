@@ -24,15 +24,14 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao {
 	public int insert(PersonEvaluation personEvaluation) {
 		final String sql = "insert into FORFUN.person_evaluation(ORDER_ID, COMMENTED, COMMENTED_BY, PERSON_STAR, PERSON_COMMENT) values(?, ?, ?, ?, ?); ";
 
-		try (Connection conn = dataSource.getConnection(); 
-			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
 			pstmt.setInt(1, personEvaluation.getOrderId());
 			pstmt.setInt(2, personEvaluation.getCommented());
 			pstmt.setInt(3, personEvaluation.getCommentedBy());
 			pstmt.setInt(4, personEvaluation.getPersonStar());
 			pstmt.setString(5, personEvaluation.getPersonComment());
-			
+
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,6 +123,23 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao {
 	public List<PersonEvaluation> selectAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public boolean isEvaluationExist(int signinId) {
+		final String sql = "select CREATE_TIME from FORFUN.person_evaluation where COMMENTED_BY = ?";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, signinId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				return true;
+			}
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 
 }

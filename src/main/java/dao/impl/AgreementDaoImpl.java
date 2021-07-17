@@ -79,4 +79,22 @@ public class AgreementDaoImpl implements AgreementDao {
 		return -1;
 	}
 
+	@Override
+	public int selectAgmtidByOrderid(int orderId) {
+		final String sql = "select AGREEMENT_ID from FORFUN.agreement where ORDER_ID = ?";
+		
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, orderId);
+			ResultSet rs = pstmt.executeQuery();
+			int agmtID = -1;
+			while (rs.next()) {
+				agmtID = rs.getInt("AGREEMENT_ID");
+			}
+			return agmtID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
 }

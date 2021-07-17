@@ -113,12 +113,12 @@ public class AgreementController extends HttpServlet {
 		case 3: // 房東新增 & 改狀態 3
 
 			String tmpAgmt = jsonObj.get("AGREEMENT").getAsString();
-			System.out.println(tmpAgmt);
+			//System.out.println(tmpAgmt);
 			Agreement agmtH = gson.fromJson(tmpAgmt, Agreement.class);
 			// 新增
 			agreementService.insertHouseOwner(agmtH);
 			// 改狀態 -> 3
-			// orderService.changeOrderStatus(agmtH.getOrderId(), 3);
+			orderService.changeOrderStatus(agmtH.getOrderId(), 3);
 
 			JsonObject jsonWri3 = new JsonObject();
 			jsonWri3.addProperty("RESULT", 200);

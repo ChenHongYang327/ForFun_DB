@@ -19,8 +19,8 @@ public class OrderService {
 	
 	// 透過 訂單ID 查詢 房客ID
 	// 假資料待改
-	public int selectTenantByID(int OrderId) {
-		return orderDao.selectTenantByID(OrderId);
+	public int selectTenantByID(int orderId) {
+		return orderDao.selectTenantByID(orderId);
 	}
 
 	// 透過 訂單ID 查詢 刊登單ID
@@ -28,7 +28,7 @@ public class OrderService {
 		return orderDao.selectPublishByID(orderId);
 	}
 
-	// 修改狀態
+	// 修改 訂單狀態
 	public boolean changeOrderStatus(int orderID, int status) {
 		return orderDao.changeOrderStatus(orderID, status);
 	}
@@ -54,4 +54,5 @@ public class OrderService {
 	public List<Order> selectAllByPublishID(int publishId) {
 	    return orderDao.selectAllByPublishID(publishId);
 	}
+
 }

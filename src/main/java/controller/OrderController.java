@@ -52,9 +52,11 @@ public class OrderController extends HttpServlet {
 
 		JsonObject jsonWri = new JsonObject();
 
-		// resultcode 0-> 要拿值。
-		// resultcode != 0 -> 要更改的”訂單狀態“碼
-		if (resultcode == 0) {
+		// resultcode 0 -> 要拿值。
+		// resultcode 1 -> 要更改的”訂單狀態“碼
+
+		switch (resultcode) {
+		case 0:
 			// find publish id
 			int publishId = orderService.selectPublishByID(orderID);
 			// take Publish publish
@@ -63,11 +65,18 @@ public class OrderController extends HttpServlet {
 			jsonWri.addProperty("MONEY", publish.getRent());
 			jsonWri.addProperty("NOTEINFO", publish.getPublishInfo());
 			jsonWri.addProperty("IMGPATH", publish.getTitleImg());
-
-		} else {
+			break;
+		case 1:
 			// 回應碼成功 改 訂單狀態
-			orderService.changeOrderStatus(orderID, resultcode);
+			orderService.changeOrderStatus(orderID, 5);
 			jsonWri.addProperty("RESULT", 200);
+			break;
+		case 2:
+
+			break;
+
+		default:
+			break;
 		}
 
 		// 回傳前端

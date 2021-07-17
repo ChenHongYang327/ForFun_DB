@@ -87,11 +87,16 @@ public class OtherPayController extends HttpServlet {
 			}
 			break;
 
-		default: // TapPay fragment use
+		case 2: // TapPay fragment use
 			otherpayID = jsonObject.get("OTHERPAYID").getAsInt();
-			// 如果前端新增成功，狀態碼要改成已付款
-			otherPayService.changeOtherpayStatus(otherpayID, resultcode);
+			// 如果前端新增成功，狀態碼要改成已付款->1
+			otherPayService.changeOtherpayStatus(otherpayID, 1);
+
 			jsonWri.addProperty("RESULT", 200);
+			break;
+
+		default:
+			jsonWri.addProperty("RESULT", -1);
 			break;
 		}
 
