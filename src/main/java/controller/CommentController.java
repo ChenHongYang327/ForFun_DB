@@ -89,8 +89,8 @@ public class CommentController extends HttpServlet {
 						String memberToken = new MemberService().selectById(notified).getToken();
 						if (memberToken != null) {
 							JsonObject notificaitonFCM = new JsonObject();
-							notificaitonFCM.addProperty("title", "一則新留言");
-							notificaitonFCM.addProperty("body", 1);
+							notificaitonFCM.addProperty("title", "新通知");
+							notificaitonFCM.addProperty("body", "您的文章有一則新留言");
 							sendSingleFcm(notificaitonFCM, memberToken);
 						}
 					}
@@ -116,8 +116,8 @@ public class CommentController extends HttpServlet {
 					String memberToken = new MemberService().selectById(notified).getToken();
 					if (memberToken != null) {
 						JsonObject notificaitonFCM = new JsonObject();
-						notificaitonFCM.addProperty("title", "刪除留言");
-						notificaitonFCM.addProperty("body", -1);
+						notificaitonFCM.addProperty("title", "新通知");
+						notificaitonFCM.addProperty("body", "留言已被刪除");
 						sendSingleFcm(notificaitonFCM, memberToken);
 					}
 				}
@@ -161,18 +161,22 @@ public class CommentController extends HttpServlet {
 		String title = jsonObject.get("title").getAsString();
 		String body = jsonObject.get("body").getAsString();
 		String data = jsonObject.get("data") == null ? "no data" : jsonObject.get("data").getAsString();
-
 		// 主要設定訊息標題與內容，client app一定要在背景時才會自動顯示
-		Notification notification = Notification.builder().setTitle(title) // 設定標題
+		Notification notification = Notification.builder()
+				.setTitle(title) // 設定標題
 				.setBody(body) // 設定內容
 				.build();
 		// 發送notification message
-		Message message = Message.builder().setNotification(notification) // 設定client app在背景時會自動顯示訊息
-				.putData("data", data) // 設定自訂資料，user點擊訊息時方可取值
-				.setToken(registrationToken) // 送訊息給指定token的裝置
-				.build();
+		Message.Builder message = Message.builder();
+		if(!body.equals("留言已被刪除")) {
+			 message
+			 	.setNotification(notification) // 設定client app在背景時會自動顯示訊息
+			 	.putData("data", data); // 設定自訂資料，user點擊訊息時方可取值
+		}
+			message	
+		 		.setToken(registrationToken); // 送訊息給指定token的裝置
 		try {
-			FirebaseMessaging.getInstance().send(message);
+			FirebaseMessaging.getInstance().send(message.build());
 //					String messageId = FirebaseMessaging.getInstance().send(message);
 //					System.out.println(registrationToken);
 //					System.out.println("messageId: " + messageId);
