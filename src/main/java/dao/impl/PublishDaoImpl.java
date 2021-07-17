@@ -180,7 +180,7 @@ public class PublishDaoImpl implements PublishDao {
 
     @Override
     public List<Publish> selectAll() {
-        final String sql = "SELECT * FROM publish WHERE DELETE_TIME IS NULL;";
+        final String sql = "SELECT * FROM publish WHERE DELETE_TIME IS NULL AND STATUS = 3;";
 
         try (
             Connection conn = dataSource.getConnection();
@@ -315,7 +315,7 @@ public class PublishDaoImpl implements PublishDao {
 
     @Override
     public List<Publish> selectAllByParam(Map<String, String> paramMap) {
-        final StringBuilder sql = new StringBuilder("SELECT * FROM publish WHERE DELETE_TIME IS NULL");
+        final StringBuilder sql = new StringBuilder("SELECT * FROM publish WHERE DELETE_TIME IS NULL AND STATUS = 3");
         sql.append(" AND CITY_ID = " + paramMap.get("cityId"));
         sql.append(" AND AREA_ID = " + paramMap.get("areaId"));
         sql.append(" AND RENT >= " + paramMap.get("rentLower"));
