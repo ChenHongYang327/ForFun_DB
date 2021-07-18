@@ -10,7 +10,6 @@ import javax.sql.DataSource;
 
 import commend.ServiceLocator;
 import dao.OrderDao;
-import member.bean.Appointment;
 import member.bean.Order;
 
 public class OrderDaoImpl implements OrderDao {
@@ -198,7 +197,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
     public List<Order> selectAllByPublishID(int publishId) {
-        final String sql = "select * from FORFUN.order where PUBLISH_ID = ?";
+        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? AND PUBLISH_STAR is not null";
         
         List<Order> orderList = new ArrayList<Order>();
         
