@@ -166,4 +166,45 @@ public class AppointmentDaoImpl implements AppointmentDao {
 	public int getInsertId() {
 		return insertId;
 	}
+
+
+	@Override
+	public int selectAppointmentIdByTenantID(int publishId, int tenantId) {
+	final String sql = "select APPOINTMENT_ID from FORFUN.appointment where PUBLISH_ID = ? AND TENANT_ID = ?";
+		
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, publishId);
+			pstmt.setInt(2, tenantId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			int apmtID = -1;
+			while (rs.next()) {
+				apmtID = rs.getInt("AGREEMENT_ID");
+			}
+			return apmtID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	@Override
+	public int selectAppointmentIdByOwnerID(int publishId, int ownerId) {
+	final String sql = "select APPOINTMENT_ID from FORFUN.appointment where PUBLISH_ID = ? AND OWNER_ID = ?";
+		
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, publishId);
+			pstmt.setInt(2, ownerId);
+			
+			ResultSet rs = pstmt.executeQuery();
+			int apmtID = -1;
+			while (rs.next()) {
+				apmtID = rs.getInt("AGREEMENT_ID");
+			}
+			return apmtID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

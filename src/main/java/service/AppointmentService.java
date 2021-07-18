@@ -36,4 +36,12 @@ public class AppointmentService {
     public int getInsertId() {
     	return dao.getInsertId();
     }
+    
+    public int selectAppointmentIdByTenantID(int publishId,int tenantId) {
+    	return dao.selectAppointmentIdByTenantID(publishId, tenantId);
+    }
+    
+    public int selectAppointmentIdByOwnerID(int publishId,int ownerId) {
+    	return dao.selectAppointmentIdByOwnerID(publishId, ownerId);
+    }
 }
