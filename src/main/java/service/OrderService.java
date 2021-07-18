@@ -54,5 +54,9 @@ public class OrderService {
 	public List<Order> selectAllByPublishID(int publishId) {
 	    return orderDao.selectAllByPublishID(publishId);
 	}
+	
+	public List<Order> selectAllByOwnerandSatus (int orderStatus, int ownerId){
+		return orderDao.selectAllByOwnerandSatus(orderStatus, ownerId);
+	}
 
 }

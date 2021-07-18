@@ -231,4 +231,38 @@ public class OrderDaoImpl implements OrderDao {
         
         return orderList;
     }
+
+	@Override
+	public List<Order> selectAllByOwnerandSatus(int orderStatus, int ownerId) {
+		final String sql = "select o.ORDER_ID,o.PUBLISH_ID,o.TENANT_ID,o.PUBLISH_STAR,o.PUBLISH_COMMENT,o.ORDER_STATUS,o.READ,o.CREATE_TIME,o.UPDATE_TIME,o.DELETE_TIME,p.OWNER_ID " + 
+				"from FORFUN.order o left join FORFUN.publish p on o.PUBLISH_ID = p.PUBLISH_ID " + 
+				"where	o.ORDER_STATUS = ? AND p.OWNER_ID = ?; ";
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+			stmt.setInt(1, orderStatus);
+			stmt.setInt(2, ownerId);
+
+			List<Order> orders = new ArrayList<Order>();
+			try (ResultSet rs = stmt.executeQuery();) {
+				while (rs.next()) {
+					Order order = new Order();
+					order.setOrderId(rs.getInt("ORDER_ID"));
+					order.setPublishId(rs.getInt("PUBLISH_ID"));
+					order.setTenantId(rs.getInt("TENANT_ID"));
+					order.setPublishStar(rs.getInt("PUBLISH_STAR"));
+					order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+					order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+					order.setRead(rs.getBoolean("READ"));
+					order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+
+					orders.add(order);
+				}
+				return orders;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 }
