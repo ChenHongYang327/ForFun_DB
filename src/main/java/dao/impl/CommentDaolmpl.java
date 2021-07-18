@@ -83,7 +83,7 @@ public class CommentDaolmpl implements CommentDao {
 
 	@Override
 	public Comment selectById(int COMMENT_ID) {
-		String sql = "SELECT MEMBER_ID, POST_ID, COMMENT_MSG, CREATE_TIME FROM Comment WHERE COMMENT_ID = ?;";
+		String sql = "SELECT * FROM Comment WHERE COMMENT_ID = ?;";
 
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
@@ -91,11 +91,15 @@ public class CommentDaolmpl implements CommentDao {
 			Comment comment = new Comment();	
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				
+				comment.setCommentId(rs.getInt("COMMENT_ID"));
 				comment.setMemberId(rs.getInt("MEMBER_ID"));
 				comment.setPostId(rs.getInt("POST_ID"));
 				comment.setCommentMsg(rs.getString("COMMENT_MSG"));
+				comment.setRead(rs.getBoolean("READ"));
 				comment.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				comment.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				comment.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+				
 			}
 			return comment;
 		} catch (SQLException e) {

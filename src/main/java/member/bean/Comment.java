@@ -18,7 +18,7 @@ public class Comment {
 	}
 	
 	public Comment(Integer commentId, Integer memberId, Integer postId, String commentMsg, Boolean read,
-			Timestamp createTime, Timestamp updateYime, Timestamp deleteTime) {
+			Timestamp createTime, Timestamp updateTime, Timestamp deleteTime) {
 		super();
 		this.commentId = commentId;
 		this.memberId = memberId;
@@ -26,7 +26,7 @@ public class Comment {
 		this.commentMsg = commentMsg;
 		this.read = read;
 		this.createTime = createTime;
-		this.updateTime = updateYime;
+		this.updateTime = updateTime;
 		this.deleteTime = deleteTime;
 	}
 	
@@ -80,12 +80,12 @@ public class Comment {
 		this.createTime = createTime;
 	}
 
-	public Timestamp getUpdateYime() {
+	public Timestamp getUpdateTime() {
 		return updateTime;
 	}
 
-	public void setUpdateYime(Timestamp updateYime) {
-		this.updateTime = updateYime;
+	public void setUpdateTime(Timestamp updateTime) {
+		this.updateTime = updateTime;
 	}
 
 	public Timestamp getDeleteTime() {

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
+import member.bean.Comment;
 import member.bean.Notification;
 import member.bean.Post;
 import service.AppointmentService;
@@ -37,7 +38,7 @@ public class NotificationController extends HttpServlet {
 		PublishService publishService = new PublishService();
 		AppointmentService appointmentService = new AppointmentService();
 		CommentService commentService = new CommentService();
-		PostService postService=new PostService();
+		PostService postService = new PostService();
 		OrderService orderService = new OrderService();
 		MemberService memberService = new MemberService();
 		try (BufferedReader reader = request.getReader(); PrintWriter writer = response.getWriter()) {
@@ -60,42 +61,48 @@ public class NotificationController extends HttpServlet {
 			// 取得通知
 			else if (req.get("action").getAsString().equals("getNotification")) {
 				int memberId = req.get("memberId").getAsInt();
-				List<Notification> notifications = notificationService.selectByMemberID(memberId);
+				List<Notification> notifications =new ArrayList<>() ;
 				List<String> customersHeadShot = new ArrayList<>();
-				int customerId;			
-				for (Notification notification : notifications) {
+				int customerId;
+				//過濾通知
+				for (Notification notification : notificationService.selectByMemberID(memberId)) {
 					// 取得客戶頭貼URL
 					// 留言
-					if (notification.getCommentId() != 0) {				
-						customerId = commentService.selectById(notification.getCommentId()).getMemberId();
-						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
-				
+					if (notification.getCommentId() != 0) {
+						Comment comment = commentService.selectById(notification.getCommentId());
+						if (comment.getDeleteTime() == null) {
+							notifications.add(notification);
+							customerId = comment.getMemberId();
+							customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
+						}
 					}
 					// 預約單
-					else if (notification.getAppointmentId() != 0) {					
+					else if (notification.getAppointmentId() != 0) {
 						// 取得客戶Id
 //						System.out.println(notification.getAppointmentId() + "");
+						notifications.add(notification);
 						customerId = appointmentService.selectById(notification.getAppointmentId()).getTenantId();
 						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
 
 					}
 					// 訂單
-					else if (notification.getOrderId() != 0) {			
+					else if (notification.getOrderId() != 0) {
 //						System.out.println(notification.getOrderId() + "");
-						customerId = orderService.selectByID(notification.getOrderId()).getTenantId();			
-						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());				
+						notifications.add(notification);
+						customerId = orderService.selectByID(notification.getOrderId()).getTenantId();
+						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
 					}
 					// 私訊
-					else if (notification.getMessageId() != 0) {			
+					else if (notification.getMessageId() != 0) {
 						// customerId=meService.selectById(notification.getAppointmentId()).getTenantId();
-						// customersId.add(customerId);				
+						// customersId.add(customerId);
 					}
 				}
-				//寫出回應
-					JsonObject resp = new JsonObject();
-					resp.addProperty("Notifications", new Gson().toJson(notifications));
-					resp.addProperty("CustomersHeadShot", new Gson().toJson(customersHeadShot));
-					writer.print(resp.toString());
+				// 寫出回應
+				JsonObject resp = new JsonObject();
+				resp.addProperty("Notifications", new Gson().toJson(notifications));
+				resp.addProperty("CustomersHeadShot", new Gson().toJson(customersHeadShot));
+				writer.print(resp.toString());
 //					System.out.println(resp.toString());
 			}
 			// 更改已讀狀態
@@ -108,12 +115,11 @@ public class NotificationController extends HttpServlet {
 					resp.addProperty("result", false);
 				}
 				writer.print(resp.toString());
-			}
-			else if (req.get("action").getAsString().equals("getPostId")) {
-				int commentId=req.get("commentId").getAsInt();
-				int postId=commentService.selectById(commentId).getPostId();
-				Post post=postService.selectById(postId);
-				String resp=new Gson().toJson(post);
+			} else if (req.get("action").getAsString().equals("getPostId")) {
+				int commentId = req.get("commentId").getAsInt();
+				int postId = commentService.selectById(commentId).getPostId();
+				Post post = postService.selectById(postId);
+				String resp = new Gson().toJson(post);
 				writer.print(resp);
 			}
 		}
