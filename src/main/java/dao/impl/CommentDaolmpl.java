@@ -111,7 +111,7 @@ public class CommentDaolmpl implements CommentDao {
 
 	@Override
 	public List<Comment> selectAllByPostId(int POST_ID) {
-		String sql = "SELECT MEMBER_ID, COMMENT_ID, COMMENT_MSG, CREATE_TIME FROM Comment WHERE POST_ID = ? AND DELETE_TIME IS NULL;";
+		String sql = "SELECT * FROM Comment WHERE POST_ID = ? AND DELETE_TIME IS NULL;";
 		List<Comment> commentList = new ArrayList<Comment>();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {

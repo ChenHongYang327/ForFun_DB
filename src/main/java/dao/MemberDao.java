@@ -24,6 +24,8 @@ public interface MemberDao {
 	List<Member> selectAll();
 	
 	List<Integer> selectAllPhone();
+
+	Member selectAllHeadShotAndName(int MEMBER_ID);
 	
 
 }

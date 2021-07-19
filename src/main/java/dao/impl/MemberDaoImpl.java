@@ -252,9 +252,33 @@ public class MemberDaoImpl implements MemberDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
-
+           
 	
+	@Override
+	public Member selectAllHeadShotAndName(int MEMBER_ID) {
+		final String sql = "select MEMBER_ID, NAME_L, NAME_F, HEADSHOT from FORFUN.member where MEMBER_ID = ?";
+		
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
+			pstmt.setInt(1, MEMBER_ID);
+			ResultSet rs = pstmt.executeQuery();
+			Member member = new Member();
+			while(rs.next()) {
+				member.setMemberId(rs.getInt("MEMBER_ID"));
+				member.setNameL(rs.getString("NAME_L"));
+				member.setNameF(rs.getString("NAME_F"));
+				member.setHeadshot(rs.getString("HEADSHOT"));
+
+			}
+			return member;
+					
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 
 

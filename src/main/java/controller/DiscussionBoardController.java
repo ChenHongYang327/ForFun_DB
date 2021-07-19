@@ -38,6 +38,7 @@ import service.PostService;
 public class DiscussionBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	PostService postService = null;   
+	MemberService memberService = new MemberService();
 	
 	@Override
 	public void init() throws ServletException {
@@ -79,14 +80,15 @@ public class DiscussionBoardController extends HttpServlet {
 			// 將輸入資料列印出來除錯用
 			String boardId = jsonObject.get("boardId").getAsString();
 			System.out.println("input: " + jsonIn);
-			MemberService memberService=new MemberService();
 			List<Post> postList = postService.selectAll(boardId);
 			List<Member> members=new ArrayList<>();
 			for(Post post:postList) {
-				Member member=memberService.selectById(post.getPosterId());
+				Member member = memberService.selectAllHeadShotAndName(post.getPosterId());
 				members.add(member);
 			}
-			writeText(response, gson.toJson(postList));
+			jsonObject.addProperty("postList", new Gson().toJson(postList));
+			jsonObject.addProperty("memberList", new Gson().toJson(members));
+			writeText(response, gson.toJson(jsonObject));
 			
 		} else if (action.equals("getImage")){
 			System.out.println("input: " + jsonIn);
