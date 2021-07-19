@@ -179,7 +179,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 			ResultSet rs = pstmt.executeQuery();
 			int apmtID = -1;
 			while (rs.next()) {
-				apmtID = rs.getInt("AGREEMENT_ID");
+				apmtID = rs.getInt("APPOINTMENT_ID");
 			}
 			return apmtID;
 		} catch (Exception e) {
@@ -199,7 +199,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 			ResultSet rs = pstmt.executeQuery();
 			int apmtID = -1;
 			while (rs.next()) {
-				apmtID = rs.getInt("AGREEMENT_ID");
+				apmtID = rs.getInt("APPOINTMENT_ID");
 			}
 			return apmtID;
 		} catch (Exception e) {
