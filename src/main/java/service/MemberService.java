@@ -46,5 +46,7 @@ public class MemberService {
 		return memberDao.selectAllPhone();
 	}
 	
-
+	public Member selectAllHeadShotAndName(int MEMBER_ID){
+		return memberDao.selectAllHeadShotAndName(MEMBER_ID);
+	}
 }

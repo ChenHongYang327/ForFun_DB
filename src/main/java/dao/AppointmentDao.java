@@ -20,4 +20,6 @@ public interface AppointmentDao {
     int selectAppointmentIdByTenantID(int publishId,int tenantId);
     
     int selectAppointmentIdByOwnerID(int publishId,int ownerId);
+    
+    List<Appointment> selectAppointmentByPublishId(int publishId);
 }

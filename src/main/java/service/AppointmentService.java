@@ -44,4 +44,8 @@ public class AppointmentService {
     public int selectAppointmentIdByOwnerID(int publishId,int ownerId) {
     	return dao.selectAppointmentIdByOwnerID(publishId, ownerId);
     }
+    //透過刊登單Id找出所有預約單
+    public List<Appointment> selectAppointmentByPublishId(int publishId){
+    	return dao.selectAppointmentByPublishId(publishId);
+    }
 }

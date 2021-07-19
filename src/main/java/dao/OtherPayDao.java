@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import member.bean.OtherPay;
 
 public interface OtherPayDao {
@@ -10,4 +12,7 @@ public interface OtherPayDao {
 	
 	public int insert (OtherPay otherPay);
 	
+	List<OtherPay> selectByTenantId(int tenantId, int orderStaus);
+	
+	List<OtherPay> selectByOwnerId(int OwnerId, int orderStaus);
 }

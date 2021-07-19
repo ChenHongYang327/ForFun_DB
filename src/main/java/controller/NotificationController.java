@@ -12,12 +12,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.firebase.FirebaseApp;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import member.bean.Comment;
 import member.bean.Notification;
 import member.bean.Post;
+import member.bean.Publish;
 import service.AppointmentService;
 import service.CommentService;
 import service.MemberService;
@@ -29,6 +31,7 @@ import service.PublishService;
 @WebServlet("/NotificationController")
 public class NotificationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	public static FirebaseApp firebaseApp;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -81,6 +84,7 @@ public class NotificationController extends HttpServlet {
 						// 取得客戶Id
 //						System.out.println(notification.getAppointmentId() + "");
 						notifications.add(notification);
+						System.out.println(notification.getAppointmentId()+"");
 						customerId = appointmentService.selectById(notification.getAppointmentId()).getTenantId();
 						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
 
@@ -121,6 +125,20 @@ public class NotificationController extends HttpServlet {
 				Post post = postService.selectById(postId);
 				String resp = new Gson().toJson(post);
 				writer.print(resp);
+			}
+			else if (req.get("action").getAsString().equals("getPostTitle")) {
+				int commentId = req.get("commentId").getAsInt();
+				int postId = commentService.selectById(commentId).getPostId();
+				Post post = postService.selectById(postId);
+				writer.print(post.getPostTitle());
+			}
+
+			else if (req.get("action").getAsString().equals("getPublishTitle")) {
+				int appointmentId = req.get("appointmentId").getAsInt();
+				int publishId = appointmentService.selectById(appointmentId).getPublishId();
+				System.out.println(publishId+"");
+				Publish publish =publishService.selectById(publishId);
+				writer.print(publish.getTitle());
 			}
 		}
 	}

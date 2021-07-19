@@ -207,4 +207,39 @@ public class AppointmentDaoImpl implements AppointmentDao {
 		}
 		return -1;
 	}
+
+	@Override
+	public List<Appointment> selectAppointmentByPublishId(int publishId) {
+		 final String sql = "SELECT * FROM appointment WHERE DELETE_TIME IS NULL and PUBLISH_ID=?;";
+	        
+	        try (
+	            Connection conn = dataSource.getConnection();
+	            PreparedStatement stmt = conn.prepareStatement(sql);
+	           
+	        ) {
+	        	stmt.setInt(1, publishId);
+	        	ResultSet rs = stmt.executeQuery();
+	            List<Appointment> appointments = new ArrayList<Appointment>();
+	            while (rs.next()) {
+	                Appointment appointment = new Appointment();
+	                appointment.setAppointmentId(rs.getInt("APPOINTMENT_ID"));
+	                appointment.setPublishId(rs.getInt("PUBLISH_ID"));
+	                appointment.setOwnerId(rs.getInt("OWNER_ID"));
+	                appointment.setTenantId(rs.getInt("TENANT_ID"));
+	                appointment.setAppointmentTime(rs.getTimestamp("APPOINTMENT_TIME"));
+	                appointment.setRead(rs.getBoolean("READ"));
+	                appointment.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+	                appointment.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+	                appointment.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+	                
+	                appointments.add(appointment);
+	            }
+	            
+	            return appointments;
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+
+	        return null;
+	}
 }

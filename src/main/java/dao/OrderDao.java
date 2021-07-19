@@ -27,4 +27,8 @@ public interface OrderDao {
 	List<Order> selectAllEvaluationByPublishID(int publishId);
 	
 	Order selectByPublishIDAndTenantID(int publishId, int tenantID);
+
+	Order selectByotherpayID(int otherpayId);
+	
+	int deleteById(int orderId);
 }

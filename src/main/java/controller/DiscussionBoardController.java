@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import com.google.gson.JsonObject;
 import dao.PostDao;
 import dao.impl.PostDaolmpl;
 import member.bean.Comment;
+import member.bean.Member;
 import member.bean.Post;
 import service.CommentService;
 import service.MemberService;
@@ -36,6 +38,7 @@ import service.PostService;
 public class DiscussionBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	PostService postService = null;   
+	MemberService memberService = new MemberService();
 	
 	@Override
 	public void init() throws ServletException {
@@ -46,7 +49,9 @@ public class DiscussionBoardController extends HttpServlet {
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(in))
 					.build();
-			FirebaseApp.initializeApp(options);
+			if(NotificationController.firebaseApp==null) {
+				NotificationController.firebaseApp=FirebaseApp.initializeApp(options);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -76,7 +81,14 @@ public class DiscussionBoardController extends HttpServlet {
 			String boardId = jsonObject.get("boardId").getAsString();
 			System.out.println("input: " + jsonIn);
 			List<Post> postList = postService.selectAll(boardId);
-			writeText(response, gson.toJson(postList));
+			List<Member> members=new ArrayList<>();
+			for(Post post:postList) {
+				Member member = memberService.selectAllHeadShotAndName(post.getPosterId());
+				members.add(member);
+			}
+			jsonObject.addProperty("postList", new Gson().toJson(postList));
+			jsonObject.addProperty("memberList", new Gson().toJson(members));
+			writeText(response, gson.toJson(jsonObject));
 			
 		} else if (action.equals("getImage")){
 			System.out.println("input: " + jsonIn);
@@ -108,7 +120,7 @@ public class DiscussionBoardController extends HttpServlet {
 			//---------刪除文章更新留言通知的狀態
 			List<Comment> comments=new CommentService().selectAllByPostId(postId);
 			for(Comment comment:comments) {
-				new NotificationService().updateCommentByPost(comment.getCommentId());
+				new NotificationService().deleteCommentByPost(comment.getCommentId());
 			}
 			//刪除文章觸發更改通知數
 			int notified=new PostService().selectById(postId).getPosterId();

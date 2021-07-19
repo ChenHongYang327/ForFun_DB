@@ -90,9 +90,30 @@ public class OtherPayController extends HttpServlet {
 		case 2: // TapPay fragment use
 			otherpayID = jsonObject.get("OTHERPAYID").getAsInt();
 			// 如果前端新增成功，狀態碼要改成已付款->1
-			otherPayService.changeOtherpayStatus(otherpayID, 1);
+			if (otherPayService.changeOtherpayStatus(otherpayID, 1)) {
+				jsonWri.addProperty("RESULT", 200);
+			} else {
+				jsonWri.addProperty("RESULT", -1);
+			}
+			break;
 
+		case 3: // TapPay fragment use
+			otherpayID = jsonObject.get("OTHERPAYID").getAsInt();
+			// 如果前端取消，狀態碼要改成已付款->2
+			if (otherPayService.changeOtherpayStatus(otherpayID, 2)) {
+				jsonWri.addProperty("RESULT", 200);
+			} else {
+				jsonWri.addProperty("RESULT", -1);
+			}
+			break;
+
+		case 4: // otherpay fragment use 房客房東預覽
+			otherpayID = jsonObject.get("OTHERPAYID").getAsInt();
+			OtherPay oPay = otherPayService.selectById(otherpayID);
+			
+			jsonWri.addProperty("OTHERPAY", gson.toJson(oPay));
 			jsonWri.addProperty("RESULT", 200);
+
 			break;
 
 		default:
