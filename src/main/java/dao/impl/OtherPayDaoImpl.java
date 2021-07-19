@@ -3,11 +3,14 @@ package dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import commend.ServiceLocator;
 import dao.OtherPayDao;
+import member.bean.Order;
 import member.bean.OtherPay;
 import member.bean.Publish;
 
@@ -85,6 +88,41 @@ public class OtherPayDaoImpl implements OtherPayDao {
 		}
 
 		return -1;
+	}
+
+
+	@Override
+	public List<OtherPay> selectByTenantId(int tenantId, int orderStaus) {
+		final String sql = "select ot.OTHERPAY_ID,ot.AGREEMENT_ID,ot.OTHERPAY_MONEY,ot.OTHERPAY_NOTE,ot.SUGGEST_IMG,ot.OTHERPAY_STATUS,ot.CREATE_TIME,ot.DELETE_TIME\n" + 
+				"from FORFUN.order o left join FORFUN.agreement a on o.ORDER_ID = a.AGREEMENT_ID left join FORFUN.otherpay ot on a.AGREEMENT_ID = ot.OTHERPAY_ID\n" + 
+				"where o.TENANT_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = 0;";
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+			stmt.setInt(1, tenantId);
+			stmt.setInt(2, orderStaus);
+
+			List<OtherPay> otherPays = new ArrayList<>();
+			try (ResultSet rs = stmt.executeQuery();) {
+				while (rs.next()) {
+					OtherPay otherPay = new OtherPay();
+					otherPay.setOtherpayId(rs.getInt("OTHERPAY_ID"));
+					otherPay.setAgreementId(rs.getInt("AGREEMENT_ID"));
+					otherPay.setOtherpayMoney(rs.getInt("OTHERPAY_MONEY"));
+					otherPay.setOtherpayNote(rs.getNString("OTHERPAY_NOTE"));
+					otherPay.setSuggestImg(rs.getNString("SUGGEST_IMG"));
+					otherPay.setOtherpayStatus(rs.getInt("OTHERPAY_STATUS"));
+					otherPay.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+					otherPay.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+
+					otherPays.add(otherPay);
+				}
+				return otherPays;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

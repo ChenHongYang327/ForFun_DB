@@ -264,4 +264,10 @@ public class OrderDaoImpl implements OrderDao {
 		}
 		return null;
 	}
+
+	@Override
+	public Order selectByotherpayID(int otherpayId) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

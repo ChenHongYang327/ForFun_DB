@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import dao.OtherPayDao;
 import dao.impl.OtherPayDaoImpl;
 import member.bean.OtherPay;
@@ -23,6 +25,11 @@ public class OtherPayService {
 	//新增一筆資料
 	public int insert (OtherPay otherPay) {
 		return dao.insert(otherPay);
+	}
+	
+	//房客拿otherpay list
+	public List<OtherPay> selectByTenntId(int tenantId, int orderStaus){
+		return dao.selectByTenantId(tenantId, orderStaus);
 	}
 	
 }

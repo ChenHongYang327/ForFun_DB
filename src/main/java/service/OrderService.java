@@ -14,9 +14,9 @@ public class OrderService {
 	}
 
 	public int insert(Order order) {
-	    return orderDao.insert(order);
+		return orderDao.insert(order);
 	}
-	
+
 	// 透過 訂單ID 查詢 房客ID
 	// 假資料待改
 	public int selectTenantByID(int orderId) {
@@ -37,26 +37,33 @@ public class OrderService {
 		return orderDao.selectByID(OrderId);
 	}
 
-	// 透過 刊登單ID 查詢 訂單ID
-	public Order selectByPublishID(int PublishId) {
-		return orderDao.selectByPublishID(PublishId);
+	// 透過 刊登單ID 查詢 訂單
+	public Order selectByPublishID(int publishId) {
+		return orderDao.selectByPublishID(publishId);
 	}
-	
+
 	// 透過 訂單ID 存房子物件評價＆星數
 	public int insertEvaluation(Order evaluation, int orderId) {
 		return orderDao.insertEvaluation(evaluation, orderId);
 	}
-	
-	public List<Order> selectAllBySatus (int orderStatus, int tenantId){
-		return orderDao.selectAllBySatus(orderStatus,tenantId);
+
+	// 透過 房客ID ＆ order狀態碼 拿order list
+	public List<Order> selectAllBySatus(int orderStatus, int tenantId) {
+		return orderDao.selectAllBySatus(orderStatus, tenantId);
 	}
 
 	public List<Order> selectAllByPublishID(int publishId) {
-	    return orderDao.selectAllByPublishID(publishId);
+		return orderDao.selectAllByPublishID(publishId);
 	}
-	
-	public List<Order> selectAllByOwnerandSatus (int orderStatus, int ownerId){
+
+	// 透過 房東ID ＆ order狀態碼 拿order list
+	public List<Order> selectAllByOwnerandSatus(int orderStatus, int ownerId) {
 		return orderDao.selectAllByOwnerandSatus(orderStatus, ownerId);
+	}
+
+	// 透過 otherpayID 查詢 訂單
+	public Order selectByotherpayID(int otherpayId) {
+		return orderDao.selectByotherpayID(otherpayId);
 	}
 
 }

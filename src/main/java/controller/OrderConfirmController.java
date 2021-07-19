@@ -15,9 +15,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import member.bean.Order;
+import member.bean.OtherPay;
 import member.bean.Publish;
 import service.AppointmentService;
 import service.OrderService;
+import service.OtherPayService;
 import service.PublishService;
 
 @WebServlet("/OrderConfirm")
@@ -29,6 +31,7 @@ public class OrderConfirmController extends HttpServlet {
 	private OrderService orderService = new OrderService();
 	private PublishService publishService = new PublishService();
 	private AppointmentService appointmentService = new AppointmentService();
+	private OtherPayService otherPayService = new OtherPayService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -76,8 +79,6 @@ public class OrderConfirmController extends HttpServlet {
 			int publishId = jsonObj.get("PUBLISHID").getAsInt();
 			Publish publish = publishService.selectById(publishId);
 			String publStr = gson.toJson(publish);
-//			int cityId = publish.getCityId();
-//			int areaId = publish.getAreaId();
 			
 			jsonWri.addProperty("PUBLISH", publStr);
 			jsonWri.addProperty("RESULT", 200);
@@ -97,7 +98,7 @@ public class OrderConfirmController extends HttpServlet {
 			int publishId_4 = jsonObj.get("PUBLISHID").getAsInt();
 			int signinId_4 = jsonObj.get("SIGNINID").getAsInt();
 			
-			int apmtId_4 = appointmentService.selectAppointmentIdByTenantID(publishId_4, signinId_4);
+			int apmtId_4 = appointmentService.selectAppointmentIdByOwnerID(publishId_4, signinId_4);
 			
 			jsonWri.addProperty("APPOINTMENTID", apmtId_4);
 			jsonWri.addProperty("RESULT", 200);
@@ -110,6 +111,27 @@ public class OrderConfirmController extends HttpServlet {
 			List<Order> orders_5 = orderService.selectAllByOwnerandSatus(statusCode_5, signinId_5);
 			
 			jsonWri.addProperty("ORDERLIST", gson.toJson(orders_5));
+			jsonWri.addProperty("RESULT", 200);
+			
+			break;
+			
+		case 6: //房客流程 拿 otherpay List
+			int statusCode_6 = jsonObj.get("STATUS").getAsInt();
+			int signinId_6 = jsonObj.get("SIGNINID").getAsInt(); //房客ＩＤ
+			
+			// signId->orderId->agreementId->otherpayId->otherpayList
+			List<OtherPay> otherPays = otherPayService.selectByTenntId(signinId_6, statusCode_6);
+			
+			jsonWri.addProperty("OTHERPAYLIST", gson.toJson(otherPays));
+			jsonWri.addProperty("RESULT", 200);
+			
+			break;
+			
+		case 7: //otherpay流程 拿order 物件 By otherpayId
+			int otherpayId_7 = jsonObj.get("OTHERPAYID").getAsInt(); //房客ＩＤ
+			Order order = orderService.selectByotherpayID(otherpayId_7);
+			
+			jsonWri.addProperty("ORDER", gson.toJson(order));
 			jsonWri.addProperty("RESULT", 200);
 			
 			break;
