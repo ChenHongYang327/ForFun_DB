@@ -264,4 +264,74 @@ public class OrderDaoImpl implements OrderDao {
 		}
 		return null;
 	}
+	
+	@Override
+	public List<Order> selectAllEvaluationByPublishID(int publishId) {
+	    final String sql = "select * from FORFUN.order where PUBLISH_ID = ? AND PUBLISH_STAR is not null";
+        
+        List<Order> orderList = new ArrayList<Order>();
+        
+        try (
+            Connection conn = dataSource.getConnection(); 
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) {
+            pstmt.setInt(1, publishId);
+            ResultSet rs = pstmt.executeQuery();
+            
+            while (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("ORDER_ID"));
+                order.setPublishId(rs.getInt("PUBLISH_ID"));
+                order.setTenantId(rs.getInt("TENANT_ID"));
+                order.setPublishStar(rs.getInt("PUBLISH_STAR"));
+                order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+                order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+                order.setRead(rs.getBoolean("READ"));
+                order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+                order.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+                order.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+                
+                orderList.add(order);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        return orderList;
+	}
+
+    @Override
+    public Order selectByPublishIDAndTenantID(int publishId, int tenantID) {
+        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? and TENANT_ID = ?";
+        
+        try (
+            Connection conn = dataSource.getConnection(); 
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+        ) {
+            pstmt.setInt(1, publishId);
+            pstmt.setInt(2, tenantID);
+            ResultSet rs = pstmt.executeQuery();
+            
+            if (rs.next()) {
+                Order order = new Order();
+                order.setOrderId(rs.getInt("ORDER_ID"));
+                order.setPublishId(rs.getInt("PUBLISH_ID"));
+                order.setTenantId(rs.getInt("TENANT_ID"));
+                order.setTenantId(rs.getInt("PUBLISH_STAR"));
+                order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+                order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+                order.setRead(rs.getBoolean("READ"));
+                order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+                order.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+                order.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+                
+                return order;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }

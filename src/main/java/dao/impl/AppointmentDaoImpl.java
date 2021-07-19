@@ -170,7 +170,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
 	@Override
 	public int selectAppointmentIdByTenantID(int publishId, int tenantId) {
-	final String sql = "select APPOINTMENT_ID from FORFUN.appointment where PUBLISH_ID = ? AND TENANT_ID = ?";
+	final String sql = "select APPOINTMENT_ID from FORFUN.appointment where PUBLISH_ID = ? AND TENANT_ID = ? AND DELETE_TIME IS NULL;";
 		
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, publishId);
@@ -190,7 +190,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
 
 	@Override
 	public int selectAppointmentIdByOwnerID(int publishId, int ownerId) {
-	final String sql = "select APPOINTMENT_ID from FORFUN.appointment where PUBLISH_ID = ? AND OWNER_ID = ?";
+	final String sql = "select APPOINTMENT_ID from FORFUN.appointment where PUBLISH_ID = ? AND OWNER_ID = ? AND DELETE_TIME IS NULL;";
 		
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, publishId);

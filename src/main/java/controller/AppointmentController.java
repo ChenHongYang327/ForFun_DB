@@ -71,6 +71,14 @@ public class AppointmentController extends HttpServlet {
             } else if ("cancelAppointment".equals(action)) {
                 // 取消預約 (房客)
                 int appointmentId = object.get("appointmentId").getAsInt();
+                
+                // 取得預約資料
+                Appointment appointment = appointmentService.selectById(appointmentId);
+                
+                // 修改訂單狀態為6
+                Order order = orderService.selectByPublishIDAndTenantID(appointment.getPublishId(), appointment.getTenantId()); 
+                orderService.changeOrderStatus(order.getOrderId(), 6);
+                
                 // 刪除預約資料
                 int count = appointmentService.deleteById(appointmentId);
                 
@@ -80,6 +88,14 @@ public class AppointmentController extends HttpServlet {
             } else if ("confirmAppointment".equals(action)) {
                 // 確認預約 (房東)
                 int appointmentId = object.get("appointmentId").getAsInt();
+                
+                // 取得預約資料
+                Appointment appointment = appointmentService.selectById(appointmentId);
+                
+                // 修改訂單狀態為6
+                Order order = orderService.selectByPublishIDAndTenantID(appointment.getPublishId(), appointment.getTenantId()); 
+                orderService.changeOrderStatus(order.getOrderId(), 2);
+                
                 // 刪除預約資料
                 int count = appointmentService.deleteById(appointmentId);
                 
@@ -92,6 +108,14 @@ public class AppointmentController extends HttpServlet {
                 
                 JsonObject result = new JsonObject();
                 result.addProperty("appointment", gson.toJson(appointmentService.selectById(appointmentId)));
+                writer.write(gson.toJson(result));
+            } else if ("getMyAppointmentByPublishId".equals(action)) {
+                // 根據使用者ID和刊登單ID取得預約ID
+                int memberId = object.get("userId").getAsInt();
+                int publishId = object.get("publishId").getAsInt();
+                
+                JsonObject result = new JsonObject();
+                result.addProperty("appointmentId", appointmentService.selectAppointmentIdByTenantID(publishId, memberId));
                 writer.write(gson.toJson(result));
             }
         } catch (Exception e) {

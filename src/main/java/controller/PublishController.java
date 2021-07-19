@@ -68,7 +68,7 @@ public class PublishController extends HttpServlet {
                 OrderService orderService = new OrderService();
                 
                 JsonObject result = new JsonObject();
-                result.addProperty("orderList", gson.toJson(orderService.selectAllByPublishID(publishId)));
+                result.addProperty("orderList", gson.toJson(orderService.selectAllEvaluationByPublishID(publishId)));
                 writer.write(gson.toJson(result));
             }
         } catch (Exception e) {
