@@ -81,11 +81,14 @@ public class DiscussionBoardController extends HttpServlet {
 			String boardId = jsonObject.get("boardId").getAsString();
 			System.out.println("input: " + jsonIn);
 			List<Post> postList = postService.selectAll(boardId);
-			List<Member> members=new ArrayList<>();
+			List<Member> members = new ArrayList<>();
 			for(Post post:postList) {
+				
+				//比對後端資料 拿取會員姓名跟頭貼
 				Member member = memberService.selectAllHeadShotAndName(post.getPosterId());
 				members.add(member);
 			}
+			//裝在jsonObject後設定key 送回前端	
 			jsonObject.addProperty("postList", new Gson().toJson(postList));
 			jsonObject.addProperty("memberList", new Gson().toJson(members));
 			writeText(response, gson.toJson(jsonObject));

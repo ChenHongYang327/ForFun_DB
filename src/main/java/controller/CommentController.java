@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -23,6 +24,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import member.bean.Comment;
+import member.bean.Member;
 import service.CommentService;
 import service.MemberService;
 import service.NotificationService;
@@ -32,6 +34,7 @@ import service.PostService;
 public class CommentController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CommentService commentService = null;
+	MemberService memberService = new MemberService();
 
 	@Override
 	public void init() throws ServletException {
@@ -71,7 +74,16 @@ public class CommentController extends HttpServlet {
 			int postId = jsonObject.get("postId").getAsInt();
 			System.out.println("input: " + jsonIn);
 			List<Comment> commentList = commentService.selectAllByPostId(postId);
-			writeText(response, gson.toJson(commentList));
+			List<Member> memberList = new ArrayList<Member>();
+			
+			for (Comment comment : commentList) {
+				Member member = memberService.selectAllHeadShotAndName(comment.getMemberId());
+				memberList.add(member);
+			}
+			jsonObject.addProperty("commentList", new Gson().toJson(commentList));
+			jsonObject.addProperty("memberList", new Gson().toJson(memberList));
+			
+			writeText(response, gson.toJson(jsonObject));
 
 		} else if (action.equals("commentInsert") || action.equals("commentUpdate")) {
 			String commentJson = jsonObject.get("comment").getAsString();

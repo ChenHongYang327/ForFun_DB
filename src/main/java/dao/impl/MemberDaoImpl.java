@@ -256,7 +256,7 @@ public class MemberDaoImpl implements MemberDao {
 	
 	@Override
 	public Member selectAllHeadShotAndName(int MEMBER_ID) {
-		final String sql = "select MEMBER_ID, NAME_L, NAME_F, HEADSHOT from FORFUN.member where MEMBER_ID = ?";
+		final String sql = "select * from FORFUN.member where MEMBER_ID = ?";
 		
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
