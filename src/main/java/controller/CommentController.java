@@ -41,7 +41,9 @@ public class CommentController extends HttpServlet {
 		try (InputStream in = getServletContext().getResourceAsStream("/firebaseServerKey.json")) {
 			FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(in))
 					.build();
-			FirebaseApp.initializeApp(options);
+			if(NotificationController.firebaseApp==null) {
+				NotificationController.firebaseApp=FirebaseApp.initializeApp(options);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -90,7 +92,8 @@ public class CommentController extends HttpServlet {
 						if (memberToken != null) {
 							JsonObject notificaitonFCM = new JsonObject();
 							notificaitonFCM.addProperty("title", "新通知");
-							notificaitonFCM.addProperty("body", "您的文章有一則新留言");
+							String postTitle=new PostService().selectById(comment.getPostId()).getPostTitle();
+							notificaitonFCM.addProperty("body", "您的"+"「"+postTitle+"」"+"文章有一則新留言");
 							sendSingleFcm(notificaitonFCM, memberToken);
 						}
 					}

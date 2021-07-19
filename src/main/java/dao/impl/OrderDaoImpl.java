@@ -3,6 +3,7 @@ package dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -197,7 +198,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
     public List<Order> selectAllByPublishID(int publishId) {
-        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? AND PUBLISH_STAR is not null";
+        final String sql = "select * from FORFUN.order where PUBLISH_ID = ?";
         
         List<Order> orderList = new ArrayList<Order>();
         
@@ -270,4 +271,20 @@ public class OrderDaoImpl implements OrderDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public int deleteById(int orderId) {
+		final String sql = "UPDATE FORFUN.ORDER SET DELETE_TIME=? WHERE PUBLISH_ID=?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(2, orderId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+
+
 }

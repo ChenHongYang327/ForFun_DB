@@ -25,4 +25,6 @@ public interface OrderDao {
 	List<Order> selectAllByOwnerandSatus (int orderStatus, int ownerId);
 	
 	Order selectByotherpayID(int otherpayId);
+	
+	int deleteById(int orderId);
 }

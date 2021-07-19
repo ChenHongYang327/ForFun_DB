@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ import com.google.gson.JsonObject;
 import dao.PostDao;
 import dao.impl.PostDaolmpl;
 import member.bean.Comment;
+import member.bean.Member;
 import member.bean.Post;
 import service.CommentService;
 import service.MemberService;
@@ -46,7 +48,9 @@ public class DiscussionBoardController extends HttpServlet {
 			FirebaseOptions options = FirebaseOptions.builder()
 					.setCredentials(GoogleCredentials.fromStream(in))
 					.build();
-			FirebaseApp.initializeApp(options);
+			if(NotificationController.firebaseApp==null) {
+				NotificationController.firebaseApp=FirebaseApp.initializeApp(options);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,7 +79,13 @@ public class DiscussionBoardController extends HttpServlet {
 			// 將輸入資料列印出來除錯用
 			String boardId = jsonObject.get("boardId").getAsString();
 			System.out.println("input: " + jsonIn);
+			MemberService memberService=new MemberService();
 			List<Post> postList = postService.selectAll(boardId);
+			List<Member> members=new ArrayList<>();
+			for(Post post:postList) {
+				Member member=memberService.selectById(post.getPosterId());
+				members.add(member);
+			}
 			writeText(response, gson.toJson(postList));
 			
 		} else if (action.equals("getImage")){
@@ -108,7 +118,7 @@ public class DiscussionBoardController extends HttpServlet {
 			//---------刪除文章更新留言通知的狀態
 			List<Comment> comments=new CommentService().selectAllByPostId(postId);
 			for(Comment comment:comments) {
-				new NotificationService().updateCommentByPost(comment.getCommentId());
+				new NotificationService().deleteCommentByPost(comment.getCommentId());
 			}
 			//刪除文章觸發更改通知數
 			int notified=new PostService().selectById(postId).getPosterId();

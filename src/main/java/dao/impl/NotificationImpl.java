@@ -35,7 +35,7 @@ public class NotificationImpl implements NotificationDao {
 	}
 
 	@Override
-	public int inserAppointment(int notifiedId, int appointmenId) {
+	public int insertAppointment(int notifiedId, int appointmenId) {
 		final String sql = "INSERT into FORFUN.notification (NOTIFIED_ID,APPOINTMENT_ID,CREATE_TIME) values (?,?,?);";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, notifiedId);
@@ -49,11 +49,11 @@ public class NotificationImpl implements NotificationDao {
 	}
 
 	@Override
-	public int insertOreder(int notifiedId, int orederId) {
+	public int insertOrder(int notifiedId, int orderId) {
 		final String sql = "INSERT into FORFUN.notification (NOTIFIED_ID,ORDER_ID,CREATE_TIME) values (?,?,?);";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setInt(1, notifiedId);
-			pstmt.setInt(2, orederId);
+			pstmt.setInt(2, orderId);
 			pstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
@@ -92,8 +92,8 @@ public class NotificationImpl implements NotificationDao {
 	}
 	
 	@Override
-	public int updateCommentByPost(int commentId) {
-		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE COMMENT_ID=?";
+	public int deleteCommentByPost(int commentId) {
+		final String sql = "UPDATE FORFUN.notification SET FORFUN.notification.READ=0,DELETE_TIME=? WHERE COMMENT_ID=?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			pstmt.setInt(2, commentId);
@@ -120,9 +120,24 @@ public class NotificationImpl implements NotificationDao {
 
 		return -1;
 	}
+	
+	@Override
+	public int editAppointment(int notifiedId, int appointmenId) {
+		final String sql = "UPDATE FORFUN.notification SET FORFUN.notification.READ= 0,DELETE_TIME= ? WHERE NOTIFIED_ID =? and APPOINTMENT_ID=?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, null);
+			pstmt.setInt(2, notifiedId);
+			pstmt.setInt(3, appointmenId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
 
 	@Override
-	public int updateOreder(int notifiedId, int orederId) {
+	public int updateOrder(int notifiedId, int orederId) {
 		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =? and ORDER_ID=?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
@@ -196,6 +211,51 @@ public class NotificationImpl implements NotificationDao {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return -1;
+	}
+
+	@Override
+	public int deleteOrder(int notifiedId, int orederId) {
+		final String sql = "UPDATE FORFUN.notification SET FORFUN.notification.READ= 0,DELETE_TIME=? WHERE NOTIFIED_ID =? and ORDER_ID=?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(2, notifiedId);
+			pstmt.setInt(3, orederId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+
+	@Override
+	public int deleteComment(int notifiedId, int commentId) {
+		final String sql = "UPDATE FORFUN.notification SET FORFUN.notification.READ= 0,DELETE_TIME=? WHERE NOTIFIED_ID =? and COMMENT_ID=?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(2, notifiedId);
+			pstmt.setInt(3, commentId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+
+	@Override
+	public int deleteAppointment(int notifiedId,  int appointmenId) {
+		final String sql = "UPDATE FORFUN.notification SET FORFUN.notification.READ= 0,DELETE_TIME=? WHERE NOTIFIED_ID =? and APPOINTMENT_ID=?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(2, notifiedId);
+			pstmt.setInt(3, appointmenId);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		return -1;
 	}
 

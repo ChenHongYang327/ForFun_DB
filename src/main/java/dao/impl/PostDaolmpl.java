@@ -78,21 +78,23 @@ public class PostDaolmpl implements PostDao {
 
 	@Override
 	public Post selectById(int POST_ID) {
-		String sql = "SELECT BOARD_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME FROM Post WHERE POST_ID = ?;";
-		Post post = null;
+		String sql = "SELECT * FROM Post WHERE POST_ID = ?;";
+		Post post = new Post();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setInt(1, POST_ID);
-
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
-				String boardId = rs.getString(1);
-				int posterId = rs.getInt(2);
-				String postTitle = rs.getString(3);
-				String postImg = rs.getString(4);
-				String postContext = rs.getString(5);
-				Timestamp postCreatTime = rs.getTimestamp(6);
-				post = new Post(POST_ID, boardId, posterId, postTitle, postImg, postContext, postCreatTime);
+				post.setPostId(rs.getInt("POST_ID"));
+				post.setBoardId(rs.getString("BOARD_ID"));
+				post.setPosterId(rs.getInt("POSTER_ID"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostImg(rs.getString("POST_IMG"));
+				post.setPostContext(rs.getString("POST_CONTEXT"));
+				post.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				post.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				post.setDeleteTime(rs.getTimestamp("DELETE_TIME"));		
+				
 			}
 
 		} catch (Exception e) {

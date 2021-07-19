@@ -7,25 +7,35 @@ import member.bean.Notification;
 public interface NotificationDao {
 	int insertComment(int notifiedId, int commentId);
 	
-	int inserAppointment(int notifiedId,int appointmenId);
+	int insertAppointment(int notifiedId,int appointmenId);
 	
-	int insertOreder(int notifiedId, int orederId);
+	int insertOrder(int notifiedId, int orderId);
 	
 	int insertMessage(int notifiedId, int messageId);
 	
 	int updateComment(int notifiedId, int commentId);
 	
-	int updateCommentByPost(int commentId);
+	int deleteCommentByPost(int commentId);
 		
 	int updateAppointment(int notifiedId,int appointmenId);
 	
-	int updateOreder(int notifiedId, int orederId);
+	int editAppointment(int notifiedId, int appointmenId);
+	
+	int updateOrder(int notifiedId, int orderId);
 	
 	int updateMessage(int notifiedId, int messageId);
 	
 	List<Notification> selectByMemberID(int notifiedId);
 	
 	int updateReaded(int notifiedId);
+	
+	int deleteOrder(int notifiedId, int orderId);
+	
+	int deleteComment(int notifiedId, int commentId);
+	
+	int deleteAppointment(int notifiedId, int appointmenId);
+	
+	
 	
 	
 
