@@ -14,4 +14,5 @@ public interface OtherPayDao {
 	
 	List<OtherPay> selectByTenantId(int tenantId, int orderStaus);
 	
+	List<OtherPay> selectByOwnerId(int OwnerId, int orderStaus);
 }

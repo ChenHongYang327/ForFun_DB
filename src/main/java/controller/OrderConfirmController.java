@@ -135,6 +135,18 @@ public class OrderConfirmController extends HttpServlet {
 			jsonWri.addProperty("RESULT", 200);
 			
 			break;
+			
+		case 8: //房東流程 拿 otherpay List
+			int statusCode_8 = jsonObj.get("STATUS").getAsInt();
+			int signinId_8 = jsonObj.get("SIGNINID").getAsInt(); //房東ＩＤ
+			
+			// signId->orderId->agreementId->otherpayId->otherpayList
+			List<OtherPay> oList = otherPayService.selectByOwnerId(signinId_8, statusCode_8);
+			
+			jsonWri.addProperty("OTHERPAYLIST", gson.toJson(oList));
+			jsonWri.addProperty("RESULT", 200);
+			
+			break;
 
 		default:
 			jsonWri.addProperty("RESULT", -1);
