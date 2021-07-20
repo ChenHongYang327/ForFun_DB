@@ -304,7 +304,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order selectByPublishIDAndTenantID(int publishId, int tenantID) {
-        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? and TENANT_ID = ?";
+        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? and TENANT_ID = ? AND ORDER_STATUS = 11;";
         
         try (
             Connection conn = dataSource.getConnection(); 

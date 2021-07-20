@@ -167,7 +167,7 @@ public class AppointmentController extends HttpServlet {
                 // 取得預約資料
                 Appointment appointment = appointmentService.selectById(appointmentId);
                 
-                // 修改訂單狀態為6
+                // 修改訂單狀態為2
                 Order order = orderService.selectByPublishIDAndTenantID(appointment.getPublishId(), appointment.getTenantId()); 
                 orderService.changeOrderStatus(order.getOrderId(), 2);
                 //被通知者
