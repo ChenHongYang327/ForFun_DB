@@ -12,4 +12,14 @@
         dataSource.prepStmtCacheSqlLimit="2048"
     />
 
+<!--     <Resource name="jdbc/example" type="javax.sql.DataSource"
+        factory="com.zaxxer.hikari.HikariJNDIFactory"
+        jdbcUrl="jdbc:mysql://219.68.160.213:3306/FORFUN?useUnicode=yes&amp;characterEncoding=utf8&amp;useSSL=true&amp;serverTimezone=Asia/Taipei" 
+        username="root"
+        password="p@ssw0rd"
+        driverClassName="com.mysql.cj.jdbc.Driver"
+        dataSource.cachePrepStmts="true"
+        dataSource.prepStmtCacheSize="250"
+        dataSource.prepStmtCacheSqlLimit="2048"
+    /> -->
 </Context>
