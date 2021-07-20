@@ -84,7 +84,7 @@ public class NotificationController extends HttpServlet {
 						// 取得客戶Id
 //						System.out.println(notification.getAppointmentId() + "");
 						notifications.add(notification);
-						System.out.println(notification.getAppointmentId()+"");
+//						System.out.println(notification.getAppointmentId()+"");
 						customerId = appointmentService.selectById(notification.getAppointmentId()).getTenantId();
 						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
 
@@ -136,7 +136,6 @@ public class NotificationController extends HttpServlet {
 			else if (req.get("action").getAsString().equals("getPublishTitle")) {
 				int appointmentId = req.get("appointmentId").getAsInt();
 				int publishId = appointmentService.selectById(appointmentId).getPublishId();
-				System.out.println(publishId+"");
 				Publish publish =publishService.selectById(publishId);
 				writer.print(publish.getTitle());
 			}

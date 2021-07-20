@@ -141,10 +141,22 @@ public class AppointmentController extends HttpServlet {
                 // 修改訂單狀態為6
                 Order order = orderService.selectByPublishIDAndTenantID(appointment.getPublishId(), appointment.getTenantId()); 
                 orderService.changeOrderStatus(order.getOrderId(), 6);
-                
+                //取得被通知者
+                int notified=appointmentService.selectById(appointmentId).getOwnerId();
                 // 刪除預約資料
                 int count = appointmentService.deleteById(appointmentId);
-                
+                //刪除通知
+                new NotificationService().deleteAppointment(notified, appointmentId);
+                String memberToken=new MemberService().selectById(notified).getToken();
+                if(memberToken!=null) {
+                	JsonObject notificaitonFCM = new JsonObject();
+					notificaitonFCM.addProperty("title", "新通知");
+					String publishTitle = new PublishService().selectById(appointment.getPublishId())
+							.getTitle();
+					notificaitonFCM.addProperty("body", "刪除");
+					sendSingleFcm(notificaitonFCM, memberToken);
+                }
+                //---------
                 JsonObject result = new JsonObject();
                 result.addProperty("result_code", count > 0 ? 1 : 0);
                 writer.write(gson.toJson(result));
@@ -158,10 +170,21 @@ public class AppointmentController extends HttpServlet {
                 // 修改訂單狀態為6
                 Order order = orderService.selectByPublishIDAndTenantID(appointment.getPublishId(), appointment.getTenantId()); 
                 orderService.changeOrderStatus(order.getOrderId(), 2);
-                
+                //被通知者
+                int notified=appointmentService.selectById(appointmentId).getOwnerId();
                 // 刪除預約資料
                 int count = appointmentService.deleteById(appointmentId);
-                
+                //刪除通知        
+                String memberToken=new MemberService().selectById(notified).getToken();
+                if(memberToken!=null) {
+                	JsonObject notificaitonFCM = new JsonObject();
+					notificaitonFCM.addProperty("title", "新通知");
+					String publishTitle = new PublishService().selectById(appointment.getPublishId())
+							.getTitle();
+					notificaitonFCM.addProperty("body", "刪除");
+					sendSingleFcm(notificaitonFCM, memberToken);
+                }
+                //---------
                 JsonObject result = new JsonObject();
                 result.addProperty("result_code", count > 0 ? 1 : 0);
                 writer.write(gson.toJson(result));
@@ -203,7 +226,7 @@ public class AppointmentController extends HttpServlet {
 			message.setToken(registrationToken); // 送訊息給指定token的裝置
 			try {
 				FirebaseMessaging.getInstance().send(message.build());
-//							String messageId = FirebaseMessaging.getInstance().send(message);
+//							String messageId = FirebaseMessaging.getInstance().send(message.build());
 //							System.out.println(registrationToken);
 //							System.out.println("messageId: " + messageId);
 			} catch (FirebaseMessagingException e) {
