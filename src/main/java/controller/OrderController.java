@@ -67,6 +67,7 @@ public class OrderController extends HttpServlet {
 			jsonWri.addProperty("IMGPATH", publish.getTitleImg());
 			break;
 		case 1:
+			
 			// 回應碼成功 改 訂單狀態
 			orderService.changeOrderStatus(orderID, 5);
 			jsonWri.addProperty("RESULT", 200);

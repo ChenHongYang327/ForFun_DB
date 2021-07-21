@@ -21,6 +21,6 @@ public interface PersonEvaluationDao {
 	
 	List<PersonEvaluation> selectAll();
 	
-	boolean isEvaluationExist(int signinId);
+	boolean isEvaluationExist(int signinId, int orderId);
 	
 }

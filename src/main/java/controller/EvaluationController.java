@@ -23,23 +23,22 @@ import service.PublishService;
 @WebServlet("/Evaluation")
 public class EvaluationController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
 	private Gson gson = new Gson();
-	private StringBuilder jsonIn = new StringBuilder();
-	private int typecode;
-	private JsonObject jsonWri = new JsonObject();
 	private OrderService orderService = new OrderService();
 	private PublishService publishService = new PublishService();
 	private PersonEvaluationService personEvaluationService = new PersonEvaluationService();
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		JsonObject jsonWri = new JsonObject();
+		StringBuilder jsonIn = new StringBuilder();
+		int typecode = -1;
+		
 		// 收取client端資料
 		request.setCharacterEncoding("UTF-8");
 
 		try (BufferedReader br = request.getReader();) {
-
+			
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				jsonIn.append(line);
@@ -57,6 +56,7 @@ public class EvaluationController extends HttpServlet {
 		} catch (Exception e) {
 			typecode = -1;
 		}
+		
 
 		switch (typecode) {
 		case 0:
@@ -94,6 +94,7 @@ public class EvaluationController extends HttpServlet {
 				jsonWri.addProperty("RESULT", 200);
 			}
 			break;
+			
 		case 1:
 			// HouseOwner Event
 			int strars_P_ = jsonObj.get("STARS_P").getAsInt();
@@ -118,19 +119,19 @@ public class EvaluationController extends HttpServlet {
 				jsonWri.addProperty("RESULT", 200);
 			}
 			break;
+			
 		case 2:
 			int signinId_2 = jsonObj.get("SIGNINID").getAsInt();
+			int orderId_2 = jsonObj.get("ORDERID").getAsInt();
 
 			// 用評價人來判斷是否有評價過!但有個BUG 房客如果只評價房子的話，會無限新增！
-			// TODO:
-			boolean isExist = personEvaluationService.isEvaluationExist(signinId_2);
-			if (isExist == true) {
+			boolean isExist = personEvaluationService.isEvaluationExist(signinId_2,orderId_2);
+			if (isExist) {
 				jsonWri.addProperty("EXIST", true);
 			} else {
 				jsonWri.addProperty("EXIST", false);
 			}
 			jsonWri.addProperty("RESULT", 200);
-
 			break;
 
 		default:

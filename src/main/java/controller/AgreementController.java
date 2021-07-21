@@ -138,7 +138,9 @@ public class AgreementController extends HttpServlet {
 
 			agreementService.updateTenant(imgPath_T, agrmtId);
 			// 改狀態 -> 4
-			orderService.changeOrderStatus(agrmtId, 4);
+			
+			int orderid = agreementService.selecOrderidByAgreementid(agrmtId);
+			orderService.changeOrderStatus(orderid, 4);
 
 			JsonObject jsonWri4 = new JsonObject();
 			jsonWri4.addProperty("RESULT", 200);

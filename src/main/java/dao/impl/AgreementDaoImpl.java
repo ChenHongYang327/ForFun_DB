@@ -24,10 +24,10 @@ public class AgreementDaoImpl implements AgreementDao {
 
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
-				ResultSet rs = stmt.executeQuery();) {
-			Agreement agreement = new Agreement();
-
+				) {
 			stmt.setInt(1, agreementId);
+			ResultSet rs = stmt.executeQuery();
+			Agreement agreement = new Agreement();
 			while (rs.next()) {
 				agreement.setOrderId(rs.getInt("ORDER_ID"));
 				agreement.setStartDate(rs.getTimestamp("START_DATE"));
@@ -35,15 +35,13 @@ public class AgreementDaoImpl implements AgreementDao {
 				agreement.setAgreementMoney(rs.getInt("AGREEMENT_MONEY"));
 				agreement.setAgreementNote(rs.getString("AGREEMENT_NOTE"));
 				agreement.setLandlordSign(rs.getString("LANDLORD_SIGN"));
-				agreement.setTenantSign(rs.getString("TENANT＿SIGN"));
+				agreement.setTenantSign(rs.getString("TENANT_SIGN"));
 				agreement.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 			}
 			return agreement;
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 		return null;
 	}
 
@@ -89,6 +87,25 @@ public class AgreementDaoImpl implements AgreementDao {
 			int agmtID = -1;
 			while (rs.next()) {
 				agmtID = rs.getInt("AGREEMENT_ID");
+			}
+			return agmtID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	@Override
+	public int selecOrderidByAgreementid(int agreementId) {
+final String sql = "select ORDER_ID from FORFUN.agreement where AGREEMENT_ID = ?";
+		
+		try (Connection conn = dataSource.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, agreementId);
+			ResultSet rs = pstmt.executeQuery();
+			int agmtID = -1;
+			while (rs.next()) {
+				agmtID = rs.getInt("ORDER_ID");
 			}
 			return agmtID;
 		} catch (Exception e) {

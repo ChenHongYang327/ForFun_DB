@@ -11,5 +11,7 @@ public interface AgreementDao {
 	int updateTenant (String tenantSignPath, int agreementId);
 	
 	int selectAgmtidByOrderid(int orderId) ;
+	
+	int selecOrderidByAgreementid(int agreementId);
 
 }

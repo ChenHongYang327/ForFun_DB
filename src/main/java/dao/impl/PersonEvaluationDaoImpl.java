@@ -126,11 +126,13 @@ public class PersonEvaluationDaoImpl implements PersonEvaluationDao {
 	}
 
 	@Override
-	public boolean isEvaluationExist(int signinId) {
-		final String sql = "select CREATE_TIME from FORFUN.person_evaluation where COMMENTED_BY = ?";
+	public boolean isEvaluationExist(int signinId, int orderId) {
+		final String sql = "select CREATE_TIME from FORFUN.person_evaluation where COMMENTED_BY = ? AND ORDER_ID = ?";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, signinId);
+			pstmt.setInt(2, orderId);
+			
 			ResultSet rs = pstmt.executeQuery();
 			while (rs.next()) {
 				return true;

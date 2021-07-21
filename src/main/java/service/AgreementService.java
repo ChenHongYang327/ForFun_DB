@@ -26,5 +26,10 @@ public class AgreementService {
 	public int selectAgmtidByOrderid(int orderId) {
 		return dao.selectAgmtidByOrderid(orderId);
 	}
+	
+	public int selecOrderidByAgreementid(int agreementId) {
+		return dao.selecOrderidByAgreementid(agreementId);
+	}
+
 
 }
