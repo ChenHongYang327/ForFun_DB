@@ -179,8 +179,6 @@ public class AppointmentController extends HttpServlet {
                 if(memberToken!=null) {
                 	JsonObject notificaitonFCM = new JsonObject();
 					notificaitonFCM.addProperty("title", "新通知");
-					String publishTitle = new PublishService().selectById(appointment.getPublishId())
-							.getTitle();
 					notificaitonFCM.addProperty("body", "刪除");
 					sendSingleFcm(notificaitonFCM, memberToken);
                 }

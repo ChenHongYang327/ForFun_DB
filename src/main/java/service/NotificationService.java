@@ -37,8 +37,8 @@ public class NotificationService {
 		return notificationDao.deleteCommentByPost(commentId);
 	}
 	//未點擊通知已讀預約單
-	public int updateAppointment(int notifiedId,int appointmenId) {
-		return notificationDao.updateAppointment(notifiedId, appointmenId);
+	public int updateAppointment(int notifiedId) {
+		return notificationDao.updateAppointment(notifiedId);
 	}
 	//預約單被修改
 	public int editAppointment(int notifiedId, int appointmenId) {

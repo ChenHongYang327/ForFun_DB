@@ -17,7 +17,7 @@ public interface NotificationDao {
 	
 	int deleteCommentByPost(int commentId);
 		
-	int updateAppointment(int notifiedId,int appointmenId);
+	int updateAppointment(int notifiedId);
 	
 	int editAppointment(int notifiedId, int appointmenId);
 	

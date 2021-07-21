@@ -17,6 +17,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
 import member.bean.Comment;
+import member.bean.Member;
 import member.bean.Notification;
 import member.bean.Post;
 import member.bean.Publish;
@@ -123,8 +124,14 @@ public class NotificationController extends HttpServlet {
 				int commentId = req.get("commentId").getAsInt();
 				int postId = commentService.selectById(commentId).getPostId();
 				Post post = postService.selectById(postId);
-				String resp = new Gson().toJson(post);
-				writer.print(resp);
+				Member member=memberService.selectById(post.getPostId());
+				String name=member.getNameL()+member.getNameF();
+				String headshot=member.getHeadshot();
+				JsonObject resp= new JsonObject();
+				resp.addProperty("post", new Gson().toJson(post));
+				resp.addProperty("name", name);
+				resp.addProperty("headshot", headshot);
+				writer.print(resp.toString());
 			}
 			else if (req.get("action").getAsString().equals("getPostTitle")) {
 				int commentId = req.get("commentId").getAsInt();

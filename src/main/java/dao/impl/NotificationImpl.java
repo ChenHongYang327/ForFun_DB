@@ -107,12 +107,11 @@ public class NotificationImpl implements NotificationDao {
 	
 	
 	@Override
-	public int updateAppointment(int notifiedId, int appointmenId) {
-		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =? and APPOINTMENT_ID=?";
+	public int updateAppointment(int notifiedId) {
+		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =? and FORFUN.notification.READ=0 and APPOINTMENT_ID is not null and DELETE_TIME is null";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			pstmt.setInt(2, notifiedId);
-			pstmt.setInt(3, appointmenId);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
