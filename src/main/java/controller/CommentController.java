@@ -72,6 +72,8 @@ public class CommentController extends HttpServlet {
 		String action = jsonObject.get("action").getAsString();
 		if (action.equals("getAll")) {
 			int postId = jsonObject.get("postId").getAsInt();
+			//請求者ID
+			int reqMemberId=jsonObject.get("reqMemberId").getAsInt();
 			System.out.println("input: " + jsonIn);
 			List<Comment> commentList = commentService.selectAllByPostId(postId);
 			List<Member> memberList = new ArrayList<Member>();
@@ -85,6 +87,27 @@ public class CommentController extends HttpServlet {
 			
 			writeText(response, gson.toJson(jsonObject));
 
+				//已讀留言通知
+					if(commentList.size()>0) {
+					if(reqMemberId==new PostService().selectById(postId).getPosterId()) {
+						List<Integer>commentIds=new ArrayList<Integer>();
+						for(Comment comment:commentList) {
+							//取得該文章留言的Id
+							commentIds.add(comment.getCommentId());
+						}
+						int updateCount=0;
+						for(int commentId:commentIds) {
+							updateCount+=new NotificationService().updateComment(reqMemberId,commentId);
+							
+						}
+						if(updateCount>0) {
+							String memberToken=new MemberService().selectById(reqMemberId).getToken();
+							if(memberToken!=null) {					
+								NotificationController.sendSingleFcmNoNotification(memberToken);
+							}
+						}
+					}
+				}
 		} else if (action.equals("commentInsert") || action.equals("commentUpdate")) {
 			String commentJson = jsonObject.get("comment").getAsString();
 			System.out.println("commentJson = " + commentJson);
@@ -106,7 +129,7 @@ public class CommentController extends HttpServlet {
 							notificaitonFCM.addProperty("title", "新通知");
 							String postTitle=new PostService().selectById(comment.getPostId()).getPostTitle();
 							notificaitonFCM.addProperty("body", "您的"+"「"+postTitle+"」"+"文章有一則新留言");
-							sendSingleFcm(notificaitonFCM, memberToken);
+							NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
 						}
 					}
 				}
@@ -126,14 +149,10 @@ public class CommentController extends HttpServlet {
 			// 留言者非貼文者
 			if (commentService.selectById(commentId).getMemberId() != notified) {
 				if (count > 0) {
-					System.out.println("");
 					new NotificationService().updateComment(notified, commentId);
 					String memberToken = new MemberService().selectById(notified).getToken();
-					if (memberToken != null) {
-						JsonObject notificaitonFCM = new JsonObject();
-						notificaitonFCM.addProperty("title", "新通知");
-						notificaitonFCM.addProperty("body", "留言已被刪除");
-						sendSingleFcm(notificaitonFCM, memberToken);
+					if (memberToken != null) {		
+						NotificationController.sendSingleFcmNoNotification(memberToken);
 					}
 				}
 			}
@@ -171,33 +190,5 @@ public class CommentController extends HttpServlet {
 		writeText(response, new Gson().toJson(comments));
 	}
 
-	// 發送單一FCM
-	private void sendSingleFcm(JsonObject jsonObject, String registrationToken) {
-		String title = jsonObject.get("title").getAsString();
-		String body = jsonObject.get("body").getAsString();
-		String data = jsonObject.get("data") == null ? "no data" : jsonObject.get("data").getAsString();
-		// 主要設定訊息標題與內容，client app一定要在背景時才會自動顯示
-		Notification notification = Notification.builder()
-				.setTitle(title) // 設定標題
-				.setBody(body) // 設定內容
-				.build();
-		// 發送notification message
-		Message.Builder message = Message.builder();
-		if(!body.equals("留言已被刪除")) {
-			 message
-			 	.setNotification(notification) // 設定client app在背景時會自動顯示訊息
-			 	.putData("data", data); // 設定自訂資料，user點擊訊息時方可取值
-		}
-			message	
-		 		.setToken(registrationToken); // 送訊息給指定token的裝置
-		try {
-			FirebaseMessaging.getInstance().send(message.build());
-//					String messageId = FirebaseMessaging.getInstance().send(message);
-//					System.out.println(registrationToken);
-//					System.out.println("messageId: " + messageId);
-		} catch (FirebaseMessagingException e) {
-			e.printStackTrace();
-		}
-	}
 
 }

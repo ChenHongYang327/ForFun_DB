@@ -21,7 +21,7 @@ public interface NotificationDao {
 	
 	int editAppointment(int notifiedId, int appointmenId);
 	
-	int updateOrder(int notifiedId, int orderId);
+	int updateOrder(int notifiedId);
 	
 	int updateMessage(int notifiedId, int messageId);
 	

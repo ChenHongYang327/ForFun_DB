@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.google.firebase.FirebaseApp;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.FirebaseMessagingException;
+import com.google.firebase.messaging.Message;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -67,6 +70,7 @@ public class NotificationController extends HttpServlet {
 				int memberId = req.get("memberId").getAsInt();
 				List<Notification> notifications =new ArrayList<>() ;
 				List<String> customersHeadShot = new ArrayList<>();
+				List<Integer>appointmentOwnerId=new ArrayList<>();
 				int customerId;
 				//過濾通知
 				for (Notification notification : notificationService.selectByMemberID(memberId)) {
@@ -78,6 +82,7 @@ public class NotificationController extends HttpServlet {
 							notifications.add(notification);
 							customerId = comment.getMemberId();
 							customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
+							appointmentOwnerId.add(-1);
 						}
 					}
 					// 預約單
@@ -86,8 +91,9 @@ public class NotificationController extends HttpServlet {
 //						System.out.println(notification.getAppointmentId() + "");
 						notifications.add(notification);
 //						System.out.println(notification.getAppointmentId()+"");
-						customerId = appointmentService.selectById(notification.getAppointmentId()).getTenantId();
+						customerId = appointmentService.notificationselectById(notification.getAppointmentId()).getTenantId();
 						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
+						appointmentOwnerId.add(appointmentService.notificationselectById(notification.getAppointmentId()).getOwnerId());
 
 					}
 					// 訂單
@@ -96,17 +102,20 @@ public class NotificationController extends HttpServlet {
 						notifications.add(notification);
 						customerId = orderService.selectByID(notification.getOrderId()).getTenantId();
 						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
+						appointmentOwnerId.add(-1);
 					}
 					// 私訊
 					else if (notification.getMessageId() != 0) {
 						// customerId=meService.selectById(notification.getAppointmentId()).getTenantId();
 						// customersId.add(customerId);
+						
 					}
 				}
 				// 寫出回應
 				JsonObject resp = new JsonObject();
 				resp.addProperty("Notifications", new Gson().toJson(notifications));
 				resp.addProperty("CustomersHeadShot", new Gson().toJson(customersHeadShot));
+				resp.addProperty("appointmentOwnerId", new Gson().toJson(appointmentOwnerId));
 				writer.print(resp.toString());
 //					System.out.println(resp.toString());
 			}
@@ -142,11 +151,52 @@ public class NotificationController extends HttpServlet {
 
 			else if (req.get("action").getAsString().equals("getPublishTitle")) {
 				int appointmentId = req.get("appointmentId").getAsInt();
-				int publishId = appointmentService.selectById(appointmentId).getPublishId();
+				int publishId = appointmentService.notificationselectById(appointmentId).getPublishId();
 				Publish publish =publishService.selectById(publishId);
 				writer.print(publish.getTitle());
 			}
 		}
 	}
+	
+	// 發送單一FCM
+		public static void sendSingleFcm(JsonObject jsonObject, String registrationToken) {
+			String title = jsonObject.get("title").getAsString();
+			String body = jsonObject.get("body").getAsString();
+			String data = jsonObject.get("data") == null ? "no data" : jsonObject.get("data").getAsString();
+			// 主要設定訊息標題與內容，client app一定要在背景時才會自動顯示
+			com.google.firebase.messaging.Notification notification = com.google.firebase.messaging.Notification.builder()
+					.setTitle(title) // 設定標題
+					.setBody(body) // 設定內容
+					.build();
+			// 發送notification message
+			Message.Builder message = Message.builder();
+			message
+				 	.setNotification(notification) // 設定client app在背景時會自動顯示訊息
+				 	.putData("data", data)// 設定自訂資料，user點擊訊息時方可取值
+			 		.setToken(registrationToken); // 送訊息給指定token的裝置
+			try {
+				FirebaseMessaging.getInstance().send(message.build());
+//						String messageId = FirebaseMessaging.getInstance().send(message);
+//						System.out.println(registrationToken);
+//						System.out.println("messageId: " + messageId);
+			} catch (FirebaseMessagingException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		// 發送單一FCM(不含通知)
+		public static void sendSingleFcmNoNotification (String registrationToken) {	
+					// 發送notification message
+					Message.Builder message = Message.builder();
+					message	.setToken(registrationToken); // 送訊息給指定token的裝置
+					try {
+						FirebaseMessaging.getInstance().send(message.build());
+//								String messageId = FirebaseMessaging.getInstance().send(message);
+//								System.out.println(registrationToken);
+//								System.out.println("messageId: " + messageId);
+					} catch (FirebaseMessagingException e) {
+						e.printStackTrace();
+					}
+				}
 
 }

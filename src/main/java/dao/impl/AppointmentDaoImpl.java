@@ -127,6 +127,42 @@ public class AppointmentDaoImpl implements AppointmentDao {
         
         return null;
     }
+    
+    @Override
+	public Appointment notificationselectById(int appointmentId) {
+    	 final String sql = "SELECT * FROM appointment WHERE APPOINTMENT_ID = ?";
+         
+         try (
+             Connection conn = dataSource.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+         ) {
+             stmt.setInt(1, appointmentId);
+             
+             try (
+                 ResultSet rs = stmt.executeQuery();
+             ) {
+                 while (rs.next()) {
+                     Appointment appointment = new Appointment();
+                     appointment.setAppointmentId(rs.getInt("APPOINTMENT_ID"));
+                     appointment.setPublishId(rs.getInt("PUBLISH_ID"));
+                     appointment.setOwnerId(rs.getInt("OWNER_ID"));
+                     appointment.setTenantId(rs.getInt("TENANT_ID"));
+                     appointment.setAppointmentTime(rs.getTimestamp("APPOINTMENT_TIME"));
+                     appointment.setRead(rs.getBoolean("READ"));
+                     appointment.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+                     appointment.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+                     appointment.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+                     
+                     return appointment;
+                 }
+             }
+         } catch (Exception e) {
+             e.printStackTrace();
+         }
+         
+         return null;
+	}
+
 
     @Override
     public List<Appointment> selectAll() {
@@ -243,3 +279,4 @@ public class AppointmentDaoImpl implements AppointmentDao {
 	        return null;
 	}
 }
+	

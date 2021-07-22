@@ -46,8 +46,8 @@ public class NotificationService {
 	}
 	
 	//未點擊通知已讀訂單
-	public int updateOrder(int notifiedId, int orderId) {
-		return notificationDao.updateOrder(notifiedId, orderId);
+	public int updateOrder(int notifiedId) {
+		return notificationDao.updateOrder(notifiedId);
 	}
 	//未點擊通知已讀私訊
 	public int updateMessage(int notifiedId, int messageId) {

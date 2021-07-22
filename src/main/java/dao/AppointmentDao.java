@@ -13,6 +13,8 @@ public interface AppointmentDao {
     
     Appointment selectById(int appointmentId);
     
+    Appointment notificationselectById(int appointmentId);
+    
     List<Appointment> selectAll();
     
     int getInsertId();

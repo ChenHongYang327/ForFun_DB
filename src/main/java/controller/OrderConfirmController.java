@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -95,10 +96,19 @@ public class OrderConfirmController extends HttpServlet {
 			int statusCode = jsonObj.get("STATUS").getAsInt();
 			int signinId = jsonObj.get("SIGNINID").getAsInt(); //房客ＩＤ
 			List<Order> orders = orderService.selectAllBySatus(statusCode,signinId);
-			
+			System.out.println("1234:"+signinId);
 			jsonWri.addProperty("ORDERLIST", gson.toJson(orders));
 			jsonWri.addProperty("RESULT", 200);
-			
+			//發送通知
+			int updateCount=new NotificationService().updateOrder(signinId);
+			System.out.println(updateCount+"");
+			if(updateCount>0) {
+				String memberToken=new MemberService().selectById(signinId).getToken();
+				if(memberToken!=null) {
+					NotificationController.sendSingleFcmNoNotification(memberToken);
+				}
+				
+			}
 			break;
 			
 		case 2: //房客流程 拿刊登單物件
@@ -139,15 +149,12 @@ public class OrderConfirmController extends HttpServlet {
 			jsonWri.addProperty("ORDERLIST", gson.toJson(orders_5));
 			jsonWri.addProperty("RESULT", 200);
 			
-			//通知功能
-			int updateCount=new NotificationService().updateAppointment(signinId_5);
-			if(updateCount>0) {
+			//房東預約清單已讀通知功能
+			int updateCount2=new NotificationService().updateAppointment(signinId_5);
+			if(updateCount2>0) {
 				String memberToken=new MemberService().selectById(signinId_5).getToken();
 				if(memberToken!=null) {
-					JsonObject notificaitonFCM = new JsonObject();
-					notificaitonFCM.addProperty("title", "新通知");
-					notificaitonFCM.addProperty("body", "刪除");
-					sendSingleFcm(notificaitonFCM, memberToken);
+					NotificationController.sendSingleFcmNoNotification(memberToken);
 				}
 			}
 			//---------
@@ -200,30 +207,5 @@ public class OrderConfirmController extends HttpServlet {
 		}
 
 	}
-	// 發送單一FCM
-			private void sendSingleFcm(JsonObject jsonObject, String registrationToken) {
-				String title = jsonObject.get("title").getAsString();
-				String body = jsonObject.get("body").getAsString();
-				String data = jsonObject.get("data") == null ? "no data" : jsonObject.get("data").getAsString();
-				// 主要設定訊息標題與內容，client app一定要在背景時才會自動顯示
-				Notification notification = Notification.builder().setTitle(title) // 設定標題
-						.setBody(body) // 設定內容
-						.build();
-				// 發送notification message
-				Message.Builder message = Message.builder();
-				if (!body.equals("刪除")) {
-					message.setNotification(notification) // 設定client app在背景時會自動顯示訊息
-							.putData("data", data); // 設定自訂資料，user點擊訊息時方可取值
-				}
-				message.setToken(registrationToken); // 送訊息給指定token的裝置
-				try {
-					FirebaseMessaging.getInstance().send(message.build());
-//								String messageId = FirebaseMessaging.getInstance().send(message.build());
-//								System.out.println(registrationToken);
-//								System.out.println("messageId: " + messageId);
-				} catch (FirebaseMessagingException e) {
-					e.printStackTrace();
-				}
-			}
 
 }

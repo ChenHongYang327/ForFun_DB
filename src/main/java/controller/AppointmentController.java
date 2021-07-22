@@ -28,6 +28,7 @@ import service.AppointmentService;
 import service.MemberService;
 import service.NotificationService;
 import service.OrderService;
+import service.PostService;
 import service.PublishService;
 
 @WebServlet("/appointment")
@@ -90,7 +91,7 @@ public class AppointmentController extends HttpServlet {
 								String publishTitle = new PublishService().selectById(appointment.getPublishId())
 										.getTitle();
 								notificaitonFCM.addProperty("body", "您的" + "「" + publishTitle + "」" + "刊登單有一筆看房預約已被修改");
-								sendSingleFcm(notificaitonFCM, memberToken);
+								NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
 							}
 						}
 
@@ -112,7 +113,7 @@ public class AppointmentController extends HttpServlet {
 								String publishTitle = new PublishService().selectById(appointment.getPublishId())
 										.getTitle();
 								notificaitonFCM.addProperty("body", "您的" + "「" + publishTitle + "」" + "刊登單有一筆新的看房預約");
-								sendSingleFcm(notificaitonFCM, memberToken);
+								NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
 							}
 						}
 
@@ -145,16 +146,13 @@ public class AppointmentController extends HttpServlet {
                 int notified=appointmentService.selectById(appointmentId).getOwnerId();
                 // 刪除預約資料
                 int count = appointmentService.deleteById(appointmentId);
+                if(count>0) {
                 //刪除通知
                 new NotificationService().deleteAppointment(notified, appointmentId);
                 String memberToken=new MemberService().selectById(notified).getToken();
-                if(memberToken!=null) {
-                	JsonObject notificaitonFCM = new JsonObject();
-					notificaitonFCM.addProperty("title", "新通知");
-					String publishTitle = new PublishService().selectById(appointment.getPublishId())
-							.getTitle();
-					notificaitonFCM.addProperty("body", "刪除");
-					sendSingleFcm(notificaitonFCM, memberToken);
+                if(memberToken!=null) {   
+					NotificationController.sendSingleFcmNoNotification(memberToken);
+                }
                 }
                 //---------
                 JsonObject result = new JsonObject();
@@ -170,17 +168,30 @@ public class AppointmentController extends HttpServlet {
                 // 修改訂單狀態為2
                 Order order = orderService.selectByPublishIDAndTenantID(appointment.getPublishId(), appointment.getTenantId()); 
                 orderService.changeOrderStatus(order.getOrderId(), 2);
-                //被通知者
-                int notified=appointmentService.selectById(appointmentId).getOwnerId();
-                // 刪除預約資料
-                int count = appointmentService.deleteById(appointmentId);
-                //刪除通知        
-                String memberToken=new MemberService().selectById(notified).getToken();
+                // 房東
+                int ownerId=appointmentService.selectById(appointmentId).getOwnerId();
+                //房客
+                int tenantId=appointmentService.selectById(appointmentId).getTenantId();
+                int publishId=appointmentService.selectById(appointmentId).getPublishId();
+                //通知預約方
+                new NotificationService().insertAppointment(tenantId, appointmentId);
+                String memberToken=new MemberService().selectById(tenantId).getToken();
                 if(memberToken!=null) {
                 	JsonObject notificaitonFCM = new JsonObject();
 					notificaitonFCM.addProperty("title", "新通知");
-					notificaitonFCM.addProperty("body", "刪除");
-					sendSingleFcm(notificaitonFCM, memberToken);
+					String publishTitle=new PublishService().selectById(publishId).getTitle();
+					notificaitonFCM.addProperty("body", "您的"+"「"+publishTitle+"」"+"看房預約已通過");
+					NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
+                }       
+                // 刪除預約資料
+                int count = appointmentService.deleteById(appointmentId);
+                if(count>0) {
+                //刪除通知   
+                new NotificationService().deleteAppointment(ownerId, appointmentId);
+                String memberToken2=new MemberService().selectById(ownerId).getToken();
+                if(memberToken2!=null) {
+                	NotificationController.sendSingleFcmNoNotification(memberToken2);
+                }
                 }
                 //---------
                 JsonObject result = new JsonObject();
@@ -206,32 +217,5 @@ public class AppointmentController extends HttpServlet {
             e.printStackTrace();
         }
 	}
-	// 發送單一FCM
-		private void sendSingleFcm(JsonObject jsonObject, String registrationToken) {
-			String title = jsonObject.get("title").getAsString();
-			String body = jsonObject.get("body").getAsString();
-			String data = jsonObject.get("data") == null ? "no data" : jsonObject.get("data").getAsString();
-			// 主要設定訊息標題與內容，client app一定要在背景時才會自動顯示
-			Notification notification = Notification.builder().setTitle(title) // 設定標題
-					.setBody(body) // 設定內容
-					.build();
-			// 發送notification message
-			Message.Builder message = Message.builder();
-			if (!body.equals("刪除")) {
-				message.setNotification(notification) // 設定client app在背景時會自動顯示訊息
-						.putData("data", data); // 設定自訂資料，user點擊訊息時方可取值
-			}
-			message.setToken(registrationToken); // 送訊息給指定token的裝置
-			try {
-				FirebaseMessaging.getInstance().send(message.build());
-//							String messageId = FirebaseMessaging.getInstance().send(message.build());
-//							System.out.println(registrationToken);
-//							System.out.println("messageId: " + messageId);
-			} catch (FirebaseMessagingException e) {
-				e.printStackTrace();
-			}
-		}
-
-
 
 }

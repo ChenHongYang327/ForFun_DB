@@ -129,10 +129,7 @@ public class DiscussionBoardController extends HttpServlet {
 			int notified=new PostService().selectById(postId).getPosterId();
 			String memberToken = new MemberService().selectById(notified).getToken();
 			if (memberToken != null) {
-				JsonObject notificaitonFCM = new JsonObject();
-				notificaitonFCM.addProperty("title", "新通知");
-				notificaitonFCM.addProperty("body", "文章已被刪除");
-				sendSingleFcm(notificaitonFCM, memberToken);
+				NotificationController.sendSingleFcmNoNotification(memberToken);
 			}
 			//----------------------
 		
@@ -172,32 +169,4 @@ public class DiscussionBoardController extends HttpServlet {
 		writeText(response, new Gson().toJson(posts));
 	}
 	
-	// 發送單一FCM
-	private void sendSingleFcm(JsonObject jsonObject, String registrationToken) {
-		String title = jsonObject.get("title").getAsString();
-		String body = jsonObject.get("body").getAsString();
-		String data = jsonObject.get("data") == null ? "no data" : jsonObject.get("data").getAsString();
-		// 主要設定訊息標題與內容，client app一定要在背景時才會自動顯示
-		Notification notification = Notification.builder()
-				.setTitle(title) // 設定標題
-				.setBody(body) // 設定內容
-				.build();
-		// 發送notification message
-		Message.Builder message = Message.builder();
-		if(!body.equals("文章已被刪除")) {
-			 message
-			 	.setNotification(notification) // 設定client app在背景時會自動顯示訊息
-			 	.putData("data", data); // 設定自訂資料，user點擊訊息時方可取值
-		}
-			message	
-		 		.setToken(registrationToken); // 送訊息給指定token的裝置
-		try {
-			FirebaseMessaging.getInstance().send(message.build());
-//					String messageId = FirebaseMessaging.getInstance().send(message);
-//					System.out.println(registrationToken);
-//					System.out.println("messageId: " + messageId);
-		} catch (FirebaseMessagingException e) {
-			e.printStackTrace();
-		}
-	}
 }

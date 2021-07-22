@@ -103,11 +103,8 @@ public class PublishListController extends HttpServlet {
 					}
 					// 觸發通知
 					String memberToken = new MemberService().selectById(appointments.get(0).getOwnerId()).getToken();
-					if (memberToken != null) {
-						JsonObject notificaitonFCM = new JsonObject();
-						notificaitonFCM.addProperty("title", "新通知");
-						notificaitonFCM.addProperty("body", "刊登單已被刪除");
-						sendSingleFcm(notificaitonFCM, memberToken);
+					if (memberToken != null) {	
+						NotificationController.sendSingleFcmNoNotification(memberToken);
 					}
 					resp.addProperty("result", true);
 				} else {
@@ -135,26 +132,5 @@ public class PublishListController extends HttpServlet {
 		}
 	}
 
-	// 發送單一FCM
-	private void sendSingleFcm(JsonObject jsonObject, String registrationToken) {
-		String title = jsonObject.get("title").getAsString();
-		String body = jsonObject.get("body").getAsString();
-		String data = jsonObject.get("data") == null ? "no data" : jsonObject.get("data").getAsString();
-		// 主要設定訊息標題與內容，client app一定要在背景時才會自動顯示
-		Notification notification = Notification.builder().setTitle(title) // 設定標題
-				.setBody(body) // 設定內容
-				.build();
-		// 發送notification message(背景時不會有通知僅觸發)
-		Message.Builder message = Message.builder();
-		message.setToken(registrationToken); // 送訊息給指定token的裝置
-		try {
-			FirebaseMessaging.getInstance().send(message.build());
-//						String messageId = FirebaseMessaging.getInstance().send(message);
-//						System.out.println(registrationToken);
-//						System.out.println("messageId: " + messageId);
-		} catch (FirebaseMessagingException e) {
-			e.printStackTrace();
-		}
-	}
 
 }

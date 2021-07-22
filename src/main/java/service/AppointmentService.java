@@ -28,6 +28,10 @@ public class AppointmentService {
     public Appointment selectById(int appointmentId) {
         return dao.selectById(appointmentId);
     }
+    //通知用
+    public Appointment notificationselectById(int appointmentId) {
+    	return dao.notificationselectById(appointmentId);
+    }
 
     public List<Appointment> selectAll() {
         return dao.selectAll();
