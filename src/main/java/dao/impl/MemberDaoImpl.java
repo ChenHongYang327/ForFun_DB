@@ -192,7 +192,7 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public List<Member> selectAll() {
-		final String sql = "select * from FORFUN.member where ROLE!=0";
+		final String sql = "select * from FORFUN.member";
 		List<Member> members=new ArrayList<Member>();
 		try (Connection conn = dataSource.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql); 
