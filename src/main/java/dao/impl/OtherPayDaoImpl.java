@@ -58,8 +58,8 @@ public class OtherPayDaoImpl implements OtherPayDao {
 
 		try (Connection conn = dataSource.getConnection(); 
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
-			stmt.setInt(1, otherpayID);
-			stmt.setInt(2, status);
+			stmt.setInt(1, status);
+			stmt.setInt(2, otherpayID);
 
 			stmt.executeUpdate();
 			
