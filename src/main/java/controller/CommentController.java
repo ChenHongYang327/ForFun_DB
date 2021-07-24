@@ -73,11 +73,12 @@ public class CommentController extends HttpServlet {
 		if (action.equals("getAll")) {
 			int postId = jsonObject.get("postId").getAsInt();
 			//請求者ID
-			int reqMemberId=jsonObject.get("reqMemberId").getAsInt();
+			int reqMemberId = jsonObject.get("reqMemberId").getAsInt();
 			System.out.println("input: " + jsonIn);
 			List<Comment> commentList = commentService.selectAllByPostId(postId);
 			List<Member> memberList = new ArrayList<Member>();
 			
+			//取留言人名與頭貼
 			for (Comment comment : commentList) {
 				Member member = memberService.selectAllHeadShotAndName(comment.getMemberId());
 				memberList.add(member);
