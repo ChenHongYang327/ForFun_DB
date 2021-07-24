@@ -22,7 +22,7 @@ public class ChatRoomDaolmpl implements ChatRoomDao {
 	
 	@Override
 	public List<ChatRoom> selectAll() {
-		final String sql = "SELECT CHATROOM_ID, MEMBER_ID_1, CREATE_TIME FROM CHATROOM;";
+		final String sql = "SELECT * FROM CHATROOM;";
 		
 		try(Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
@@ -34,6 +34,7 @@ public class ChatRoomDaolmpl implements ChatRoomDao {
 				ChatRoom chatRoom = new ChatRoom();
 				chatRoom.setChatroomId(rs.getInt("CHATROOM_ID"));
 				chatRoom.setMemberId1(rs.getInt("MEMBER_ID_1"));
+				chatRoom.setMemberId2(rs.getInt("MEMBER_ID_2"));
 				chatRoom.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				
 				chatRoomList.add(chatRoom);

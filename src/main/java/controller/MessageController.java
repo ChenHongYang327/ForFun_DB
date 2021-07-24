@@ -76,12 +76,14 @@ public class MessageController extends HttpServlet {
 			//取得token
 			List<Member> memberList = new ArrayList<Member>();
 			Member member = memberService.selectById(member1TokenId);
+			Member member2 = memberService.selectById(memberId);
+			
 			registrationToken = member.getToken();
 			if (registrationToken != null) {
 				JsonObject notificaitonFCM = new JsonObject();
 				notificaitonFCM.addProperty("title", "新私訊");
-				String memberName = member.getNameL() + member.getNameF();
-				notificaitonFCM.addProperty("body", "您有來自"+"「"+ memberName + "」"+"的一則新訊息");
+				String memberName = member2.getNameL() + member2.getNameF();
+				notificaitonFCM.addProperty("body", "您有來自" + "「 "+ memberName + "」" + "的一則新訊息");
 				NotificationController.sendSingleFcm(notificaitonFCM, registrationToken);
 			}
 			
