@@ -71,8 +71,17 @@ public class MessageController extends HttpServlet {
 		}
 		String action = jsonObject.get("action").getAsString();
 		if (action.equals("getAll")) {
-			int memberId = jsonObject.get("MEMBER_ID").getAsInt();
+			int chatroomId = jsonObject.get("chatRoomId").getAsInt();
+		
+			
+			List<Message> messageList = messageService.selectAll(chatroomId);
+			jsonObject.addProperty("messageList", new Gson().toJson(messageList));
+			writeText(response, gson.toJson(jsonObject));
+			
+		} else if (action.equals("messageInsert")) {
+			String messageJson = jsonObject.get("chatRoomMessage").getAsString();
 			int member1TokenId = jsonObject.get("receivedMemberId").getAsInt();
+			int memberId = jsonObject.get("MemberId").getAsInt();
 			//取得token
 			List<Member> memberList = new ArrayList<Member>();
 			Member member = memberService.selectById(member1TokenId);
@@ -86,13 +95,6 @@ public class MessageController extends HttpServlet {
 				notificaitonFCM.addProperty("body", "您有來自" + "「 "+ memberName + "」" + "的一則新訊息");
 				NotificationController.sendSingleFcm(notificaitonFCM, registrationToken);
 			}
-			
-			List<Message> messageList = messageService.selectAll(memberId);
-			jsonObject.addProperty("messageList", new Gson().toJson(messageList));
-			writeText(response, gson.toJson(jsonObject));
-			
-		} else if (action.equals("messageInsert")) {
-			String messageJson = jsonObject.get("chatRoomMessage").getAsString();
 			
 			System.out.println("messageJson = " + messageJson);
 			Message message = gson.fromJson(messageJson, Message.class);

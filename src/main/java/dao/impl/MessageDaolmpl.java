@@ -68,12 +68,12 @@ public class MessageDaolmpl implements MessageDao{
 	}
 
 	@Override
-	public List<Message> selectAll(int MEMBER_ID) {
-		String sql = "SELECT MSG_ID, CHATROOM_ID, MSG_CHAT, CREATE_TIME FROM Message WHERE MEMBER_ID = ?;";
+	public List<Message> selectAll(int CHATROOM_ID) {
+		String sql = "SELECT MSG_ID, CHATROOM_ID, MSG_CHAT, CREATE_TIME FROM Message WHERE CHATROOM_ID = ?;";
 		List<Message> messageList = new ArrayList<Message>();
 		try (Connection connection = dataSource.getConnection();
 		PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setInt(1, MEMBER_ID);
+			ps.setInt(1, CHATROOM_ID);
 			
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {

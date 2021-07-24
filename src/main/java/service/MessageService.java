@@ -21,7 +21,7 @@ public class MessageService {
 		return dao.selectById(MSG_ID);
 	}
 	
-	public List<Message> selectAll(int MEMBER_ID) {
-		return dao.selectAll(MEMBER_ID);
+	public List<Message> selectAll(int CHATROOM_ID) {
+		return dao.selectAll(CHATROOM_ID);
 	}
 }
