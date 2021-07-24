@@ -36,15 +36,66 @@ public class SignInController extends HttpServlet {
 			try (PrintWriter writer = response.getWriter()) {
 				for (Member member : memberService.selectAll()) {
 					if (inputPhone == member.getPhone()) {
-						respJson.addProperty("pass", true);
-						respJson.addProperty("imformation", new Gson().toJson(member));
-						writer.print(respJson);
+						if (member.getRole() != 0 && member.getType() != 0) {
+							respJson.addProperty("pass", 0);
+							respJson.addProperty("imformation", new Gson().toJson(member));
+							writer.print(respJson);
+						} else if (member.getType() == 0) {
+							respJson.addProperty("pass", 1);
+							writer.print(respJson);
+						}
 						return;
 					}
 				}
-				respJson.addProperty("pass", false);
+				respJson.addProperty("pass", 2);
 				writer.print(respJson);
+
 			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (clientReq.get("action").getAsString().equals("rootSingIn")) {
+			JsonObject respJson = new JsonObject(); // 伺服器回覆
+			int inputPhone = clientReq.get("phone").getAsInt();
+			try (PrintWriter writer = response.getWriter()) {
+				for (Member member : memberService.selectAll()) {
+					if (inputPhone == member.getPhone()) {
+						if (member.getRole() == 0) {
+							respJson.addProperty("pass", 0);
+							writer.print(respJson);
+						}
+						// 非管理者權限
+						else if (member.getRole() == 1 || member.getRole() == 2) {
+							respJson.addProperty("pass", 1);
+							writer.print(respJson);
+						}
+						return;
+					}
+				}
+				// 非已註冊會員
+				respJson.addProperty("pass", 2);
+				writer.print(respJson);
+
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
+		} else if (clientReq.get("action").getAsString().equals("checkType")) {
+			int memberId = clientReq.get("memberId").getAsInt();
+			try (PrintWriter writer = response.getWriter()) {
+				if (memberService.selectById(memberId).getType() == 0) {
+					memberService.clearTokenById(memberId);
+					writer.print(0);
+				} else {
+					writer.print(1);
+				}
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
+
 		} else if (clientReq.get("action").getAsString().equals("updateToken")) {
 			Member member = new Gson().fromJson(clientReq.get("member").getAsString(), Member.class);
 			JsonObject respJson = new JsonObject();
@@ -74,7 +125,7 @@ public class SignInController extends HttpServlet {
 				}
 			}
 			try (PrintWriter writer = response.getWriter()) {
-					writer.print(role);
+				writer.print(role);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
