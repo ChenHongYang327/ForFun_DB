@@ -28,13 +28,13 @@ public class OtherPayService {
 	}
 
 	// 房客拿otherpay list
-	public List<OtherPay> selectByTenntId(int tenantId, int orderStaus) {
-		return dao.selectByTenantId(tenantId, orderStaus);
+	public List<OtherPay> selectByTenntId(int tenantId, int orderStaus, int otherpayStatus) {
+		return dao.selectByTenantId(tenantId, orderStaus,otherpayStatus);
 	}
 
 	// 房東拿otherpay list
-	public List<OtherPay> selectByOwnerId(int ownerId, int orderStaus) {
-		return dao.selectByOwnerId(ownerId, orderStaus);
+	public List<OtherPay> selectByOwnerId(int ownerId, int orderStaus, int otherpayStatus) {
+		return dao.selectByOwnerId(ownerId, orderStaus, otherpayStatus);
 	}
 
 }

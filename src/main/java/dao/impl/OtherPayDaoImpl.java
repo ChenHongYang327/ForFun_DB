@@ -36,8 +36,8 @@ public class OtherPayDaoImpl implements OtherPayDao {
 					otherPay.setOtherpayId(rs.getInt("OTHERPAY_ID"));
 					otherPay.setAgreementId(rs.getInt("AGREEMENT_ID"));
 					otherPay.setOtherpayMoney(rs.getInt("OTHERPAY_MONEY"));
-					otherPay.setOtherpayNote(rs.getNString("OTHERPAY_NOTE"));
-					otherPay.setSuggestImg(rs.getNString("SUGGEST_IMG"));
+					otherPay.setOtherpayNote(rs.getString("OTHERPAY_NOTE"));
+					otherPay.setSuggestImg(rs.getString("SUGGEST_IMG"));
 					otherPay.setOtherpayStatus(rs.getInt("OTHERPAY_STATUS"));
 					otherPay.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 					otherPay.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
@@ -54,13 +54,16 @@ public class OtherPayDaoImpl implements OtherPayDao {
 
 	@Override
 	public boolean changeOtherpayStatus(int otherpayID, int status) {
-		final String sql = "UPDATE otherpay SET OTHERPAY_STATUS = ? WHERE OTHERPAY_ID = ? ;";
+		final String sql = "UPDATE FORFUN.otherpay SET OTHERPAY_STATUS = ? WHERE OTHERPAY_ID = ? ;";
 
-		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
-			stmt.setInt(1, status);
-			stmt.setInt(2, otherpayID);
+		try (Connection conn = dataSource.getConnection(); 
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setInt(1, otherpayID);
+			stmt.setInt(2, status);
 
-			return stmt.execute();
+			stmt.executeUpdate();
+			
+			return true;
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -92,15 +95,16 @@ public class OtherPayDaoImpl implements OtherPayDao {
 
 
 	@Override
-	public List<OtherPay> selectByTenantId(int tenantId, int orderStaus) {
+	public List<OtherPay> selectByTenantId(int tenantId, int orderStaus, int otherpayStatus) {
 		final String sql = "select ot.OTHERPAY_ID,ot.AGREEMENT_ID,ot.OTHERPAY_MONEY,ot.OTHERPAY_NOTE,ot.SUGGEST_IMG,ot.OTHERPAY_STATUS,ot.CREATE_TIME,ot.DELETE_TIME " + 
-				"from FORFUN.order o left join FORFUN.agreement a on o.ORDER_ID = a.AGREEMENT_ID left join FORFUN.otherpay ot on a.AGREEMENT_ID = ot.OTHERPAY_ID " + 
-				"where o.TENANT_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = 0;";
+				"from FORFUN.order o left join FORFUN.agreement a on o.ORDER_ID = a.ORDER_ID left join FORFUN.otherpay ot on a.AGREEMENT_ID = ot.AGREEMENT_ID " + 
+				"where o.TENANT_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = ?;";
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 
 			stmt.setInt(1, tenantId);
 			stmt.setInt(2, orderStaus);
+			stmt.setInt(3, otherpayStatus);
 
 			List<OtherPay> otherPays = new ArrayList<>();
 			try (ResultSet rs = stmt.executeQuery();) {
@@ -109,8 +113,8 @@ public class OtherPayDaoImpl implements OtherPayDao {
 					otherPay.setOtherpayId(rs.getInt("OTHERPAY_ID"));
 					otherPay.setAgreementId(rs.getInt("AGREEMENT_ID"));
 					otherPay.setOtherpayMoney(rs.getInt("OTHERPAY_MONEY"));
-					otherPay.setOtherpayNote(rs.getNString("OTHERPAY_NOTE"));
-					otherPay.setSuggestImg(rs.getNString("SUGGEST_IMG"));
+					otherPay.setOtherpayNote(rs.getString("OTHERPAY_NOTE"));
+					otherPay.setSuggestImg(rs.getString("SUGGEST_IMG"));
 					otherPay.setOtherpayStatus(rs.getInt("OTHERPAY_STATUS"));
 					otherPay.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 					otherPay.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
@@ -126,16 +130,19 @@ public class OtherPayDaoImpl implements OtherPayDao {
 	}
 
 	@Override
-	public List<OtherPay> selectByOwnerId(int ownerId, int orderStaus) {
-		final String sql = "select ot.OTHERPAY_ID,ot.AGREEMENT_ID,ot.OTHERPAY_MONEY,ot.OTHERPAY_NOTE,ot.SUGGEST_IMG,ot.OTHERPAY_STATUS,ot.CREATE_TIME,ot.DELETE_TIME " + 
-				"from FORFUN.order o left join FORFUN.agreement a on o.ORDER_ID = a.AGREEMENT_ID left join FORFUN.otherpay ot on a.AGREEMENT_ID = ot.OTHERPAY_ID " +
+	public List<OtherPay> selectByOwnerId(int ownerId, int orderStaus, int otherpayStatus) {
+		final String sql = "select ot.* " + 
+				"from FORFUN.order o "+ 
+				"left join FORFUN.agreement a on o.ORDER_ID = a.ORDER_ID "+ 
+				"left join FORFUN.otherpay ot on a.AGREEMENT_ID = ot.AGREEMENT_ID " +
 				"left join FORFUN.publish p on o.PUBLISH_ID = p.PUBLISH_ID "+
-				"where p.OWNER_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = 0;";
+				"where p.OWNER_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = ?;";
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 
 			stmt.setInt(1, ownerId);
 			stmt.setInt(2, orderStaus);
+			stmt.setInt(3, otherpayStatus);
 
 			List<OtherPay> otherPays = new ArrayList<>();
 			try (ResultSet rs = stmt.executeQuery();) {
@@ -144,8 +151,8 @@ public class OtherPayDaoImpl implements OtherPayDao {
 					otherPay.setOtherpayId(rs.getInt("OTHERPAY_ID"));
 					otherPay.setAgreementId(rs.getInt("AGREEMENT_ID"));
 					otherPay.setOtherpayMoney(rs.getInt("OTHERPAY_MONEY"));
-					otherPay.setOtherpayNote(rs.getNString("OTHERPAY_NOTE"));
-					otherPay.setSuggestImg(rs.getNString("SUGGEST_IMG"));
+					otherPay.setOtherpayNote(rs.getString("OTHERPAY_NOTE"));
+					otherPay.setSuggestImg(rs.getString("SUGGEST_IMG"));
 					otherPay.setOtherpayStatus(rs.getInt("OTHERPAY_STATUS"));
 					otherPay.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 					otherPay.setDeleteTime(rs.getTimestamp("DELETE_TIME"));

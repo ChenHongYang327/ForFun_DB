@@ -338,8 +338,38 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Order selectByotherpayID(int otherpayId) {
-		// TODO Auto-generated method stub
-		return null;
+		 final String sql = "select o.* from FORFUN.otherpay ot " + 
+		 		"left join FORFUN.agreement a on ot.AGREEMENT_ID = a.AGREEMENT_ID " + 
+		 		"left join FORFUN.order o on a.ORDER_ID = o.ORDER_ID " + 
+		 		"where ot.OTHERPAY_ID = ? ; ";
+	        
+	        try (
+	            Connection conn = dataSource.getConnection(); 
+	            PreparedStatement pstmt = conn.prepareStatement(sql);
+	        ) {
+	            pstmt.setInt(1, otherpayId);
+	            ResultSet rs = pstmt.executeQuery();
+	            
+	            if (rs.next()) {
+	                Order order = new Order();
+	                order.setOrderId(rs.getInt("ORDER_ID"));
+	                order.setPublishId(rs.getInt("PUBLISH_ID"));
+	                order.setTenantId(rs.getInt("TENANT_ID"));
+	                order.setTenantId(rs.getInt("PUBLISH_STAR"));
+	                order.setPublishComment(rs.getString("PUBLISH_COMMENT"));
+	                order.setOrderStatus(rs.getInt("ORDER_STATUS"));
+	                order.setRead(rs.getBoolean("READ"));
+	                order.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+	                order.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+	                order.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+	                
+	                return order;
+	            }
+
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        return null;
 	}
 	
 	@Override

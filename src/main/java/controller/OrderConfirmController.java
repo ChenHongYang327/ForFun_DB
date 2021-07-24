@@ -166,7 +166,7 @@ public class OrderConfirmController extends HttpServlet {
 			int signinId_6 = jsonObj.get("SIGNINID").getAsInt(); //房客ＩＤ
 			
 			// signId->orderId->agreementId->otherpayId->otherpayList
-			List<OtherPay> otherPays = otherPayService.selectByTenntId(signinId_6, statusCode_6);
+			List<OtherPay> otherPays = otherPayService.selectByTenntId(signinId_6, statusCode_6,0);
 			
 			jsonWri.addProperty("OTHERPAYLIST", gson.toJson(otherPays));
 			jsonWri.addProperty("RESULT", 200);
@@ -187,9 +187,21 @@ public class OrderConfirmController extends HttpServlet {
 			int signinId_8 = jsonObj.get("SIGNINID").getAsInt(); //房東ＩＤ
 			
 			// signId->orderId->agreementId->otherpayId->otherpayList
-			List<OtherPay> oList = otherPayService.selectByOwnerId(signinId_8, statusCode_8);
+			List<OtherPay> oList = otherPayService.selectByOwnerId(signinId_8, statusCode_8, 1);
 			
 			jsonWri.addProperty("OTHERPAYLIST", gson.toJson(oList));
+			jsonWri.addProperty("RESULT", 200);
+			
+			break;
+			
+		case 9: //房客流程 拿 otherpay List (已完成)
+			int statusCode_9 = jsonObj.get("STATUS").getAsInt();
+			int signinId_9 = jsonObj.get("SIGNINID").getAsInt(); //房客ＩＤ
+			
+			// signId->orderId->agreementId->otherpayId->otherpayList
+			List<OtherPay> otherPays_9 = otherPayService.selectByTenntId(signinId_9, statusCode_9, 1);
+			
+			jsonWri.addProperty("OTHERPAYLIST", gson.toJson(otherPays_9));
 			jsonWri.addProperty("RESULT", 200);
 			
 			break;

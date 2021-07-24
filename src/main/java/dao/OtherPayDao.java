@@ -12,7 +12,7 @@ public interface OtherPayDao {
 	
 	public int insert (OtherPay otherPay);
 	
-	List<OtherPay> selectByTenantId(int tenantId, int orderStaus);
+	List<OtherPay> selectByTenantId(int tenantId, int orderStaus, int otherpayStatus);
 	
-	List<OtherPay> selectByOwnerId(int OwnerId, int orderStaus);
+	List<OtherPay> selectByOwnerId(int OwnerId, int orderStaus, int otherpayStatus);
 }
