@@ -24,7 +24,6 @@ public class OrderController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private Gson gson = new Gson();
-	private StringBuilder jsonIn = new StringBuilder();
 	private OrderService orderService = new OrderService();
 	private PublishService publishService = new PublishService();
 
@@ -33,9 +32,12 @@ public class OrderController extends HttpServlet {
 
 		// 收取client端資料
 		request.setCharacterEncoding("UTF-8");
-
+		
+		StringBuilder jsonIn = new StringBuilder();
+		JsonObject jsonWri = new JsonObject();
+		
 		try (BufferedReader br = request.getReader();) {
-
+			
 			String line = null;
 			while ((line = br.readLine()) != null) {
 				jsonIn.append(line);
@@ -50,7 +52,7 @@ public class OrderController extends HttpServlet {
 		int orderID = jsonObject_Client.get("ORDER").getAsInt();
 		int resultcode = jsonObject_Client.get("RESULTCODE").getAsInt();
 
-		JsonObject jsonWri = new JsonObject();
+		
 
 		// resultcode 0 -> 要拿值。
 		// resultcode 1 -> 要更改的”訂單狀態“碼
