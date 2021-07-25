@@ -133,7 +133,7 @@ public class NotificationController extends HttpServlet {
 				int commentId = req.get("commentId").getAsInt();
 				int postId = commentService.selectById(commentId).getPostId();
 				Post post = postService.selectById(postId);
-				Member member=memberService.selectById(post.getPostId());
+				Member member=memberService.selectById(post.getPosterId());
 				String name=member.getNameL()+member.getNameF();
 				String headshot=member.getHeadshot();
 				JsonObject resp= new JsonObject();

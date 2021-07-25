@@ -3,6 +3,8 @@ package controller;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
+import member.bean.Member;
 import service.MemberService;
 
 @WebServlet("/adminMemberController")
@@ -31,7 +34,13 @@ public class AdminMemberController extends HttpServlet {
 			req = gson.fromJson(reader, JsonObject.class);
 			System.out.println("客戶端的請求:" + req);
 			if (req.get("action").getAsString().equals("getAllMember")) {
-				pw.print(gson.toJson(memberService.selectAll()));
+				List<Member>members=new ArrayList<Member>();
+				for(Member member:memberService.selectAll()) {
+					if(member.getRole()!=0) {
+						members.add(member);
+					}
+				}
+				pw.print(gson.toJson(members));
 			}
 
 		} catch (Exception e) {
