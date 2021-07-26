@@ -142,13 +142,38 @@ public class HouseSnapsShotController extends HttpServlet {
 				MemberService memberService = new MemberService();
 				int orderPublishId = orderService.selectPublishByID(orderId_2);
 				int notifiedId = publishService.selectById(orderPublishId).getOwnerId();
-				// 新增通知
+				// 刪除通知
 				new NotificationService().deleteOrder(notifiedId, orderId_2);
 				String memberToken = memberService.selectById(notifiedId).getToken();
 				if (memberToken != null) {
 					NotificationController.sendSingleFcmNoNotification(memberToken);
 				}
 
+			} 
+			//預約被取消
+			else if(orderStatus == 6) {
+				System.out.println("!@34555");
+				MemberService memberService = new MemberService();
+				int orderPublishId = orderService.selectPublishByID(orderId_2);
+				//房東
+				int notifiedId1 = publishService.selectById(orderPublishId).getOwnerId();
+				//房客
+				int notifiedId2 = orderService.selectTenantByID(orderId_2);	
+				// 刪除通知房東
+				String memberToken=null;
+				if(new NotificationService().deleteOrder(notifiedId1, orderId_2)>0){
+					memberToken = memberService.selectById(notifiedId1).getToken();
+					if (memberToken != null) {
+						NotificationController.sendSingleFcmNoNotification(memberToken);
+					}
+				}
+				// 刪除通知房客
+				if (new NotificationService().deleteOrder(notifiedId2, orderId_2)>0){
+					memberToken = memberService.selectById(notifiedId2).getToken();
+					if (memberToken != null) {
+						NotificationController.sendSingleFcmNoNotification(memberToken);
+					}
+				}
 			}
 			break;
 		case 3:
