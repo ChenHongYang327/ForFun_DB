@@ -136,7 +136,16 @@ public class DiscussionBoardController extends HttpServlet {
 			int postId = jsonObject.get("postId").getAsShort();
 			String postImagePath = postService.getImagePath(postId);
 			writeText(response, gson.toJson(postImagePath));
-		}  else {
+			
+		} else if(action.equals("getRentSeekList")){
+			// 將輸入資料列印出來除錯用
+			String boardId = jsonObject.get("boardId").getAsString();
+			int memberId = jsonObject.get("memberId").getAsInt();
+			List<Post> postList = postService.selectRentSeekList(boardId, memberId);
+			jsonObject.addProperty("rentSeekList", new Gson().toJson(postList));
+			writeText(response, gson.toJson(jsonObject)); 
+		
+		} else {
 			writeText(response, "");
 		}
 		
