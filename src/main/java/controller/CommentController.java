@@ -41,14 +41,14 @@ public class CommentController extends HttpServlet {
 		// 私密金鑰檔案可以儲存在專案以外
 		// File file = new File("/path/to/firsebase-java-privateKey.json");
 		// 私密金鑰檔案也可以儲存在專案WebContent目錄內，私密金鑰檔名要與程式所指定的檔名相同
-		try (InputStream in = getServletContext().getResourceAsStream("/firebaseServerKey.json")) {
-			FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(in))
-					.build();
-			if(NotificationController.firebaseApp==null) {
-				NotificationController.firebaseApp=FirebaseApp.initializeApp(options);
+		if (NotificationController.firebaseApp == null) {
+			try (InputStream in = getServletContext().getResourceAsStream("/firebaseServerKey.json")) {
+				FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(in))
+						.build();
+				NotificationController.firebaseApp = FirebaseApp.initializeApp(options);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 

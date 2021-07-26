@@ -49,14 +49,14 @@ public class OrderConfirmController extends HttpServlet {
 		// 私密金鑰檔案可以儲存在專案以外
 		// File file = new File("/path/to/firsebase-java-privateKey.json");
 		// 私密金鑰檔案也可以儲存在專案WebContent目錄內，私密金鑰檔名要與程式所指定的檔名相同
-		try (InputStream in = getServletContext().getResourceAsStream("/firebaseServerKey.json")) {
-			FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(in))
-					.build();
-			if(NotificationController.firebaseApp==null) {
-				NotificationController.firebaseApp=FirebaseApp.initializeApp(options);
+		if (NotificationController.firebaseApp == null) {
+			try (InputStream in = getServletContext().getResourceAsStream("/firebaseServerKey.json")) {
+				FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(in))
+						.build();
+				NotificationController.firebaseApp = FirebaseApp.initializeApp(options);
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 
@@ -96,12 +96,10 @@ public class OrderConfirmController extends HttpServlet {
 			int statusCode = jsonObj.get("STATUS").getAsInt();
 			int signinId = jsonObj.get("SIGNINID").getAsInt(); //房客ＩＤ
 			List<Order> orders = orderService.selectAllBySatus(statusCode,signinId);
-			System.out.println("1234:"+signinId);
 			jsonWri.addProperty("ORDERLIST", gson.toJson(orders));
 			jsonWri.addProperty("RESULT", 200);
 			//發送通知
 			int updateCount=new NotificationService().updateOrder(signinId);
-			System.out.println(updateCount+"");
 			if(updateCount>0) {
 				String memberToken=new MemberService().selectById(signinId).getToken();
 				if(memberToken!=null) {

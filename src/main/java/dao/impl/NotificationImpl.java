@@ -137,7 +137,7 @@ public class NotificationImpl implements NotificationDao {
 
 	@Override
 	public int updateOrder(int notifiedId) {
-		final String sql = "UPDATE FORFUN.notification SET DELETE_TIME=? WHERE NOTIFIED_ID =?  and FORFUN.notification.READ=0 and ORDER_ID is not null and DELETE_TIME is null";
+		final String sql = "UPDATE FORFUN.notification SET FORFUN.notification.READ= 1,DELETE_TIME=? WHERE NOTIFIED_ID =?  and FORFUN.notification.READ=0 and ORDER_ID is not null and DELETE_TIME is null";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			pstmt.setInt(2, notifiedId);

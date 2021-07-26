@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
 
@@ -11,6 +12,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 
@@ -19,6 +23,7 @@ import member.bean.Order;
 import member.bean.Publish;
 import service.AgreementService;
 import service.MemberService;
+import service.NotificationService;
 import service.OrderService;
 import service.PublishService;
 
@@ -32,6 +37,22 @@ public class HouseSnapsShotController extends HttpServlet {
 	private PublishService publishService = new PublishService();
 	private MemberService memberService = new MemberService();
 	private AgreementService agreementService = new AgreementService();
+
+	@Override
+	public void init() throws ServletException {
+		// 私密金鑰檔案可以儲存在專案以外
+		// File file = new File("/path/to/firsebase-java-privateKey.json");
+		// 私密金鑰檔案也可以儲存在專案WebContent目錄內，私密金鑰檔名要與程式所指定的檔名相同
+		if (NotificationController.firebaseApp == null) {
+			try (InputStream in = getServletContext().getResourceAsStream("/firebaseServerKey.json")) {
+				FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(in))
+						.build();
+				NotificationController.firebaseApp = FirebaseApp.initializeApp(options);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -69,7 +90,6 @@ public class HouseSnapsShotController extends HttpServlet {
 			int signinId = jsonObj.get("SIGNINID").getAsInt();
 			int publishId = orderService.selectPublishByID(orderId);
 			Publish publish = publishService.selectById(publishId);
-			
 
 			// 判斷signinId 是房東OR房客，並回傳相對的值
 			Member member = new Member();
@@ -100,8 +120,37 @@ public class HouseSnapsShotController extends HttpServlet {
 			} else {
 				jsonWri.addProperty("RESULT", -1);
 			}
-			break;
+			// 房客下定新增(order)
+			if (orderStatus == 12) {
+				MemberService memberService = new MemberService();
+				int orderPublishId = orderService.selectPublishByID(orderId_2);
+				int notifiedId = publishService.selectById(orderPublishId).getOwnerId();
+				// 新增通知
+				new NotificationService().insertOrder(notifiedId, orderId_2);
+				String memberToken = memberService.selectById(notifiedId).getToken();
+				if (memberToken != null) {
+					JsonObject notificaitonFCM = new JsonObject();
+					notificaitonFCM.addProperty("title", "新通知");
+					String publishTitle = new PublishService().selectById(orderPublishId).getTitle();
+					notificaitonFCM.addProperty("body", "您的" + "「" + publishTitle + "」" + "刊登單有一筆新訂單");
+					NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
+				}
 
+			} 
+			//房東按下產生合約
+			else if (orderStatus == 13) {
+				MemberService memberService = new MemberService();
+				int orderPublishId = orderService.selectPublishByID(orderId_2);
+				int notifiedId = publishService.selectById(orderPublishId).getOwnerId();
+				// 新增通知
+				new NotificationService().deleteOrder(notifiedId, orderId_2);
+				String memberToken = memberService.selectById(notifiedId).getToken();
+				if (memberToken != null) {
+					NotificationController.sendSingleFcmNoNotification(memberToken);
+				}
+
+			}
+			break;
 		case 3:
 			int orderId_3 = jsonObj.get("ORDERID").getAsInt();
 			int agreementId = agreementService.selectAgmtidByOrderid(orderId_3);
