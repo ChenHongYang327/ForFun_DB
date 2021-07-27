@@ -11,4 +11,6 @@ public interface MessageDao {
 	Message selectById(int MSG_ID);
 	
 	List<Message> selectAll(int CHATROOM_ID);
+	
+	int updateRead(int MSG_ID);
 }

@@ -20,5 +20,7 @@ public interface PostDao {
 
 	String getBoardId(int POST_ID);
 	
+	List<Post> selectRentSeekList(String BOARD_I, int POSTER_ID);
+	
 
 }

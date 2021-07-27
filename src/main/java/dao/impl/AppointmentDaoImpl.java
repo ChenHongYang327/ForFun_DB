@@ -36,7 +36,7 @@ public class AppointmentDaoImpl implements AppointmentDao {
             stmt.setBoolean(5, appointment.getRead());
             stmt.setTimestamp(6, appointment.getCreateTime());
             int result = stmt.executeUpdate();
-            if (result == 1) {
+            if (result > 0) {
 				ResultSet rs = stmt.getGeneratedKeys();
 				while (rs.next()) {
 					insertId = rs.getInt(1);

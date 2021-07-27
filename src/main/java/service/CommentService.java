@@ -6,14 +6,14 @@ import dao.CommentDao;
 import dao.impl.CommentDaolmpl;
 import member.bean.Comment;
 
-public class CommentService {
+	public class CommentService {
 	CommentDao commentDao;
 	
 	public CommentService () {
 		commentDao = new CommentDaolmpl();
 	}
 	
-public int insert(Comment comment) {
+	public int insert(Comment comment) {
 		
 		return commentDao.insert(comment);
 	}
@@ -41,6 +41,11 @@ public int insert(Comment comment) {
 	//取得insert的Id失敗會得到-1
     public int getInsertId() {
     	return commentDao.getInsertId();
+    }
+    
+    public int updateRead(int COMMENT_ID) {
+		return commentDao.updateRead(COMMENT_ID);
+    	
     }
 
 }

@@ -93,9 +93,12 @@ public class CommentController extends HttpServlet {
 					if(reqMemberId==new PostService().selectById(postId).getPosterId()) {
 						List<Integer>commentIds=new ArrayList<Integer>();
 						for(Comment comment:commentList) {
+							
+							commentService.updateRead(comment.getCommentId());
 							//取得該文章留言的Id
 							commentIds.add(comment.getCommentId());
 						}
+						
 						int updateCount=0;
 						for(int commentId:commentIds) {
 							updateCount+=new NotificationService().updateComment(reqMemberId,commentId);

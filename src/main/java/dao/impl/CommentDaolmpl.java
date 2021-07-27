@@ -141,4 +141,18 @@ public class CommentDaolmpl implements CommentDao {
 		return insertId;
 	}
 
+	@Override
+	public int updateRead(int COMMENT_ID) {
+		String sql = "UPDATE FORFUN.comment SET FORFUN.comment.READ = 1,UPDATE_TIME = ? WHERE COMMENT_ID = ?;";
+		try (Connection connection = dataSource.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(2, COMMENT_ID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
+	}
+
 }

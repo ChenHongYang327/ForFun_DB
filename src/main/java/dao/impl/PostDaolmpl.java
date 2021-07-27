@@ -61,14 +61,28 @@ public class PostDaolmpl implements PostDao {
 	@Override
 	public int update(Post post) {
 		int count = 0;
-		String sql = "UPDATE post SET POST_TITLE = ?, POST_CONTEXT = ?,POST_IMG = ?, UPDATE_TIME = ? WHERE POST_ID = ?;";
+		final String sql;
+		if (post.getPostImg() == null) {
+			sql = "UPDATE post SET POST_TITLE = ?, POST_CONTEXT = ?, UPDATE_TIME = ? WHERE POST_ID = ?;";
+		} else {
+			sql = "UPDATE post SET POST_TITLE = ?, POST_CONTEXT = ?,POST_IMG = ?, UPDATE_TIME = ? WHERE POST_ID = ?;";
+		}
+
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
-			ps.setString(1, post.getPostTitle());
-			ps.setString(2, post.getPostContext());
-			ps.setString(3, post.getPostImg());
-			ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
-			ps.setInt(5, post.getPostId());
+			if (post.getPostImg() == null) {
+				ps.setString(1, post.getPostTitle());
+				ps.setString(2, post.getPostContext());
+				ps.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+				ps.setInt(4, post.getPostId());
+			} else {
+				ps.setString(1, post.getPostTitle());
+				ps.setString(2, post.getPostContext());
+				ps.setString(3, post.getPostImg());
+				ps.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
+				ps.setInt(5, post.getPostId());
+
+			}
 			count = ps.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,8 +107,8 @@ public class PostDaolmpl implements PostDao {
 				post.setPostContext(rs.getString("POST_CONTEXT"));
 				post.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				post.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
-				post.setDeleteTime(rs.getTimestamp("DELETE_TIME"));		
-				
+				post.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+
 			}
 
 		} catch (Exception e) {
@@ -110,7 +124,7 @@ public class PostDaolmpl implements PostDao {
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
 			ps.setString(1, BOARD_ID);
-			
+
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
 				int postId = rs.getInt(1);
@@ -154,6 +168,33 @@ public class PostDaolmpl implements PostDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
+
+	@Override
+	public List<Post> selectRentSeekList(String BOARD_ID, int POSTER_ID) {
+		String sql = "SELECT *  FROM Post WHERE BOARD_ID = ? AND POSTER_ID = ? AND DELETE_TIME IS NULL;";
+		List<Post> postList = new ArrayList<Post>();
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql);) {
+			ps.setString(1, BOARD_ID);
+			ps.setInt(2, POSTER_ID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Post post = new Post();
+				post.setPostId(rs.getInt("POST_ID"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostImg(rs.getString("POST_IMG"));
+				post.setPostContext(rs.getString("POST_CONTEXT"));
+				post.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				postList.add(post);
+
+			}
+			return postList;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return postList;
+	}
+
 }

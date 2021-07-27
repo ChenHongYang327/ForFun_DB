@@ -6,7 +6,7 @@ import member.bean.Comment;
 
 public interface CommentDao {
 
-int insert(Comment comment);
+	int insert(Comment comment);
 	
 	int deleteById(int COMMENT_ID);
 	
@@ -17,6 +17,8 @@ int insert(Comment comment);
 	List<Comment> selectAllByPostId(int postId);
 	
 	 int getInsertId();
+	 
+	 int updateRead(int commentId);
 	
 	
 }

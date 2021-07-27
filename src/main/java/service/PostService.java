@@ -49,4 +49,10 @@ public class PostService {
 		
 		return postDao.getBoardId(POST_ID);
 	}
+	
+	public List<Post> selectRentSeekList(String BOARD_ID, int POSTER_ID) {
+		
+		return postDao.selectRentSeekList(BOARD_ID, POSTER_ID);
+		
+	}
 }

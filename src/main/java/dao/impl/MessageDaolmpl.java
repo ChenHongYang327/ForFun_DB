@@ -69,7 +69,7 @@ public class MessageDaolmpl implements MessageDao{
 
 	@Override
 	public List<Message> selectAll(int CHATROOM_ID) {
-		String sql = "SELECT MSG_ID, CHATROOM_ID, MSG_CHAT, CREATE_TIME FROM Message WHERE CHATROOM_ID = ?;";
+		String sql = "SELECT * FROM Message WHERE CHATROOM_ID = ?;";
 		List<Message> messageList = new ArrayList<Message>();
 		try (Connection connection = dataSource.getConnection();
 		PreparedStatement ps = connection.prepareStatement(sql);) {
@@ -79,6 +79,7 @@ public class MessageDaolmpl implements MessageDao{
 			while (rs.next()) {
 				Message message = new Message();
 				message.setMsgId(rs.getInt("MSG_ID"));
+				message.setMemberId(rs.getInt("MEMBER_ID"));
 				message.setChatroomId(rs.getInt("CHATROOM_ID"));
 				message.setMsgChat(rs.getString("MSG_CHAT"));
 				message.setCreateTime(rs.getTimestamp("CREATE_TIME"));
@@ -91,6 +92,20 @@ public class MessageDaolmpl implements MessageDao{
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public int updateRead(int MSG_ID) {
+		String sql = "UPDATE FORFUN.Message SET FORFUN.Message.READ = 1,UPDATE_TIME = ? WHERE MSG_ID = ?;";
+		try (Connection connection = dataSource.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			pstmt.setInt(2, MSG_ID);
+			return pstmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return -1;
 	}
 
 }
