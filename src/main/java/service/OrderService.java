@@ -74,9 +74,8 @@ public class OrderService {
 		return orderDao.selectByotherpayID(otherpayId);
 	}
 	
-	//只要id符合全刪
-	public int deleteById(int orderId) {
-		return orderDao.deleteById(orderId);
+	public int deleteByPublishId(int orderId) {
+		return orderDao.deleteByPublishId(orderId);
 	}
 
 }

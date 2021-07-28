@@ -3,6 +3,7 @@ package dao.impl;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -165,6 +166,20 @@ public class OtherPayDaoImpl implements OtherPayDao {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	@Override
+	public int deleteByAgreementId(int agreementId) {
+		final String sql = "UPDATE FORFUN.otherpay SET DELETE_TIME = ? WHERE AGREEMENT_ID = ?;";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setTimestamp(1,new Timestamp(System.currentTimeMillis()));
+			stmt.setInt(2, agreementId);
+			return stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
 	}
 
 }

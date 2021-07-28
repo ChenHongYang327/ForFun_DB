@@ -4,12 +4,16 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
 import commend.ServiceLocator;
 import dao.AgreementDao;
 import member.bean.Agreement;
+import member.bean.Member;
 
 public class AgreementDaoImpl implements AgreementDao {
 	private DataSource dataSource;
@@ -97,7 +101,7 @@ public class AgreementDaoImpl implements AgreementDao {
 
 	@Override
 	public int selecOrderidByAgreementid(int agreementId) {
-final String sql = "select ORDER_ID from FORFUN.agreement where AGREEMENT_ID = ?";
+		final String sql = "select ORDER_ID from FORFUN.agreement where AGREEMENT_ID = ?";
 		
 		try (Connection conn = dataSource.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -112,6 +116,47 @@ final String sql = "select ORDER_ID from FORFUN.agreement where AGREEMENT_ID = ?
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+	@Override
+	public int deleteByOrderId(int orderId) {
+		final String sql = "UPDATE FORFUN.agreement SET DELETE_TIME = ? WHERE ORDER_ID = ?;";
+
+		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
+			stmt.setTimestamp(1,new Timestamp(System.currentTimeMillis()));
+			stmt.setInt(2, orderId);
+			return stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	@Override
+	public Agreement selectByOrderId(int orderId) {
+		final String sql = "SELECT * FROM FORFUN.agreement WHERE ORDER_ID = ?;";
+		Agreement agreement=null;
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, orderId);
+			ResultSet rs = pstmt.executeQuery();			
+			while (rs.next()) {
+				agreement=new Agreement();
+				agreement.setAgreementId(rs.getInt("AGREEMENT_ID"));
+				agreement.setOrderId(rs.getInt("ORDER_ID"));
+				agreement.setStartDate(rs.getTimestamp("START_DATE"));
+				agreement.setEndDate(rs.getTimestamp("END_DATE"));
+				agreement.setAgreementMoney(rs.getInt("AGREEMENT_MONEY"));
+				agreement.setAgreementNote("AGREEMENT_NOTE");
+				agreement.setLandlordSign(rs.getString("LANDLORD_SIGN"));
+				agreement.setTenantSign(rs.getString("TENANT_SIGN"));
+				agreement.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				agreement.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+			}
+			return agreement;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }

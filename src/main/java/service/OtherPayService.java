@@ -36,5 +36,9 @@ public class OtherPayService {
 	public List<OtherPay> selectByOwnerId(int ownerId, int orderStaus, int otherpayStatus) {
 		return dao.selectByOwnerId(ownerId, orderStaus, otherpayStatus);
 	}
+	
+	public int deleteByAgreementId(int agreementId) {
+		return dao.deleteByAgreementId(agreementId);
+	}
 
 }

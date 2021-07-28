@@ -373,11 +373,11 @@ public class OrderDaoImpl implements OrderDao {
 	}
 	
 	@Override
-	public int deleteById(int orderId) {
+	public int deleteByPublishId(int publishId) {
 		final String sql = "UPDATE FORFUN.ORDER SET DELETE_TIME=? WHERE PUBLISH_ID=?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
-			pstmt.setInt(2, orderId);
+			pstmt.setInt(2, publishId);
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();

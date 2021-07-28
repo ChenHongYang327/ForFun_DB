@@ -1,5 +1,7 @@
 package service;
 
+import java.util.List;
+
 import dao.AgreementDao;
 import dao.impl.AgreementDaoImpl;
 import member.bean.Agreement;
@@ -29,6 +31,14 @@ public class AgreementService {
 	
 	public int selecOrderidByAgreementid(int agreementId) {
 		return dao.selecOrderidByAgreementid(agreementId);
+	}
+	
+	public int deleteByOrderId(int orderId) {
+		return dao.deleteByOrderId(orderId);
+	}
+	
+	public Agreement selectByOrderId(int orderId) {
+		return dao.selectByOrderId(orderId);
 	}
 
 

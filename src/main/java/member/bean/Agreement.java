@@ -13,10 +13,12 @@ public class Agreement {
 	private String landlordSign;
 	private String tenantSign;
 	private Timestamp createTime;
+	private Timestamp deleteTime;
+	
 
 	public Agreement(Integer agreementId, Integer orderId, Timestamp startDate, Timestamp endDate,
-			Integer agreementMoney, String agreementNote, String landlordSign, String tenantSign,
-			Timestamp createTime) {
+			Integer agreementMoney, String agreementNote, String landlordSign, String tenantSign, Timestamp createTime,
+			Timestamp deleteTime) {
 		super();
 		this.agreementId = agreementId;
 		this.orderId = orderId;
@@ -27,6 +29,7 @@ public class Agreement {
 		this.landlordSign = landlordSign;
 		this.tenantSign = tenantSign;
 		this.createTime = createTime;
+		this.deleteTime = deleteTime;
 	}
 
 	public Agreement() {
@@ -104,5 +107,12 @@ public class Agreement {
 	public void setCreateTime(Timestamp createTime) {
 		this.createTime = createTime;
 	}
+	
+	public Timestamp getDeleteTime() {
+		return deleteTime;
+	}
 
+	public void setDeleteTime(Timestamp deleteTime) {
+		this.deleteTime = deleteTime;
+	}
 }

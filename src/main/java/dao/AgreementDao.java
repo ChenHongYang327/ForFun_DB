@@ -1,5 +1,7 @@
 package dao;
 
+import java.util.List;
+
 import member.bean.Agreement;
 
 public interface AgreementDao {
@@ -13,5 +15,9 @@ public interface AgreementDao {
 	int selectAgmtidByOrderid(int orderId) ;
 	
 	int selecOrderidByAgreementid(int agreementId);
+	
+	int deleteByOrderId(int orderId);
+	
+	Agreement selectByOrderId(int orderId);
 
 }
