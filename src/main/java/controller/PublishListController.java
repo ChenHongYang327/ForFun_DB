@@ -25,6 +25,7 @@ import member.bean.Publish;
 import service.AgreementService;
 import service.AppointmentService;
 import service.CityService;
+import service.FavoriteService;
 import service.MemberService;
 import service.NotificationService;
 import service.OrderService;
@@ -84,6 +85,8 @@ public class PublishListController extends HttpServlet {
 				int notified = publishService.selectById(publishId).getOwnerId();
 				JsonObject resp = new JsonObject();
 				if (publishService.deleteById(publishId) == 1) {
+					// 刪除收藏
+					new FavoriteService().deleteByPublishId(publishId);
 					// 刪除預約單的通知及預約單
 					List<Appointment> appointments = new AppointmentService().selectAppointmentByPublishId(publishId);
 					if (appointments.size() > 0&& appointments!=null) {

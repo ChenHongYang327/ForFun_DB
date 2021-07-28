@@ -11,6 +11,8 @@ public interface FavoriteDao {
 	
 	int deleteById(int favoriteId);
 	
+	int deleteByPublishId(int publishId);
+	
 	int update(Favorite favorite);
 		
 	Favorite selectById(int favoriteId);

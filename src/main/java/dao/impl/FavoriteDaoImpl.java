@@ -77,11 +77,11 @@ public class FavoriteDaoImpl implements FavoriteDao {
 				favorite.setMemberId(rs.getInt("MEMBER_ID"));
 				favorite.setPublishId(rs.getInt("PUBLISH_ID"));
 				favorite.setCreateTime(rs.getTimestamp("CREATE_TIME"));
-				if (new PublishService().selectById(favorite.getPublishId()) != null) {
-					if (new PublishService().selectById(favorite.getPublishId()).getStatus() == 3) {
+				// 刊登單狀態為開啟的
+				if (new PublishService().selectById(favorite.getPublishId()).getStatus() == 3) {
 						favorites.add(favorite);
 					}
-				}
+
 			}
 			return favorites;
 
@@ -121,4 +121,17 @@ public class FavoriteDaoImpl implements FavoriteDao {
         }
         return null;
     }
+
+	@Override
+	public int deleteByPublishId(int publishId) {
+		final String sql = "DELETE FROM FORFUN.favorite WHERE PUBLISH_ID = ?";
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement pstmt = connection.prepareStatement(sql);) {
+			pstmt.setInt(1, publishId);
+			return pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

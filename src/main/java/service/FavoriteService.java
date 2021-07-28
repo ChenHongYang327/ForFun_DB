@@ -26,4 +26,8 @@ public class FavoriteService {
 	public Favorite selectByMemberIdAndPublishId(int memberId, int publishId) {
 	    return favoriteDao.selectByMemberIdAndPublishId(memberId, publishId);
 	}
+	
+	public int deleteByPublishId(int publishId) {
+		return favoriteDao.deleteByPublishId(publishId);
+	}
 }
