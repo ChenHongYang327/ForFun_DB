@@ -24,7 +24,7 @@ public class AgreementDaoImpl implements AgreementDao {
 
 	@Override
 	public Agreement sellectById(int agreementId) {
-		final String sql = " SELECT * FROM FORFUN.agreement WHERE AGREEMENT_ID = ?; ";
+		final String sql = " SELECT * FROM FORFUN.agreement WHERE AGREEMENT_ID = ? AND DELETE_TIME is null; ";
 
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);
@@ -83,7 +83,7 @@ public class AgreementDaoImpl implements AgreementDao {
 
 	@Override
 	public int selectAgmtidByOrderid(int orderId) {
-		final String sql = "select AGREEMENT_ID from FORFUN.agreement where ORDER_ID = ?";
+		final String sql = "select AGREEMENT_ID from FORFUN.agreement where ORDER_ID = ? AND DELETE_TIME is null";
 		
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, orderId);
@@ -101,7 +101,7 @@ public class AgreementDaoImpl implements AgreementDao {
 
 	@Override
 	public int selecOrderidByAgreementid(int agreementId) {
-		final String sql = "select ORDER_ID from FORFUN.agreement where AGREEMENT_ID = ?";
+		final String sql = "select ORDER_ID from FORFUN.agreement where AGREEMENT_ID = ? AND DELETE_TIME is null";
 		
 		try (Connection conn = dataSource.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -134,7 +134,7 @@ public class AgreementDaoImpl implements AgreementDao {
 
 	@Override
 	public Agreement selectByOrderId(int orderId) {
-		final String sql = "SELECT * FROM FORFUN.agreement WHERE ORDER_ID = ?;";
+		final String sql = "SELECT * FROM FORFUN.agreement WHERE ORDER_ID = ? AND DELETE_TIME is null;";
 		Agreement agreement=null;
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, orderId);

@@ -25,7 +25,7 @@ public class OtherPayDaoImpl implements OtherPayDao {
 
 	@Override
 	public OtherPay selectById(int otherpayId) {
-		final String sql = "SELECT * FROM FORFUN.otherpay WHERE OTHERPAY_ID = ? ;";
+		final String sql = "SELECT * FROM FORFUN.otherpay WHERE OTHERPAY_ID = ? AND DELETE_TIME is null;";
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql);) {
 
@@ -99,7 +99,7 @@ public class OtherPayDaoImpl implements OtherPayDao {
 	public List<OtherPay> selectByTenantId(int tenantId, int orderStaus, int otherpayStatus) {
 		final String sql = "select ot.OTHERPAY_ID,ot.AGREEMENT_ID,ot.OTHERPAY_MONEY,ot.OTHERPAY_NOTE,ot.SUGGEST_IMG,ot.OTHERPAY_STATUS,ot.CREATE_TIME,ot.DELETE_TIME " + 
 				"from FORFUN.order o left join FORFUN.agreement a on o.ORDER_ID = a.ORDER_ID left join FORFUN.otherpay ot on a.AGREEMENT_ID = ot.AGREEMENT_ID " + 
-				"where o.TENANT_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = ?;";
+				"where o.TENANT_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = ? AND o.DELETE_TIME is null;";
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 
@@ -137,7 +137,7 @@ public class OtherPayDaoImpl implements OtherPayDao {
 				"left join FORFUN.agreement a on o.ORDER_ID = a.ORDER_ID "+ 
 				"left join FORFUN.otherpay ot on a.AGREEMENT_ID = ot.AGREEMENT_ID " +
 				"left join FORFUN.publish p on o.PUBLISH_ID = p.PUBLISH_ID "+
-				"where p.OWNER_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = ?;";
+				"where p.OWNER_ID = ? AND o.ORDER_STATUS = ? AND ot.OTHERPAY_STATUS = ? AND o.DELETE_TIME is null;";
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 

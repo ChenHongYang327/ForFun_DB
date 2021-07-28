@@ -45,7 +45,7 @@ public class OrderDaoImpl implements OrderDao {
 	// 取得訂單的房客
 	@Override
 	public int selectTenantByID(int OrderId) {
-		final String sql = "select TENANT_ID from FORFUN.order where ORDER_ID = ?";
+		final String sql = "select TENANT_ID from FORFUN.order where ORDER_ID = ? AND DELETE_TIME is null";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, OrderId);
 			ResultSet rs = pstmt.executeQuery();
@@ -62,7 +62,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public int selectPublishByID(int orderId) {
-		final String sql = "select PUBLISH_ID from FORFUN.order where ORDER_ID = ?";
+		final String sql = "select PUBLISH_ID from FORFUN.order where ORDER_ID = ? AND DELETE_TIME is null ";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, orderId);
 			ResultSet rs = pstmt.executeQuery();
@@ -96,7 +96,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Order selectByID(int OrderId) {
-		final String sql = "select * from FORFUN.order where ORDER_ID = ?";
+		final String sql = "select * from FORFUN.order where ORDER_ID = ? AND DELETE_TIME is null";
 		Order order = new Order();
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, OrderId);
@@ -122,7 +122,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public Order selectByPublishID(int PublishId) {
-		final String sql = "select * from FORFUN.order where PUBLISH_ID = ?";
+		final String sql = "select * from FORFUN.order where PUBLISH_ID = ? AND DELETE_TIME is null ";
 		Order order = new Order();
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, PublishId);
@@ -166,7 +166,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
 	public List<Order> selectAllBySatus(int orderStatus, int tenantId) {
-		final String sql = "SELECT * FROM FORFUN.order WHERE ORDER_STATUS = ? AND TENANT_ID = ? ;";
+		final String sql = "SELECT * FROM FORFUN.order WHERE ORDER_STATUS = ? AND TENANT_ID = ? AND DELETE_TIME is null ;";
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 
@@ -198,7 +198,7 @@ public class OrderDaoImpl implements OrderDao {
 
 	@Override
     public List<Order> selectAllByPublishID(int publishId) {
-        final String sql = "select * from FORFUN.order where PUBLISH_ID = ?";
+        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? AND DELETE_TIME is null";
         
         List<Order> orderList = new ArrayList<Order>();
         
@@ -236,7 +236,7 @@ public class OrderDaoImpl implements OrderDao {
 	public List<Order> selectAllByOwnerandSatus(int orderStatus, int ownerId) {
 		final String sql = "select o.ORDER_ID,o.PUBLISH_ID,o.TENANT_ID,o.PUBLISH_STAR,o.PUBLISH_COMMENT,o.ORDER_STATUS,o.READ,o.CREATE_TIME,o.UPDATE_TIME,o.DELETE_TIME,p.OWNER_ID " + 
 				"from FORFUN.order o left join FORFUN.publish p on o.PUBLISH_ID = p.PUBLISH_ID " + 
-				"where	o.ORDER_STATUS = ? AND p.OWNER_ID = ?; ";
+				"where o.ORDER_STATUS = ? AND p.OWNER_ID = ? AND o.DELETE_TIME is null; ";
 		try (Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 
@@ -304,7 +304,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public Order selectByPublishIDAndTenantID(int publishId, int tenantID) {
-        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? and TENANT_ID = ? AND ORDER_STATUS = 11;";
+        final String sql = "select * from FORFUN.order where PUBLISH_ID = ? and TENANT_ID = ? AND ORDER_STATUS = 11 AND DELETE_TIME is null ;";
         
         try (
             Connection conn = dataSource.getConnection(); 
@@ -341,7 +341,7 @@ public class OrderDaoImpl implements OrderDao {
 		 final String sql = "select o.* from FORFUN.otherpay ot " + 
 		 		"left join FORFUN.agreement a on ot.AGREEMENT_ID = a.AGREEMENT_ID " + 
 		 		"left join FORFUN.order o on a.ORDER_ID = o.ORDER_ID " + 
-		 		"where ot.OTHERPAY_ID = ? ; ";
+		 		"where ot.OTHERPAY_ID = ? AND o.DELETE_TIME is null; ";
 	        
 	        try (
 	            Connection conn = dataSource.getConnection(); 
