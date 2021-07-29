@@ -61,10 +61,20 @@ public class AdminMemberController extends HttpServlet {
 					else if(memberService.adminuUpdate(member)>0) {
 						resp.addProperty("pass", 0); //成功
 					}
+					else {
+						resp.addProperty("pass", 1); //更新失敗
+					}
 				}
-				else {
-					resp.addProperty("pass", 1); //更新失敗
+				//更新電話
+				else if(selectMember==null) {
+					if(memberService.adminuUpdate(member)>0) {
+						resp.addProperty("pass", 0); //成功
+					}
+					else {
+						resp.addProperty("pass", 1); //更新失敗
+					}
 				}
+				
 //				System.out.println("伺服器的回應:"+resp.toString());
 				pw.print(resp.toString());
 				
