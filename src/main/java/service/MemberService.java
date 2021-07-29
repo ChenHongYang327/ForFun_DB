@@ -26,6 +26,10 @@ public class MemberService {
 		return memberDao.update(member);
 	}
 	
+	public int adminuUpdate(Member member) {
+		return memberDao.adminUpdate(member);
+	}
+	
 	public int updateToken(Member member) {
 		return memberDao.updateToken(member);
 	}
@@ -48,5 +52,9 @@ public class MemberService {
 	
 	public Member selectAllHeadShotAndName(int MEMBER_ID){
 		return memberDao.selectAllHeadShotAndName(MEMBER_ID);
+	}
+	
+	public Member selectByPhone(int phone) {
+		return memberDao.selectByPhone(phone);
 	}
 }

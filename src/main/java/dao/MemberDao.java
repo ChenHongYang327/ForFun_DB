@@ -15,6 +15,8 @@ public interface MemberDao {
 	
 	int update(Member member);
 	
+	int adminUpdate(Member member);
+	
 	int updateToken(Member member);
 	
 	int clearTokenById(int MEMBER_ID);
@@ -24,6 +26,8 @@ public interface MemberDao {
 	List<Member> selectAll();
 	
 	List<Integer> selectAllPhone();
+	
+	Member selectByPhone(int phone);
 
 	Member selectAllHeadShotAndName(int MEMBER_ID);
 	

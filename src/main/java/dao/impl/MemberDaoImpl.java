@@ -140,6 +140,22 @@ public class MemberDaoImpl implements MemberDao {
 	}
 	
 	@Override
+	public int adminUpdate(Member member) {
+		final String sql= "UPDATE FORFUN.member SET PHONE =?,TYPE =?,ROLE =? WHERE MEMBER_ID =?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, member.getPhone());
+			pstmt.setInt(2, member.getType());
+			pstmt.setInt(3, member.getRole());
+			pstmt.setInt(4, member.getMemberId());
+			return pstmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+	
+	@Override
 	public int clearTokenById(int MEMBER_ID) {
 		final String sql="UPDATE FORFUN.member SET TOKEN = NULL WHERE MEMBER_ID =?";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -159,9 +175,10 @@ public class MemberDaoImpl implements MemberDao {
 
 			pstmt.setInt(1, MEMBER_ID);
 			ResultSet rs = pstmt.executeQuery();
-			Member member = new Member();
+			Member member = null;
 			
 			while (rs.next()) {
+				member=new Member();
 				member.setMemberId(rs.getInt("MEMBER_ID"));
 				member.setRole(rs.getInt("ROLE"));
 				member.setNameL(rs.getString("NAME_L"));
@@ -233,11 +250,12 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public List<Integer> selectAllPhone() {
 		final String sql = "select PHONE from FORFUN.member";
-		List<Integer> phones=new ArrayList<>();
+		List<Integer> phones=null;
 		try (Connection conn = dataSource.getConnection(); 
 				PreparedStatement pstmt = conn.prepareStatement(sql);
 				ResultSet rs = pstmt.executeQuery()) {
 			while (rs.next()) {
+				phones=new ArrayList<>();
 				phones.add(rs.getInt(1));
 			}
 		}
@@ -262,16 +280,16 @@ public class MemberDaoImpl implements MemberDao {
 
 			pstmt.setInt(1, MEMBER_ID);
 			ResultSet rs = pstmt.executeQuery();
-			Member member = new Member();
 			while(rs.next()) {
+				Member member = new Member();
 				member.setMemberId(rs.getInt("MEMBER_ID"));
 				member.setNameL(rs.getString("NAME_L"));
 				member.setNameF(rs.getString("NAME_F"));
 				member.setHeadshot(rs.getString("HEADSHOT"));
+				return member;
 
 			}
-			return member;
-					
+	
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -280,6 +298,45 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
+	@Override
+	public Member selectByPhone(int phone) {
+		final String sql = "select * from FORFUN.member where PHONE = ?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
+			pstmt.setInt(1, phone);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Member member=new Member();
+				member.setMemberId(rs.getInt("MEMBER_ID"));
+				member.setRole(rs.getInt("ROLE"));
+				member.setNameL(rs.getString("NAME_L"));
+				member.setNameF(rs.getString("NAME_F"));
+				member.setPhone(rs.getInt("PHONE"));
+				member.setHeadshot(rs.getString("HEADSHOT"));
+				member.setGender(rs.getInt("GENDER"));
+				member.setId(rs.getString("ID"));
+				member.setBirthady(rs.getTimestamp("BIRTHDAY"));
+				member.setAddress(rs.getString("ADDRESS"));
+				member.setMail(rs.getString("MAIL"));
+				member.setType(rs.getInt("TYPE"));
+				member.setToken(rs.getString("TOKEN"));
+				member.setIdImgf(rs.getString("ID_IMGF"));
+				member.setIdImgb(rs.getString("ID_IMGB"));
+				member.setCitizen(rs.getString("CITIZEN"));
+				member.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				member.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				member.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+				return member;
+
+			}
+	
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
 
 
 }
