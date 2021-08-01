@@ -24,7 +24,7 @@ public class CustomerServiceDaoImpl implements CustomerServiceDao {
 
 	@Override
 	public int insert(Customer_bean customer_Service) {
-		final String sql = "insert into customer_service(NICK_NAME, MAIL, PHONE, MESSAGE) values(?, ?, ?, ?);";
+		final String sql = "insert into customer_service(NICK_NAME, MAIL, PHONE, MSG) values(?, ?, ?, ?);";
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setString(1, customer_Service.getNickName());
 			pstmt.setString(2, customer_Service.getMail());
