@@ -82,6 +82,7 @@ public class MessageDaolmpl implements MessageDao{
 				message.setMemberId(rs.getInt("MEMBER_ID"));
 				message.setChatroomId(rs.getInt("CHATROOM_ID"));
 				message.setMsgChat(rs.getString("MSG_CHAT"));
+				message.setRead(rs.getBoolean("READ"));
 				message.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				messageList.add(message);
 				
@@ -107,5 +108,34 @@ public class MessageDaolmpl implements MessageDao{
 
 		return -1;
 	}
+	
+	
+	@Override
+	public List<Message> selectByMemberId(int CHATROOM_ID, int MEMBER_ID) {
+		String sql = "SELECT * FROM Message WHERE CHATROOM_ID = ? AND MEMBER_ID != ?;";
+		List<Message> messageList = new ArrayList<Message>();
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql);) {
+				ps.setInt(1, CHATROOM_ID);
+				ps.setInt(2, MEMBER_ID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Message message = new Message();
+				message.setMsgId(rs.getInt("MSG_ID"));
+				message.setChatroomId(rs.getInt("CHATROOM_ID"));
+				message.setMemberId(rs.getInt("MEMBER_ID"));
+				message.setMsgChat(rs.getString("MSG_CHAT"));
+				message.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				messageList.add(message);
+			}
+			return messageList;
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("11111111111111");
+		return null;
+	}
+
 
 }

@@ -30,4 +30,8 @@ public class MessageService {
 		return dao.updateRead(MSG_ID);
     	
     }
+	
+	public List<Message> selectByMemberId(int CHATROOM_ID, int MEMBER_ID) {
+		return dao.selectByMemberId(CHATROOM_ID, MEMBER_ID);
+	}
 }

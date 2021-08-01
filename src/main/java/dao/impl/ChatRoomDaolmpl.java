@@ -25,22 +25,21 @@ public class ChatRoomDaolmpl implements ChatRoomDao {
 	}
 	
 	@Override
-	public List<ChatRoom> selectAll() {
-		final String sql = "SELECT * FROM CHATROOM;";
+	public List<ChatRoom> selectAll(int MEMBER_ID_1) {
+		final String sql = "SELECT * FROM CHATROOM WHERE (MEMBER_ID_1 = ? or MEMBER_ID_2 = ?) AND DELETE_TIME IS NULL;";
 		
-		try(Connection conn = dataSource.getConnection();
-				PreparedStatement stmt = conn.prepareStatement(sql);
-				ResultSet rs = stmt.executeQuery();) 
-		{
+		try(Connection conn = dataSource.getConnection();PreparedStatement stmt = conn.prepareStatement(sql);) {
 			List<ChatRoom> chatRoomList = new ArrayList<ChatRoom>();
-			
+			stmt.setInt(1, MEMBER_ID_1);
+			stmt.setInt(2, MEMBER_ID_1);
+			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
 				ChatRoom chatRoom = new ChatRoom();
 				chatRoom.setChatroomId(rs.getInt("CHATROOM_ID"));
 				chatRoom.setMemberId1(rs.getInt("MEMBER_ID_1"));
 				chatRoom.setMemberId2(rs.getInt("MEMBER_ID_2"));
 				chatRoom.setCreateTime(rs.getTimestamp("CREATE_TIME"));
-				
+				chatRoom.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
 				chatRoomList.add(chatRoom);
 				
 			}
@@ -51,11 +50,15 @@ public class ChatRoomDaolmpl implements ChatRoomDao {
 		}
 		return null;
 	}
+	
+	
+	
+
 
 
 	@Override
-	public ChatRoom selectChatRommId(int MEMBER_ID_1, int MEMBER_ID_2) {
-		final String sql = "SELECT * FROM CHATROOM WHERE (MEMBER_ID_1 = ? AND MEMBER_ID_2 = ?) or (MEMBER_ID_1 = ? AND MEMBER_ID_2 = ?);";
+	public ChatRoom selectChatRoomId(int MEMBER_ID_1, int MEMBER_ID_2) {
+		final String sql = "SELECT * FROM CHATROOM WHERE (MEMBER_ID_1 = ? AND MEMBER_ID_2 = ?) AND DELETE_TIME IS NULL or (MEMBER_ID_1 = ? AND MEMBER_ID_2 = ?) AND DELETE_TIME IS NULL;";
 		try(Connection conn = dataSource.getConnection();
 				PreparedStatement stmt = conn.prepareStatement(sql);) {
 				stmt.setInt(1, MEMBER_ID_1);
@@ -69,6 +72,7 @@ public class ChatRoomDaolmpl implements ChatRoomDao {
 				chatRoom.setMemberId1(rs.getInt("MEMBER_ID_1"));
 				chatRoom.setMemberId2(rs.getInt("MEMBER_ID_2"));
 				chatRoom.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				chatRoom.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
 			
 				
 			}
@@ -107,6 +111,45 @@ public class ChatRoomDaolmpl implements ChatRoomDao {
 	@Override
 	public int getInsertId() {
 		return insertId;
+	}
+
+
+	@Override
+	public int deleteById(int CHATROOM_ID) {
+		int count = 0;
+//		String sql = "DELETE FROM Comment WHERE COMMENT_ID = ?;";
+		String sql = "UPDATE chatRoom SET DELETE_TIME = ? WHERE CHATROOM_ID = ?;";
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql);) {
+			ps.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+			ps.setInt(2, CHATROOM_ID);
+			count = ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return count;
+	}
+
+	@Override
+	public ChatRoom selectById(int CHATROOM_ID) {
+		String sql = "SELECT * FROM CHATROOM WHERE CHATROOM_ID = ?;";
+		try (Connection connection = dataSource.getConnection();PreparedStatement ps = connection.prepareStatement(sql);) {
+			ps.setInt(1, CHATROOM_ID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+			ChatRoom chatRoom = new ChatRoom();
+			chatRoom.setChatroomId(rs.getInt("CHATROOM_ID"));
+			chatRoom.setMemberId1(rs.getInt("MEMBER_ID_1"));
+			chatRoom.setMemberId2(rs.getInt("MEMBER_ID_2"));
+			chatRoom.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+			chatRoom.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+			return chatRoom;
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
