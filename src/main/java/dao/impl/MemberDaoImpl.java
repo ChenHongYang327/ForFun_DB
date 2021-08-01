@@ -298,6 +298,52 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
+	
+	
+	@Override
+	public List<Member> selectApplyLandlordMember() {
+		final String sql = "select * from FORFUN.member WHERE ROLE=1 and CITIZEN is not null";
+		List<Member> members=new ArrayList<Member>();
+		try (Connection conn = dataSource.getConnection(); 
+				PreparedStatement pstmt = conn.prepareStatement(sql); 
+			ResultSet rs = pstmt.executeQuery()){
+			while(rs.next()) {
+				Member member=new Member();
+				member.setMemberId(rs.getInt("MEMBER_ID"));
+				member.setRole(rs.getInt("ROLE"));
+				member.setNameL(rs.getString("NAME_L"));
+				member.setNameF(rs.getString("NAME_F"));
+				member.setPhone(rs.getInt("PHONE"));
+				member.setHeadshot(rs.getString("HEADSHOT"));
+				member.setGender(rs.getInt("GENDER"));
+				member.setId(rs.getString("ID"));
+				member.setBirthady(rs.getTimestamp("BIRTHDAY"));
+				member.setAddress(rs.getString("ADDRESS"));
+				member.setMail(rs.getString("MAIL"));
+				member.setType(rs.getInt("TYPE"));
+				member.setToken(rs.getString("TOKEN"));
+				member.setIdImgf(rs.getString("ID_IMGF"));
+				member.setIdImgb(rs.getString("ID_IMGB"));
+				member.setCitizen(rs.getString("CITIZEN"));
+				member.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				member.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				member.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+				members.add(member);
+			}
+			return members;
+					
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+
+	
+	
+
+	
 	@Override
 	public Member selectByPhone(int phone) {
 		final String sql = "select * from FORFUN.member where PHONE = ?";
@@ -338,5 +384,22 @@ public class MemberDaoImpl implements MemberDao {
 		return null;
 	}
 
+	@Override
+	public int adminUpdatePass(Member member) {
+		final String sql= "UPDATE FORFUN.member SET ROLE =?, CITIZEN =? WHERE MEMBER_ID =?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, member.getRole());
+			pstmt.setString(2, member.getCitizen());
+			pstmt.setInt(3, member.getMemberId());
+			
+			return pstmt.executeUpdate();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
+
+	
 
 }

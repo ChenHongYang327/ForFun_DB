@@ -57,4 +57,12 @@ public class MemberService {
 	public Member selectByPhone(int phone) {
 		return memberDao.selectByPhone(phone);
 	}
+	
+	public List<Member> selectApplyLandlordMember(){
+		return memberDao.selectApplyLandlordMember();
+	}
+	public int adminUpdatePass(Member member) {
+		return memberDao.adminUpdatePass(member);
+	}
+	
 }

@@ -130,6 +130,15 @@ public class SignInController extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
+		else if (clientReq.get("action").getAsString().equals("updateInfo")) {
+			int memberId = clientReq.get("memberId").getAsInt();
+			Member member = memberService.selectById(memberId);
+			try (PrintWriter writer = response.getWriter()) {
+				writer.print(new Gson().toJson(member));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 
 	}
 }

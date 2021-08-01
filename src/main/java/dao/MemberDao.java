@@ -17,7 +17,10 @@ public interface MemberDao {
 	
 	int adminUpdate(Member member);
 	
+	int adminUpdatePass(Member member);
+	
 	int updateToken(Member member);
+	
 	
 	int clearTokenById(int MEMBER_ID);
 	
@@ -30,6 +33,8 @@ public interface MemberDao {
 	Member selectByPhone(int phone);
 
 	Member selectAllHeadShotAndName(int MEMBER_ID);
+	
+	List<Member> selectApplyLandlordMember();
 	
 
 }

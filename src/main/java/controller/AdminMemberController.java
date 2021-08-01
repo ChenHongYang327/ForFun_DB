@@ -2,6 +2,7 @@ package controller;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -14,17 +15,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
 
 import member.bean.Member;
 import service.MemberService;
+import service.PostService;
 
 @WebServlet("/adminMemberController")
 public class AdminMemberController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	
+	@Override
+	public void init() throws ServletException {
+		// 私密金鑰檔案可以儲存在專案以外
+		// File file = new File("/path/to/firsebase-java-privateKey.json");
+		// 私密金鑰檔案也可以儲存在專案WebContent目錄內，私密金鑰檔名要與程式所指定的檔名相同
+		if (NotificationController.firebaseApp == null) {
+			try (InputStream in = getServletContext().getResourceAsStream("/firebaseServerKey.json")) {
+				FirebaseOptions options = FirebaseOptions.builder().setCredentials(GoogleCredentials.fromStream(in))
+						.build();
+				NotificationController.firebaseApp = FirebaseApp.initializeApp(options);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.setContentType("application/json;charset=UTF-8");
@@ -47,7 +68,7 @@ public class AdminMemberController extends HttpServlet {
 			}
 			else if(req.get("action").getAsString().equals("updateMember")) {
 				Member member=gson.fromJson(req.get("member").getAsString(), Member.class);
-				System.out.println("比對的電話:"+member.getPhone());
+//				System.out.println("比對的電話:"+member.getPhone());
 				Member selectMember=memberService.selectByPhone(member.getPhone());
 				if(selectMember!=null) {
 					//非同一人
@@ -60,6 +81,13 @@ public class AdminMemberController extends HttpServlet {
 					}
 					else if(memberService.adminuUpdate(member)>0) {
 						resp.addProperty("pass", 0); //成功
+						String memberToken=memberService.selectById(member.getMemberId()).getToken();
+						if(memberToken!=null) {
+						JsonObject notificaitonFCM = new JsonObject();
+						notificaitonFCM.addProperty("title", "系統通知");
+						notificaitonFCM.addProperty("body", "您的個人資料已更新");
+						NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
+						}
 					}
 					else {
 						resp.addProperty("pass", 1); //更新失敗
@@ -69,21 +97,51 @@ public class AdminMemberController extends HttpServlet {
 				else if(selectMember==null) {
 					if(memberService.adminuUpdate(member)>0) {
 						resp.addProperty("pass", 0); //成功
+						String memberToken=memberService.selectById(member.getMemberId()).getToken();
+						if(memberToken!=null) {
+						JsonObject notificaitonFCM = new JsonObject();
+						notificaitonFCM.addProperty("title", "系統通知");
+						notificaitonFCM.addProperty("body", "您的個人資料已更新");
+						NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
+						}
 					}
 					else {
 						resp.addProperty("pass", 1); //更新失敗
 					}
 				}
-				
 //				System.out.println("伺服器的回應:"+resp.toString());
 				pw.print(resp.toString());
 				
 			}
-
-		} catch (Exception e) {
+			
+			else if(req.get("action").getAsString().equals("getApplyMember")) {
+				List<Member> members=memberService.selectApplyLandlordMember();
+				//搜尋錯誤
+				if(members==null) {
+					
+				}
+				else if(members.size()>=0) {
+					pw.print(gson.toJson(members));
+				}
+			
+			}
+			else if(req.get("action").getAsString().equals("applyMemberResult")){
+				Member member=gson.fromJson(req.get("member").getAsString(), Member.class);
+				if(memberService.adminUpdatePass(member)>0){
+					resp.addProperty("result", true);
+				}
+				else {
+					resp.addProperty("result", false);
+				}
+				pw.print(resp.toString());
+			}
+			
+	}
+		 catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		
 	}
+		
 
 }
