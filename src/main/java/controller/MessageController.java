@@ -96,8 +96,8 @@ public class MessageController extends HttpServlet {
 					if (registrationToken != null) {
 						System.out.println("123: " + registrationToken);
 						JsonObject notificaitonFCM = new JsonObject();
-						notificaitonFCM.addProperty("title", "");
-						notificaitonFCM.addProperty("body", "");
+						notificaitonFCM.addProperty("title", "title");
+						notificaitonFCM.addProperty("body", "body");
 						NotificationController.sendSingleFcm(notificaitonFCM, registrationToken);
 					}
 				}

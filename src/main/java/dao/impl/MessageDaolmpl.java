@@ -97,7 +97,7 @@ public class MessageDaolmpl implements MessageDao{
 
 	@Override
 	public int updateRead(int MSG_ID) {
-		String sql = "UPDATE FORFUN.Message SET FORFUN.Message.READ = 1,UPDATE_TIME = ? WHERE MSG_ID = ?;";
+		String sql = "UPDATE FORFUN.Message SET FORFUN.Message.READ = 1,UPDATE_TIME = ? WHERE MSG_ID = ? AND FORFUN.Message.READ = 0;";
 		try (Connection connection = dataSource.getConnection(); PreparedStatement pstmt = connection.prepareStatement(sql)) {
 			pstmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 			pstmt.setInt(2, MSG_ID);
