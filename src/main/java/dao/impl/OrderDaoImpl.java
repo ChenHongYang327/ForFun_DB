@@ -51,7 +51,7 @@ public class OrderDaoImpl implements OrderDao {
 			ResultSet rs = pstmt.executeQuery();
 			int tenantID = -1;
 			while (rs.next()) {
-				tenantID = rs.getInt(1);
+				tenantID = rs.getInt("TENANT_ID");
 			}
 			return tenantID;
 		} catch (Exception e) {
@@ -383,6 +383,25 @@ public class OrderDaoImpl implements OrderDao {
 			e.printStackTrace();
 		}
 
+		return -1;
+	}
+
+	@Override
+	public int selectPublishidByAgreementId(int agreementId) {
+		final String sql = "select o.PUBLISH_ID "
+				+ "from FORFUN.agreement a left join FORFUN.order o on a.ORDER_ID = o.ORDER_ID" + 
+				"where a.ORDER_ID = ? AND a.DELETE_TIME is null;";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, agreementId);
+			ResultSet rs = pstmt.executeQuery();
+			int publishId = -1;
+			while (rs.next()) {
+				publishId = rs.getInt("PUBLISH_ID");
+			}
+			return publishId;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return -1;
 	}
 }

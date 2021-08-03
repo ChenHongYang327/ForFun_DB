@@ -77,5 +77,10 @@ public class OrderService {
 	public int deleteByPublishId(int orderId) {
 		return orderDao.deleteByPublishId(orderId);
 	}
+	
+	// 用 合約ID 找 publishID
+	public int selectPublishidByAgreementId (int agreementId) {
+		return orderDao.selectPublishidByAgreementId(agreementId);
+	}
 
 }

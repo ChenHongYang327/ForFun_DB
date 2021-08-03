@@ -31,4 +31,6 @@ public interface OrderDao {
 	Order selectByotherpayID(int otherpayId);
 	
 	int deleteByPublishId(int publishId);
+	
+	int selectPublishidByAgreementId(int agreementId);
 }

@@ -44,6 +44,7 @@ public class AgreementController extends HttpServlet {
 	private CityService cityService = new CityService();
 	private AreaService areaService = new AreaService();
 	private AgreementService agreementService = new AgreementService();
+	private PublishService PublishService = new PublishService();
 
 	@Override
 	public void init() throws ServletException {
@@ -60,6 +61,7 @@ public class AgreementController extends HttpServlet {
 			}
 		}
 	}
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
@@ -68,7 +70,7 @@ public class AgreementController extends HttpServlet {
 		// 回傳前端
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		
+
 		StringBuilder jsonIn = new StringBuilder();
 
 		try (BufferedReader br = request.getReader();) {
@@ -100,9 +102,11 @@ public class AgreementController extends HttpServlet {
 //			int areaId = publish.getAreaId();
 
 			String wholeAdress = publish.getAddress();
-			
+			int rent = publish.getRent();
+			System.out.println(rent);
 			JsonObject jsonWri = new JsonObject();
 			jsonWri.addProperty("ADDRESS", wholeAdress);
+			jsonWri.addProperty("RENT", rent);
 			jsonWri.addProperty("RESULT", 200);
 			try (PrintWriter pw = response.getWriter();) {
 				pw.println(jsonWri);
@@ -121,7 +125,7 @@ public class AgreementController extends HttpServlet {
 			JsonObject jsonWri2 = new JsonObject();
 			jsonWri2.addProperty("AGREEMENT", agtStr);
 			jsonWri2.addProperty("RESULT", 200);
-			
+
 			try (PrintWriter pw = response.getWriter();) {
 				pw.println(jsonWri2);
 				System.out.println("output: " + jsonWri2.toString());
@@ -130,14 +134,19 @@ public class AgreementController extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
-			
-		case 3: // 房東新增 & 改狀態 3
+
+		case 3: // 房東新增 & 改狀態 3 & publish改合約中(1)
 
 			String tmpAgmt = jsonObj.get("AGREEMENT").getAsString();
-			//System.out.println(tmpAgmt);
+			// System.out.println(tmpAgmt);
 			Agreement agmtH = gson.fromJson(tmpAgmt, Agreement.class);
 			// 新增
-			agreementService.insertHouseOwner(agmtH);
+			int tmp1 = agreementService.insertHouseOwner(agmtH);
+
+			// 改publish table狀態 -> 1
+			int publish_Id = orderService.selectPublishidByAgreementId(agmtH.getOrderId());
+			publishService.updateStatus(1, publish_Id);
+
 			// 改狀態 -> 3
 			orderService.changeOrderStatus(agmtH.getOrderId(), 3);
 
@@ -147,19 +156,18 @@ public class AgreementController extends HttpServlet {
 			try (PrintWriter pw = response.getWriter();) {
 				pw.println(jsonWri3);
 				System.out.println("output: " + jsonWri3.toString());
-				//通知功能
-				Order order=orderService.selectByID(agmtH.getOrderId());
-				//房客Id
-				int notifiedId=order.getTenantId();
-				//新增通知
+				// 通知功能
+				Order order = orderService.selectByID(agmtH.getOrderId());
+				// 房客Id
+				int notifiedId = order.getTenantId();
+				// 新增通知
 				new NotificationService().insertOrder(notifiedId, agmtH.getOrderId());
-				//通知
-				String memberToken=new MemberService().selectById(notifiedId).getToken();
-				if(memberToken!=null) {
+				// 通知
+				String memberToken = new MemberService().selectById(notifiedId).getToken();
+				if (memberToken != null) {
 					JsonObject notificaitonFCM = new JsonObject();
 					notificaitonFCM.addProperty("title", "新通知");
-					String publishTitle = new PublishService().selectById(order.getPublishId())
-							.getTitle();
+					String publishTitle = new PublishService().selectById(order.getPublishId()).getTitle();
 					notificaitonFCM.addProperty("body", "您的" + "「" + publishTitle + "」" + "訂單有一筆需要簽約的合約");
 					NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
 				}
@@ -167,7 +175,7 @@ public class AgreementController extends HttpServlet {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			break;
 
 		case 4: // 房客存簽名path & 改狀態 4
@@ -176,7 +184,7 @@ public class AgreementController extends HttpServlet {
 
 			agreementService.updateTenant(imgPath_T, agrmtId);
 			// 改狀態 -> 4
-			
+
 			int orderid = agreementService.selecOrderidByAgreementid(agrmtId);
 			orderService.changeOrderStatus(orderid, 4);
 
@@ -186,13 +194,13 @@ public class AgreementController extends HttpServlet {
 			try (PrintWriter pw = response.getWriter();) {
 				pw.println(jsonWri4);
 				System.out.println("output: " + jsonWri4.toString());
-				//通知
-				//房客
-				int notified=orderService.selectByID(orderid).getTenantId();
-				//刪除通知
+				// 通知
+				// 房客
+				int notified = orderService.selectByID(orderid).getTenantId();
+				// 刪除通知
 				new NotificationService().deleteOrder(notified, orderid);
-				String memberToken=new MemberService().selectById(notified).getToken();
-				if(memberToken!=null) {	
+				String memberToken = new MemberService().selectById(notified).getToken();
+				if (memberToken != null) {
 					NotificationController.sendSingleFcmNoNotification(memberToken);
 				}
 
@@ -204,7 +212,7 @@ public class AgreementController extends HttpServlet {
 		default:
 			JsonObject jsonErr = new JsonObject();
 			jsonErr.addProperty("RESULT", -1);
-			
+
 			try (PrintWriter pw = response.getWriter();) {
 				pw.println(jsonErr);
 				System.out.println("output: " + jsonErr.toString());
