@@ -135,13 +135,16 @@ public class MessageController extends HttpServlet {
 				count = messageService.insert(message);
 			}
 			writeText(response, String.valueOf(count));
+			
+		} else if (action.equals("getMessage")) {
+			
+			int chatroomId = jsonObject.get("chatRoomId").getAsInt();
+			int memberId = jsonObject.get("MemberId").getAsInt();
+			List<Message> messages = messageService.selectByMSG(chatroomId, memberId);
+			jsonObject.addProperty("messageList", new Gson().toJson(messages));
+			writeText(response, gson.toJson(jsonObject));
+		
 		}
-
-//		} else if (action.equals("updateRead")) {
-//			int chatRoomId = jsonObject.get("chatRoomId").getAsInt();
-//			int messageReadType = messageService.updateRead(chatRoomId);
-//			writeText(response, String.valueOf(messageReadType));
-//		}
 		else {
 			writeText(response, "");
 		}

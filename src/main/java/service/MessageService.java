@@ -34,4 +34,8 @@ public class MessageService {
 	public List<Message> selectByMemberId(int CHATROOM_ID, int MEMBER_ID) {
 		return dao.selectByMemberId(CHATROOM_ID, MEMBER_ID);
 	}
+	
+	public List<Message> selectByMSG(int CHATROOM_ID, int MEMBER_ID) {
+		return dao.selectByMSG(CHATROOM_ID, MEMBER_ID);
+	}
 }

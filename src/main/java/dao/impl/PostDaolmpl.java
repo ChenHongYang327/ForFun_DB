@@ -119,7 +119,7 @@ public class PostDaolmpl implements PostDao {
 
 	@Override
 	public List<Post> selectAll(String BOARD_ID) {
-		String sql = "SELECT POST_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  FROM Post WHERE BOARD_ID = ? AND DELETE_TIME IS NULL;";
+		String sql = "SELECT POST_ID, POSTER_ID, POST_TITLE, POST_IMG, POST_CONTEXT, CREATE_TIME  FROM Post WHERE BOARD_ID = ? AND DELETE_TIME IS NULL ORDER BY CREATE_TIME DESC;";
 		List<Post> postList = new ArrayList<Post>();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {

@@ -16,4 +16,6 @@ public interface MessageDao {
 	
 	List<Message> selectByMemberId(int CHATROOM_ID, int MEMBER_ID);
 	
+	List<Message> selectByMSG(int CHATROOM_ID, int MEMBER_ID);
+	
 }
