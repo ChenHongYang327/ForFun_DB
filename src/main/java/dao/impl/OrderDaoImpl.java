@@ -390,7 +390,8 @@ public class OrderDaoImpl implements OrderDao {
 	public int selectPublishidByAgreementId(int agreementId) {
 		final String sql = "select o.PUBLISH_ID "
 				+ "from FORFUN.agreement a left join FORFUN.order o on a.ORDER_ID = o.ORDER_ID" + 
-				"where a.ORDER_ID = ? AND a.DELETE_TIME is null;";
+				" where a.ORDER_ID = ? AND a.DELETE_TIME is null;";
+		System.out.println(sql);
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 			pstmt.setInt(1, agreementId);
 			ResultSet rs = pstmt.executeQuery();
