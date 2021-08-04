@@ -91,21 +91,40 @@ public class NotificationController extends HttpServlet {
 //						System.out.println(notification.getAppointmentId() + "");
 						notifications.add(notification);
 //						System.out.println(notification.getAppointmentId()+"");
-						customerId = appointmentService.notificationselectById(notification.getAppointmentId())
-								.getTenantId();
+						int appointmentId = notification.getAppointmentId();		
+						//回傳另一個人的頭像
+						if (notification.getNotified() == appointmentService.notificationselectById(appointmentId)
+								.getOwnerId()) {		
+							customerId = appointmentService.notificationselectById(appointmentId)
+									.getTenantId();
+						} else {
+							customerId = appointmentService.notificationselectById(appointmentId)
+									.getOwnerId();
+						}
 						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
-						ownerId.add(appointmentService
-								.notificationselectById(notification.getAppointmentId()).getOwnerId());
+						ownerId.add(appointmentService.notificationselectById(appointmentId)
+								.getOwnerId());
 
 					}
 					// 訂單
 					else if (notification.getOrderId() != 0) {
 //						System.out.println(notification.getOrderId() + "");
 						notifications.add(notification);
-						customerId = orderService.selectByID(notification.getOrderId()).getTenantId();
+						int orderId=notification.getOrderId();
+						if(notification.getNotified()==orderService.selectByID(orderId).getTenantId()) {
+							int publishId=orderService.selectByID(orderId).getPublishId();	
+							//取得此刊登者的頭像
+							customerId = publishService.selectById(publishId).getOwnerId();
+						}
+						else {
+							customerId = orderService.selectByID(orderId).getTenantId();
+						}
 						customersHeadShot.add(memberService.selectById(customerId).getHeadshot());
-						//取得刊登單擁有者
-						ownerId.add(publishService.selectById(orderService.selectPublishByID(notification.getOrderId())).getOwnerId());
+						
+						
+						// 取得刊登單擁有者
+						ownerId.add(publishService.selectById(orderService.selectPublishByID(notification.getOrderId()))
+								.getOwnerId());
 					}
 					// 私訊
 					else if (notification.getMessageId() != 0) {
@@ -152,7 +171,7 @@ public class NotificationController extends HttpServlet {
 			}
 
 			else if (req.get("action").getAsString().equals("getPublishTitle")) {
-				Publish publish=new Publish();
+				Publish publish = new Publish();
 				if (req.get("appointmentId") != null) {
 					int appointmentId = req.get("appointmentId").getAsInt();
 					int publishId = appointmentService.notificationselectById(appointmentId).getPublishId();
@@ -184,6 +203,7 @@ public class NotificationController extends HttpServlet {
 				.setToken(registrationToken); // 送訊息給指定token的裝置
 		try {
 			FirebaseMessaging.getInstance().send(message.build());
+			System.out.println("FCM發送成功");
 //						String messageId = FirebaseMessaging.getInstance().send(message);
 //						System.out.println(registrationToken);
 //						System.out.println("messageId: " + messageId);

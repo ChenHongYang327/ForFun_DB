@@ -33,4 +33,6 @@ public interface OrderDao {
 	int deleteByPublishId(int publishId);
 	
 	int selectPublishidByAgreementId(int agreementId);
+	
+	int selectTenantByIDForPersonEvaluation(int OrderId);
 }

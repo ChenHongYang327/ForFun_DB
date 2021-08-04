@@ -405,4 +405,21 @@ public class OrderDaoImpl implements OrderDao {
 		}
 		return -1;
 	}
+	//不需加判斷delete_time
+	@Override
+	public int selectTenantByIDForPersonEvaluation(int OrderId) {
+		final String sql = "select TENANT_ID from FORFUN.order where ORDER_ID = ?";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			pstmt.setInt(1, OrderId);
+			ResultSet rs = pstmt.executeQuery();
+			int tenantID = -1;
+			while (rs.next()) {
+				tenantID = rs.getInt("TENANT_ID");
+			}
+			return tenantID;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return -1;
+	}
 }

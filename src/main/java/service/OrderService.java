@@ -82,5 +82,12 @@ public class OrderService {
 	public int selectPublishidByAgreementId (int agreementId) {
 		return orderDao.selectPublishidByAgreementId(agreementId);
 	}
+	
+	//對人的價用來取房客ID
+	public int selectTenantByIDForPersonEvaluation(int orderId) {
+		return orderDao.selectTenantByID(orderId);
+	}
+	
+	
 
 }

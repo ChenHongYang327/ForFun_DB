@@ -53,7 +53,7 @@ public class PersonalSnapshot extends HttpServlet {
 			List<PersonEvaluation> landlordstatus=new ArrayList<>();//房東身分
 			//將評論資料分類資料
 			for(PersonEvaluation personEvaluation:personEvaluations) {
-				int ordetTenantID =orderService.selectTenantByID(personEvaluation.getOrderId());//取得此訂單的房客用戶ID
+				int ordetTenantID =orderService.selectTenantByIDForPersonEvaluation(personEvaluation.getOrderId());//取得此訂單的房客用戶ID
 				if(ordetTenantID==commentedID) {
 					tenantstatus.add(personEvaluation);//房客身分
 				}
