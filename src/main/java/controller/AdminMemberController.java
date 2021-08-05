@@ -4,10 +4,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,7 +22,6 @@ import com.google.gson.JsonObject;
 
 import member.bean.Member;
 import service.MemberService;
-import service.PostService;
 
 @WebServlet("/adminMemberController")
 public class AdminMemberController extends HttpServlet {
@@ -129,6 +126,13 @@ public class AdminMemberController extends HttpServlet {
 				Member member=gson.fromJson(req.get("member").getAsString(), Member.class);
 				if(memberService.adminUpdatePass(member)>0){
 					resp.addProperty("result", true);
+					String memberToken=memberService.selectById(member.getMemberId()).getToken();
+					if(memberToken!=null) {
+						JsonObject notificaitonFCM = new JsonObject();
+						notificaitonFCM.addProperty("title", "系統通知");
+						notificaitonFCM.addProperty("body", "您的個人資料已更新");
+						NotificationController.sendSingleFcm(notificaitonFCM, memberToken);
+					}
 				}
 				else {
 					resp.addProperty("result", false);
