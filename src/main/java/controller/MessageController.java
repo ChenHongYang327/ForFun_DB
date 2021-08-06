@@ -141,6 +141,7 @@ public class MessageController extends HttpServlet {
 			int chatroomId = jsonObject.get("chatRoomId").getAsInt();
 			int memberId = jsonObject.get("MemberId").getAsInt();
 			List<Message> messages = messageService.selectByMSG(chatroomId, memberId);
+//			System.out.println();
 			jsonObject.addProperty("messageList", new Gson().toJson(messages));
 			writeText(response, gson.toJson(jsonObject));
 		

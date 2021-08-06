@@ -140,7 +140,7 @@ public class MessageDaolmpl implements MessageDao{
 	
 	@Override
 	public List<Message> selectByMSG(int CHATROOM_ID, int MEMBER_ID) {
-		String sql = "SELECT * FROM Message WHERE CHATROOM_ID = ? AND MEMBER_ID != ? AND READ = 1;";
+		String sql = "SELECT * FROM Message WHERE CHATROOM_ID = ? AND MEMBER_ID != ? AND FORFUN.Message.READ = 0;";
 		List<Message> messageList = new ArrayList<Message>();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
