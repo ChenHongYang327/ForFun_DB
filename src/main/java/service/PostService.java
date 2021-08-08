@@ -55,4 +55,10 @@ public class PostService {
 		return postDao.selectRentSeekList(BOARD_ID, POSTER_ID);
 		
 	}
+	
+	public List<Post> selectAllPosts() {
+		
+		return postDao.selectAllPost();
+	}
+	
 }

@@ -197,4 +197,34 @@ public class PostDaolmpl implements PostDao {
 		return postList;
 	}
 
+	@Override
+	public List<Post> selectAllPost() {
+		String sql = "SELECT *  FROM Post WHERE DELETE_TIME IS NULL;";
+		List<Post> postList = new ArrayList<Post>();
+		try (Connection connection = dataSource.getConnection();
+				PreparedStatement ps = connection.prepareStatement(sql);) {
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				Post post = new Post();
+				post.setPostId(rs.getInt("POST_ID"));
+				post.setBoardId(rs.getString("BOARD_ID"));
+				post.setPosterId(rs.getInt("POSTER_ID"));
+				post.setPostTitle(rs.getString("POST_TITLE"));
+				post.setPostImg(rs.getString("POST_IMG"));
+				post.setPostContext(rs.getString("POST_CONTEXT"));
+				post.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				post.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
+				post.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+				postList.add(post);
+
+			}
+			return postList;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return postList;
+	}
+
 }

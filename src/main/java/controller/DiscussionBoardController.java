@@ -90,6 +90,7 @@ public class DiscussionBoardController extends HttpServlet {
 			//裝在jsonObject後設定key 送回前端	
 			jsonObject.addProperty("postList", new Gson().toJson(postList));
 			jsonObject.addProperty("memberList", new Gson().toJson(members));
+			System.out.println("outPut: " + gson.toJson(jsonObject));
 			writeText(response, gson.toJson(jsonObject));
 			
 		} else if (action.equals("getImage")){
@@ -145,6 +146,17 @@ public class DiscussionBoardController extends HttpServlet {
 			jsonObject.addProperty("rentSeekList", new Gson().toJson(postList));
 			writeText(response, gson.toJson(jsonObject)); 
 		
+		} else if (action.equals("getAllReport")) {
+			// 將輸入資料列印出來除錯用
+			System.out.println("input: " + jsonIn);
+			List<Post> postList = postService.selectAllPosts();
+			
+	
+			//裝在jsonObject後設定key 送回前端	
+			jsonObject.addProperty("postList", new Gson().toJson(postList));
+			System.out.println("outPut: " + gson.toJson(jsonObject));
+			writeText(response, gson.toJson(jsonObject));
+			
 		} else {
 			writeText(response, "");
 		}
