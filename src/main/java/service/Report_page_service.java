@@ -32,5 +32,11 @@ public class Report_page_service {
 		return report_pageDao.selectAllChatMsg();
 	}
 	
-
+	public List<Report_page_bean> selectReportMember(){
+		return report_pageDao.selectReportMember();
+	}
+	
+	public int deleteById(int reportId) {
+		return report_pageDao.deleteById(reportId);
+	}
 }

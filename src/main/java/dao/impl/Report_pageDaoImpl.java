@@ -10,12 +10,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import commend.ServiceLocator;
-import controller.Report_page_Servlet;
 import dao.Report_pageDao;
-import dao.MemberDao;
-import member.bean.Customer_bean;
-import member.bean.Member;
-import member.bean.Order;
 import member.bean.Report_page_bean;
 
 public class Report_pageDaoImpl implements Report_pageDao {
@@ -113,7 +108,55 @@ public class Report_pageDaoImpl implements Report_pageDao {
 		return null;
 	}
 
-	
+	@Override
+	public List<Report_page_bean> selectReportMember() {
+		final String sql="SELECT * FROM FORFUN.report WHERE ITEM=2 and DELETE_TIME is null";
+		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			List<Report_page_bean> reports=new ArrayList<Report_page_bean>();
+			ResultSet rs= pstmt.executeQuery(sql);
+			while(rs.next()) {
+				Report_page_bean report=new Report_page_bean();
+				report.setReport_id(rs.getInt("REPORT_ID"));
+				report.setWhistleblower_id(rs.getInt("WHISTLEBLOWER_ID"));
+				report.setReported_id(rs.getInt("REPORTED_ID"));
+				report.setType(rs.getInt("TYPE"));
+				report.setMessage(rs.getString("MESSAGE"));
+				report.setReport_class(rs.getInt("REPORT_CLASS"));
+				report.setPost_id(rs.getInt("POST_ID"));
+				report.setChatroom_id(rs.getInt("CHATROOM_ID"));
+				report.setItem(rs.getInt("ITEM"));
+				report.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+				report.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+				reports.add(report);
+			}
+			return reports;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+	@Override
+	public int deleteById(int reportId) {
+		  final String sql = "UPDATE FORFUN.report SET DELETE_TIME = ? WHERE REPORT_ID = ?;";
+	        
+	        try (
+	            Connection conn = dataSource.getConnection();
+	            PreparedStatement stmt = conn.prepareStatement(sql);
+	        ) {
+	            stmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+	            stmt.setInt(2, reportId);
+	            
+	            return stmt.executeUpdate();
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        }
+	        
+	        return -1;
+	}
+
+
 
 	
 
