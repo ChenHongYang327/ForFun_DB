@@ -10,10 +10,12 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import commend.ServiceLocator;
+import controller.Report_page_Servlet;
 import dao.Report_pageDao;
 import dao.MemberDao;
 import member.bean.Customer_bean;
 import member.bean.Member;
+import member.bean.Order;
 import member.bean.Report_page_bean;
 
 public class Report_pageDaoImpl implements Report_pageDao {
@@ -77,6 +79,38 @@ public class Report_pageDaoImpl implements Report_pageDao {
 			e.printStackTrace();
 		}
 		return -1;
+	}
+
+
+	@Override
+	public List<Report_page_bean> selectAllChatMsg() {
+		final String sql = "SELECT * FROM FORFUN.report WHERE ITEM = 1 AND TYPE = 0;";
+		try (Connection conn = dataSource.getConnection();
+				PreparedStatement stmt = conn.prepareStatement(sql);) {
+
+			List<Report_page_bean> reports = new ArrayList<>();
+			try (ResultSet rs = stmt.executeQuery();) {
+				while (rs.next()) {
+					
+					Report_page_bean report = new Report_page_bean();
+					report.setReport_id(rs.getInt("REPORT_ID"));
+					report.setWhistleblower_id(rs.getInt("WHISTLEBLOWER_ID"));
+					report.setReported_id(rs.getInt("REPORTED_ID"));
+					report.setType(rs.getInt("TYPE"));
+					report.setMessage(rs.getString("MESSAGE"));
+					report.setReport_class(rs.getInt("REPORT_CLASS"));
+					report.setChatroom_id(rs.getInt("CHATROOM_ID"));
+					report.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+					
+					reports.add(report);
+					
+				}
+				return reports;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	
