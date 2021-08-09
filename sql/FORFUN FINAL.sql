@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 8.0.22, for macos10.15 (x86_64)
 --
--- Host: localhost    Database: FORFUN
+-- Host: 219.68.160.213    Database: FORFUN
 -- ------------------------------------------------------
 -- Server version	8.0.23
 
@@ -45,7 +45,6 @@ CREATE TABLE `agreement` (
 
 LOCK TABLES `agreement` WRITE;
 /*!40000 ALTER TABLE `agreement` DISABLE KEYS */;
-INSERT INTO `agreement` VALUES (1,30,'2021-08-03 00:00:00','2021-08-03 00:00:00',1234,NULL,'/Project_ForFun/Agreement/30/20210803_162032','/Project_ForFun/Agreement/30/20210803_162247','2021-08-03 16:20:32','2021-08-03 17:03:14');
 /*!40000 ALTER TABLE `agreement` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -82,7 +81,6 @@ CREATE TABLE `appointment` (
 
 LOCK TABLES `appointment` WRITE;
 /*!40000 ALTER TABLE `appointment` DISABLE KEYS */;
-INSERT INTO `appointment` VALUES (1,1,3,5,'2021-07-02 16:00:00',0,'2021-06-27 16:43:15',NULL,NULL),(3,4,5,6,'2021-06-26 16:43:15',0,'2021-06-26 16:43:15',NULL,NULL),(4,13,3,11,'2021-07-24 06:19:00',0,'2021-07-19 14:19:15',NULL,NULL),(9,10,3,2,'2021-07-20 22:23:00',0,'2021-07-19 22:23:45',NULL,'2021-07-19 22:24:49'),(10,13,3,2,'2021-07-24 18:30:00',0,'2021-07-19 22:24:06','2021-07-19 22:24:23','2021-07-19 22:33:20'),(11,9,3,2,'2021-07-20 23:27:00',0,'2021-07-20 23:27:17',NULL,'2021-07-20 23:27:51'),(12,9,3,2,'2021-07-20 23:28:00',0,'2021-07-20 23:28:11',NULL,'2021-07-20 23:45:01'),(13,9,3,2,'2021-07-21 05:25:00',0,'2021-07-20 23:47:22',NULL,'2021-07-20 23:47:51'),(14,9,3,2,'2021-07-22 23:48:00',0,'2021-07-20 23:48:22','2021-07-21 23:28:10','2021-07-21 23:28:10'),(15,9,3,2,'2021-07-21 23:30:00',0,'2021-07-21 23:30:33',NULL,'2021-07-21 23:30:40'),(16,9,3,2,'2021-07-24 23:30:00',0,'2021-07-21 23:30:50','2021-07-21 23:30:55','2021-07-21 23:35:44'),(17,1,3,2,'2021-07-26 17:24:00',0,'2021-07-26 17:25:02','2021-07-26 17:25:09','2021-07-26 17:25:14'),(18,1,3,2,'2021-07-26 17:25:00',0,'2021-07-26 17:25:22',NULL,'2021-07-26 17:25:59'),(19,9,3,2,'2021-08-05 12:00:00',0,'2021-08-03 14:05:36','2021-08-03 14:05:51','2021-08-03 14:06:01'),(20,9,3,2,'2021-08-06 13:20:00',0,'2021-08-03 14:06:13',NULL,'2021-08-03 15:27:02'),(21,10,3,2,'2021-08-12 14:06:00',0,'2021-08-03 14:06:30',NULL,'2021-08-03 15:48:21');
 /*!40000 ALTER TABLE `appointment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -135,7 +133,7 @@ CREATE TABLE `chatroom` (
   KEY `FK_MEMBER2_ID_idx` (`MEMBER_ID_2`),
   CONSTRAINT `FK_MEMBER1_ID` FOREIGN KEY (`MEMBER_ID_1`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `FK_MEMBER2_ID` FOREIGN KEY (`MEMBER_ID_2`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -144,7 +142,7 @@ CREATE TABLE `chatroom` (
 
 LOCK TABLES `chatroom` WRITE;
 /*!40000 ALTER TABLE `chatroom` DISABLE KEYS */;
-INSERT INTO `chatroom` VALUES (1,3,2,'2021-08-03 14:36:18',NULL,NULL);
+INSERT INTO `chatroom` VALUES (1,3,2,'2021-08-03 14:36:18',NULL,NULL),(2,6,4,'2021-08-09 16:13:49',NULL,'2021-08-09 16:14:23'),(4,6,5,'2021-08-09 17:02:52',NULL,NULL);
 /*!40000 ALTER TABLE `chatroom` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -196,7 +194,7 @@ CREATE TABLE `comment` (
   KEY `FK_POST_ID_idx` (`POST_ID`),
   CONSTRAINT `FK_MEMBER_ID` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `FK_POST_ID` FOREIGN KEY (`POST_ID`) REFERENCES `post` (`POST_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -205,7 +203,7 @@ CREATE TABLE `comment` (
 
 LOCK TABLES `comment` WRITE;
 /*!40000 ALTER TABLE `comment` DISABLE KEYS */;
-INSERT INTO `comment` VALUES (1,3,3,'123','2021-07-19 14:21:24','2021-08-03 15:27:53',NULL,1),(2,4,3,'123','2021-07-19 14:21:27','2021-08-03 15:27:53',NULL,1),(3,5,3,'ttt','2021-07-19 14:23:47','2021-08-03 15:27:53',NULL,1),(4,6,3,'ttt','2021-07-19 14:25:41','2021-08-03 15:27:53',NULL,1),(5,2,4,'eytghhh\ntggggggg\nhhhhhhhhhh\nrrfffghhh\ntttuuhhhuhhhhjj\ngggggffdedf\ntfjohgfgjj','2021-08-03 14:09:13','2021-08-03 14:28:35',NULL,1),(6,2,4,'drtdftyftyd','2021-08-03 14:09:48','2021-08-03 14:28:35',NULL,1);
+INSERT INTO `comment` VALUES (7,4,11,'這裡有房子','2021-08-09 16:11:08',NULL,NULL,0),(8,4,12,'我也遇過這種房東','2021-08-09 16:12:02',NULL,NULL,0),(9,4,10,'我也住這附近','2021-08-09 16:12:47',NULL,NULL,0),(10,5,11,'我這裡也有','2021-08-09 16:32:51',NULL,NULL,0),(11,5,12,'真的誇張','2021-08-09 16:33:15',NULL,NULL,0),(12,5,11,'已私訊','2021-08-09 16:44:58',NULL,NULL,0),(15,5,10,'這附近太貴住不起','2021-08-09 17:49:59',NULL,NULL,0);
 /*!40000 ALTER TABLE `comment` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -260,7 +258,7 @@ CREATE TABLE `customer_service` (
   PRIMARY KEY (`CUSTOMER_ID`),
   KEY `FK_MEMBER_ID_idx` (`MEMBER_ID`),
   CONSTRAINT `FK_MEMID` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -269,7 +267,7 @@ CREATE TABLE `customer_service` (
 
 LOCK TABLES `customer_service` WRITE;
 /*!40000 ALTER TABLE `customer_service` DISABLE KEYS */;
-INSERT INTO `customer_service` VALUES (1,NULL,NULL,'123','qwe',987654321,'zxc','2021-08-03 13:56:24',NULL),(2,NULL,NULL,'1223','qwe',1234567890,'243sdf','2021-08-03 13:57:21',NULL),(3,NULL,NULL,'¡²³é','éåäé',97393,'²¡é²é¡é¡','2021-08-03 15:05:09',NULL);
+INSERT INTO `customer_service` VALUES (1,NULL,NULL,'123','qwe',987654321,'zxc','2021-08-03 13:56:24',NULL),(2,NULL,NULL,'1223','qwe',1234567890,'243sdf','2021-08-03 13:57:21',NULL),(3,NULL,NULL,'¡²³é','éåäé',97393,'²¡é²é¡é¡','2021-08-03 15:05:09',NULL),(4,NULL,NULL,'123123123','1321231',1321231,'13213','2021-08-09 16:33:02',NULL);
 /*!40000 ALTER TABLE `customer_service` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -290,7 +288,7 @@ CREATE TABLE `favorite` (
   KEY `PUBLISH_ID_idx` (`PUBLISH_ID`),
   CONSTRAINT `MEMBER_ID` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `PUBLISH_ID` FOREIGN KEY (`PUBLISH_ID`) REFERENCES `publish` (`PUBLISH_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -299,7 +297,7 @@ CREATE TABLE `favorite` (
 
 LOCK TABLES `favorite` WRITE;
 /*!40000 ALTER TABLE `favorite` DISABLE KEYS */;
-INSERT INTO `favorite` VALUES (4,3,11,'2021-06-26 23:56:47'),(6,3,13,'2021-06-26 23:56:47'),(9,3,1,'2021-07-19 15:14:10'),(10,2,1,'2021-07-19 22:21:35');
+INSERT INTO `favorite` VALUES (16,6,9,'2021-08-09 17:21:13'),(17,6,12,'2021-08-09 17:21:14'),(20,6,13,'2021-08-09 17:21:54');
 /*!40000 ALTER TABLE `favorite` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,7 +338,7 @@ CREATE TABLE `member` (
 
 LOCK TABLES `member` WRITE;
 /*!40000 ALTER TABLE `member` DISABLE KEYS */;
-INSERT INTO `member` VALUES (1,0,'admin','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2021-06-12 19:46:24',NULL,NULL),(2,1,'李','文賢¡²³',922877662,'/Project_ForFun/Person/922877662/ian-dooley-d1UPkiFd04A-unsplash.jpg',1,'A189271911','1987-03-20 00:00:00','台北市信義區基隆路一段245號','ngdqzmhndh@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:11:05','2021-08-03 14:58:01',NULL),(3,2,'林','怡吟',921371162,'/Project_ForFun/Person/921371162/testphoto.jpg',2,'F205861001','1999-06-01 00:00:00','台北市內湖區康寧路三段202號','test@email.com',1,'fcMTNBXBTr6J-tmfMOIGzu:APA91bG1txcGKO9ra-lwMQs82W25L-8q6dVPLwuTKThIotYeSImSigC0G_xk2BfyGyZhcfc18USMZvgDOR2Lk6Y2KB0yUprHFJE-NLGL_uEjlm6-QUEJj4ZA-RPm10ayoON-tvVDd0RK','/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/921371162/goodpeople.png','2021-06-12 20:30:21','2021-07-19 14:02:26',NULL),(4,2,'溫','俊宏',924545884,'/Project_ForFun/Person/924545884/ivana-cajina-_7LbC5J-jw4-unsplash.jpg',1,'F187277081','1992-09-05 00:00:00','新北市板橋區林園街129巷15號2樓','hoyaqojnnt@iubridge.com',1,'f-X_YK3tRr-EgU-LWxXL0f:APA91bEMHyhdG5hZGKviUwsVQUiJtw87z9-YF-Nle75fhr0I6MfpBOIWm_RjrT-_Cs0Vw3a_HICbhDFLs34L5wP9BEh_8L3iVMda243X3PP4F8IaBsP7WeMYXjd-iKwMCHpSKHi4xxXB','/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/924545884/Group 287.png','2021-06-12 20:30:21',NULL,NULL),(5,2,'林','玉玲',952894963,'/Project_ForFun/Person/952894963/rafaella-mendes-diniz-et_78QkMMQs-unsplash.jpg',2,'A256873907','1992-12-01 00:00:00','台北市萬華區和平西路三段177號','jsubwpjsju@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/952894963/Group 285.png','2021-06-12 20:30:21',NULL,NULL),(6,2,'錢','立奇',960917393,'/Project_ForFun/Person/960917393/bruce-mars-8YG31Xn4dSw-unsplash.jpg',1,'F197272310','1988-02-01 00:00:00','新北市永和區秀朗路一段36巷17號1樓','lbkodplfdq@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/960917393/Group 286.png','2021-06-12 20:30:21',NULL,NULL),(7,2,'陳','良',929458421,'/Project_ForFun/Person/929458421/lachlan-dempsey-6VPEOdpFNAs-unsplash.jpg',1,'A196363871','1991-11-11 00:00:00','新北市板橋區四維路84號','fqzsmsvcen@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/929458421/Group 288.png','2021-06-12 20:30:21',NULL,NULL),(8,1,'李','炳揚',921526256,'/Project_ForFun/Person/921526256/ayo-ogunseinde-sibVwORYqs0-unsplash.jpg',1,'A106831868','1992-09-20 00:00:00','台北市大安區和平東路二段83號','oaepshjtds@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(9,1,'陳','宛真',930362802,'/Project_ForFun/Person/930362802/karsten-winegeart-yPwpLYepiz0-unsplash.jpg',2,'A222223386','1980-10-05 00:00:00','新北市三重區龍濱路7巷1號','peejdyvlxx@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(10,1,'陳','美惠',930553563,'/Project_ForFun/Person/930553563/warren-wong-uuVguyksViA-unsplash.jpg',2,'A272995506','2002-06-01 00:00:00','台北市大安區敦化南路一段188巷17號','srwkfxesd@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(11,1,'蔡','宜名',916366024,'/Project_ForFun/Person/916366024/bruce-mars-AndE50aaHn4-unsplash.jpg',1,'F197272310','2000-01-05 00:00:00','台北市北投區中山路71號','mvxcffbhty@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(17,1,'林','驊',912345678,'/Project_ForFun/Person/912345678/Headshot',2,'A123456789','2003-08-02 00:00:00','台北市中山區南京東路三段219號5樓','test@email.com',1,NULL,'/Project_ForFun/Person/912345678/IdImgf','/Project_ForFun/Person/912345678/IdImgb',NULL,'2021-08-03 14:03:08',NULL,NULL);
+INSERT INTO `member` VALUES (1,0,'admin','',NULL,NULL,NULL,NULL,NULL,NULL,NULL,1,NULL,NULL,NULL,NULL,'2021-06-12 19:46:24',NULL,NULL),(2,1,'李','文賢',922877662,'/Project_ForFun/Person/922877662/ian-dooley-d1UPkiFd04A-unsplash.jpg',1,'A189271911','1987-03-20 00:00:00','台北市信義區基隆路一段245號','ngdqzmhndh@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:11:05','2021-08-03 14:58:01',NULL),(3,2,'林','怡吟',921371162,'/Project_ForFun/Person/921371162/testphoto.jpg',2,'F205861001','1999-06-01 00:00:00','台北市內湖區康寧路三段202號','test@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/921371162/goodpeople.png','2021-06-12 20:30:21','2021-07-19 14:02:26',NULL),(4,2,'溫','俊宏',924545884,'/Project_ForFun/Person/924545884/ivana-cajina-_7LbC5J-jw4-unsplash.jpg',1,'F187277081','1992-09-05 00:00:00','新北市板橋區林園街129巷15號2樓','hoyaqojnnt@iubridge.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/924545884/Group 287.png','2021-06-12 20:30:21',NULL,NULL),(5,2,'林','玉玲',952894963,'/Project_ForFun/Person/952894963/rafaella-mendes-diniz-et_78QkMMQs-unsplash.jpg',2,'A256873907','1992-12-01 00:00:00','台北市萬華區和平西路三段177號','jsubwpjsju@email.com',1,'cxgCZbDTQ9OiS5cSJ_GWZ_:APA91bGpaaVYRQijeq3G4S3RVfaNww-cf-9-Kh2qy_XuK9-sIhEHMt61RMZyBZDDUFA-rdPbYQZXD_VTspOy1-e5Qeh-EOVgqfiM5Kuq6cQX4WVzxHf4cI0o6WSX6dlRu8wGwjXeUT06','/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/952894963/Group 285.png','2021-06-12 20:30:21',NULL,NULL),(6,2,'錢','立奇',960917393,'/Project_ForFun/Person/960917393/bruce-mars-8YG31Xn4dSw-unsplash.jpg',1,'F197272310','1988-02-01 00:00:00','新北市永和區秀朗路一段36巷17號1樓','lbkodplfdq@email.com',1,'fTpTEjBvQQKUVXY4KrZywn:APA91bEvNZorzcoHwUgHtJ3imQydeBG8NH_zuMwBqRgB2rLnMZI2WyXyyrryuNcq2bMTdALq7Z1TEtTLlHsGoojaLF-oKSiciqaIkNtpAUTmUvABJ_-1Rw9k78l0UfMNV6EFhGV4ER0Z','/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/960917393/Group 286.png','2021-06-12 20:30:21',NULL,NULL),(7,2,'陳','良',929458421,'/Project_ForFun/Person/929458421/lachlan-dempsey-6VPEOdpFNAs-unsplash.jpg',1,'A196363871','1991-11-11 00:00:00','新北市板橋區四維路84號','fqzsmsvcen@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg','/Project_ForFun/Person/929458421/Group 288.png','2021-06-12 20:30:21',NULL,NULL),(8,1,'李','炳揚',921526256,'/Project_ForFun/Person/921526256/ayo-ogunseinde-sibVwORYqs0-unsplash.jpg',1,'A106831868','1992-09-20 00:00:00','台北市大安區和平東路二段83號','oaepshjtds@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(9,1,'陳','宛真',930362802,'/Project_ForFun/Person/930362802/karsten-winegeart-yPwpLYepiz0-unsplash.jpg',2,'A222223386','1980-10-05 00:00:00','新北市三重區龍濱路7巷1號','peejdyvlxx@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(10,1,'陳','美惠',930553563,'/Project_ForFun/Person/930553563/warren-wong-uuVguyksViA-unsplash.jpg',2,'A272995506','2002-06-01 00:00:00','台北市大安區敦化南路一段188巷17號','srwkfxesd@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL),(11,1,'蔡','宜名',900000000,'/Project_ForFun/Person/916366024/bruce-mars-AndE50aaHn4-unsplash.jpg',1,'F197272310','2000-01-05 00:00:00','台北市北投區中山路71號','mvxcffbhty@email.com',1,NULL,'/Project_ForFun/Person/921371162/ROC_mibunsho.jpg','/Project_ForFun/Person/921371162/ROC_mibunsho_ura.jpg',NULL,'2021-06-12 20:30:21',NULL,NULL);
 /*!40000 ALTER TABLE `member` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -367,7 +365,7 @@ CREATE TABLE `message` (
   KEY `FK_MEMBER_ID_idx` (`MEMBER_ID`),
   CONSTRAINT `FK_CHATROOM_ID` FOREIGN KEY (`CHATROOM_ID`) REFERENCES `chatroom` (`CHATROOM_ID`),
   CONSTRAINT `FK_MEM_ID` FOREIGN KEY (`MEMBER_ID`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -376,7 +374,7 @@ CREATE TABLE `message` (
 
 LOCK TABLES `message` WRITE;
 /*!40000 ALTER TABLE `message` DISABLE KEYS */;
-INSERT INTO `message` VALUES (1,1,2,'good morning',NULL,NULL,1,'2021-08-03 14:36:45','2021-08-03 15:25:28',NULL);
+INSERT INTO `message` VALUES (1,1,2,'good morning',NULL,NULL,1,'2021-08-03 14:36:45','2021-08-03 15:25:28',NULL),(2,1,3,'您好',NULL,NULL,0,'2021-08-09 16:31:42',NULL,NULL),(5,1,3,'給你地址',NULL,NULL,0,'2021-08-09 16:49:33',NULL,NULL),(6,4,5,'您好 我這邊有你需要的房屋 有興趣嗎？',NULL,NULL,0,'2021-08-09 17:05:56',NULL,NULL);
 /*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -408,7 +406,7 @@ CREATE TABLE `notification` (
   CONSTRAINT `FK_MSGID` FOREIGN KEY (`MESSAGE_ID`) REFERENCES `message` (`MSG_ID`),
   CONSTRAINT `FK_NOTIFIED_ID` FOREIGN KEY (`NOTIFIED_ID`) REFERENCES `member` (`MEMBER_ID`),
   CONSTRAINT `NOTIFICATION_ID_FK_ORDER_ID` FOREIGN KEY (`ORDER_ID`) REFERENCES `order` (`ORDER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -417,7 +415,7 @@ CREATE TABLE `notification` (
 
 LOCK TABLES `notification` WRITE;
 /*!40000 ALTER TABLE `notification` DISABLE KEYS */;
-INSERT INTO `notification` VALUES (9,3,NULL,4,NULL,NULL,1,'2021-07-19 14:19:15','2021-07-26 17:04:44'),(10,5,NULL,3,NULL,NULL,0,'2021-07-19 17:58:19',NULL),(20,3,NULL,9,NULL,NULL,1,'2021-07-19 22:23:45','2021-07-26 17:04:44'),(21,3,NULL,10,NULL,NULL,1,'2021-07-19 22:24:06','2021-07-26 17:04:44'),(22,3,NULL,11,NULL,NULL,0,'2021-07-20 23:27:17','2021-07-20 23:27:51'),(23,3,NULL,12,NULL,NULL,1,'2021-07-20 23:28:11','2021-07-26 17:04:44'),(24,3,NULL,13,NULL,NULL,0,'2021-07-20 23:47:22','2021-07-20 23:47:51'),(25,3,NULL,14,NULL,NULL,1,'2021-07-20 23:48:22','2021-07-26 17:04:44'),(26,3,NULL,15,NULL,NULL,0,'2021-07-21 23:30:33','2021-07-21 23:30:40'),(27,3,NULL,16,NULL,NULL,1,'2021-07-21 23:30:50','2021-07-26 17:04:44'),(28,3,NULL,17,NULL,NULL,0,'2021-07-26 17:25:02','2021-07-26 17:25:14'),(29,3,NULL,18,NULL,NULL,0,'2021-07-26 17:25:22','2021-07-26 17:25:59'),(30,2,NULL,18,NULL,NULL,1,'2021-07-26 17:25:59','2021-08-03 14:04:33'),(31,3,NULL,19,NULL,NULL,0,'2021-08-03 14:05:36','2021-08-03 14:06:01'),(32,3,NULL,20,NULL,NULL,0,'2021-08-03 14:06:13','2021-08-03 15:27:02'),(33,3,NULL,21,NULL,NULL,0,'2021-08-03 14:06:30','2021-08-03 15:48:21'),(35,2,NULL,20,NULL,NULL,1,'2021-08-03 15:27:02','2021-08-03 15:46:53'),(36,2,NULL,21,NULL,NULL,1,'2021-08-03 15:48:21','2021-08-03 15:48:55'),(37,3,NULL,NULL,30,NULL,0,'2021-08-03 15:49:21','2021-08-03 17:03:14'),(38,2,NULL,NULL,30,NULL,0,'2021-08-03 15:58:23','2021-08-03 17:03:14'),(39,2,NULL,NULL,30,NULL,0,'2021-08-03 16:20:32','2021-08-03 17:03:14');
+INSERT INTO `notification` VALUES (1,6,7,NULL,NULL,NULL,1,'2021-08-09 16:11:08','2021-08-09 17:25:40'),(2,10,8,NULL,NULL,NULL,0,'2021-08-09 16:12:02',NULL),(3,8,9,NULL,NULL,NULL,0,'2021-08-09 16:12:47',NULL),(4,6,10,NULL,NULL,NULL,1,'2021-08-09 16:32:51','2021-08-09 17:25:40'),(5,10,11,NULL,NULL,NULL,0,'2021-08-09 16:33:15',NULL),(6,6,12,NULL,NULL,NULL,1,'2021-08-09 16:44:58','2021-08-09 17:25:40'),(9,8,15,NULL,NULL,NULL,0,'2021-08-09 17:49:59',NULL);
 /*!40000 ALTER TABLE `notification` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -453,7 +451,7 @@ CREATE TABLE `order` (
 
 LOCK TABLES `order` WRITE;
 /*!40000 ALTER TABLE `order` DISABLE KEYS */;
-INSERT INTO `order` VALUES (1,1,4,3,'還可以,就是吵了點',1,1,'2021-06-21 21:11:59',NULL,'2021-07-19 17:54:13'),(2,2,2,3,'還行,房租有點貴',1,1,'2019-06-21 19:31:59',NULL,NULL),(3,3,6,4,'環境好',1,0,'2018-06-21 16:31:59',NULL,NULL),(4,4,7,5,'氣氛佳',1,0,'2018-05-20 21:31:59',NULL,NULL),(5,5,8,5,'房租太貴',1,1,'2021-06-23 11:20:15',NULL,NULL),(6,7,11,3,'房租太貴',1,0,'2021-06-23 17:20:15',NULL,NULL),(7,9,5,5,'蒸蚌',1,0,'2021-07-09 17:20:15',NULL,NULL),(8,9,6,1,'房租太貴',1,0,'2021-07-09 17:20:15',NULL,NULL),(9,9,7,3,'還可以,就是吵了點',1,0,'2021-07-09 17:20:15',NULL,NULL),(10,9,8,4,'棒棒DER',1,0,'2021-07-09 17:20:15',NULL,NULL),(11,9,9,1,'房租太貴',1,0,'2021-07-09 17:20:15',NULL,NULL),(12,9,10,2,'環境好',1,0,'2021-07-09 17:20:15',NULL,NULL),(18,10,2,NULL,NULL,6,0,'2021-07-19 22:23:45',NULL,'2021-08-03 17:03:14'),(19,13,2,NULL,NULL,6,0,'2021-07-19 22:24:06',NULL,NULL),(20,9,2,NULL,NULL,6,0,'2021-07-20 23:27:17',NULL,NULL),(21,9,2,NULL,NULL,12,0,'2021-07-20 23:28:11',NULL,NULL),(22,9,2,NULL,NULL,6,0,'2021-07-20 23:47:22',NULL,NULL),(23,9,2,NULL,NULL,2,0,'2021-07-20 23:48:22',NULL,NULL),(24,9,2,NULL,NULL,6,0,'2021-07-21 23:30:33',NULL,NULL),(25,9,2,NULL,NULL,2,0,'2021-07-21 23:30:50',NULL,NULL),(26,1,2,NULL,NULL,6,0,'2021-07-26 17:25:02',NULL,NULL),(27,1,2,NULL,NULL,2,0,'2021-07-26 17:25:22',NULL,NULL),(28,9,2,NULL,NULL,6,0,'2021-08-03 14:05:36',NULL,NULL),(29,9,2,NULL,NULL,6,0,'2021-08-03 14:06:13',NULL,NULL),(30,10,2,4,'123456',5,0,'2021-08-03 14:06:30',NULL,'2021-08-03 17:03:14');
+INSERT INTO `order` VALUES (1,1,4,3,'還可以,就是吵了點',1,1,'2021-06-21 21:11:59',NULL,'2021-07-19 17:54:13'),(2,2,2,3,'還行,房租有點貴',1,1,'2019-06-21 19:31:59',NULL,NULL),(3,3,6,4,'環境好',1,0,'2018-06-21 16:31:59',NULL,NULL),(4,4,7,5,'氣氛佳',1,0,'2018-05-20 21:31:59',NULL,NULL),(5,5,8,5,'房租太貴',1,1,'2021-06-23 11:20:15',NULL,NULL),(6,7,11,3,'房租太貴',1,0,'2021-06-23 17:20:15',NULL,NULL),(7,9,5,5,'蒸蚌',1,0,'2021-07-09 17:20:15',NULL,NULL),(8,9,6,1,'房租太貴',1,0,'2021-07-09 17:20:15',NULL,NULL),(9,9,7,3,'還可以,就是吵了點',1,0,'2021-07-09 17:20:15',NULL,NULL),(10,9,8,4,'棒棒DER',1,0,'2021-07-09 17:20:15',NULL,NULL),(11,9,9,1,'房租太貴',1,0,'2021-07-09 17:20:15',NULL,NULL),(12,9,10,2,'環境好',1,0,'2021-07-09 17:20:15',NULL,NULL),(30,10,2,4,'住起來舒適',5,0,'2021-08-03 14:06:30',NULL,'2021-08-03 17:03:14');
 /*!40000 ALTER TABLE `order` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -485,7 +483,6 @@ CREATE TABLE `otherpay` (
 
 LOCK TABLES `otherpay` WRITE;
 /*!40000 ALTER TABLE `otherpay` DISABLE KEYS */;
-INSERT INTO `otherpay` VALUES (1,1,12,'sqws','/Project_ForFun/OtherPay/1/20210803_164348',1,'2021-08-03 16:43:47','2021-08-03 17:03:15'),(2,1,111,'111','/Project_ForFun/OtherPay/1/20210803_164915',1,'2021-08-03 16:49:15','2021-08-03 17:03:15');
 /*!40000 ALTER TABLE `otherpay` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -522,7 +519,7 @@ CREATE TABLE `person_evaluation` (
 
 LOCK TABLES `person_evaluation` WRITE;
 /*!40000 ALTER TABLE `person_evaluation` DISABLE KEYS */;
-INSERT INTO `person_evaluation` VALUES (1,5,3,8,4,'房屋不錯 房東人也不錯','2021-06-23 17:25:19',NULL,NULL),(2,1,3,4,4,'屋主還不錯','2021-06-21 21:40:07',NULL,NULL),(3,2,3,2,2,'房租貴,屋主態度差','2021-06-21 21:40:07',NULL,NULL),(4,3,9,6,3,'屋主普通','2021-06-21 21:40:07',NULL,NULL),(6,1,4,3,4,'房客還行','2021-06-21 21:40:07',NULL,NULL),(7,2,2,3,2,'根本奧客','2021-06-21 21:40:07',NULL,NULL),(8,3,6,9,3,'房客普通','2021-06-21 21:40:07',NULL,NULL),(9,12,3,10,2,'屋主不負責任','2021-07-19 13:59:15',NULL,NULL),(17,12,10,3,1,'房客來找碴的','2021-07-19 13:59:15',NULL,NULL),(18,30,3,2,5,'qazwsx','2021-08-03 16:30:21',NULL,NULL),(19,30,2,3,3,'bad','2021-08-03 16:40:08',NULL,NULL);
+INSERT INTO `person_evaluation` VALUES (1,5,3,8,4,'房屋不錯 房東人也不錯','2021-06-23 17:25:19',NULL,NULL),(2,1,3,4,4,'屋主還不錯','2021-06-21 21:40:07',NULL,NULL),(3,2,3,2,2,'房租貴,屋主態度差','2021-06-21 21:40:07',NULL,NULL),(4,3,9,6,3,'屋主普通','2021-06-21 21:40:07',NULL,NULL),(6,1,4,3,4,'房客還行','2021-06-21 21:40:07',NULL,NULL),(7,2,2,3,2,'根本奧客','2021-06-21 21:40:07',NULL,NULL),(8,3,6,9,3,'房客普通','2021-06-21 21:40:07',NULL,NULL),(9,12,3,10,2,'屋主不負責任','2021-07-19 13:59:15',NULL,NULL),(17,12,10,3,1,'房客來找碴的','2021-07-19 13:59:15',NULL,NULL),(18,30,3,2,5,'so bad','2021-08-03 16:30:21',NULL,NULL),(19,30,2,3,3,'bad','2021-08-03 16:40:08',NULL,NULL);
 /*!40000 ALTER TABLE `person_evaluation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -544,7 +541,7 @@ CREATE TABLE `post` (
   `UPDATE_TIME` datetime DEFAULT NULL,
   `DELETE_TIME` datetime DEFAULT NULL,
   PRIMARY KEY (`POST_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -553,7 +550,7 @@ CREATE TABLE `post` (
 
 LOCK TABLES `post` WRITE;
 /*!40000 ALTER TABLE `post` DISABLE KEYS */;
-INSERT INTO `post` VALUES (1,'知識問答',3,'ddddd','Project_ForFun/Discussion_insert/1624696992874','ddddddddd','2021-06-26 16:43:15',NULL,'2021-08-03 15:31:35'),(3,'需求單',3,'ttt','Project_ForFun/Discussion_insert/1625383127581','ttttt','2021-07-04 15:18:53',NULL,'2021-08-03 15:27:59'),(4,'租屋交流',2,'qazwsx','Project_ForFun/Discussion_update/1627972224231','qwrrsgdfx','2021-08-03 14:08:43','2021-08-03 14:30:24',NULL),(5,'需求單',2,'guyguy','Project_ForFun/Discussion_insert/1627972316269','567689','2021-08-03 14:32:06',NULL,NULL),(6,'租屋交流',3,'ðßßáðð','Project_ForFun/Discussion_insert/1627975786720','áßðßáðßáð','2021-08-03 15:29:51',NULL,'2021-08-03 15:30:05'),(7,'租屋交流',3,'ðßðßáð','Project_ForFun/Discussion_insert/no_image.jpg','áßðßáðáß','2021-08-03 15:32:10',NULL,'2021-08-03 15:32:18'),(8,'租屋交流',3,'ðåäð','Project_ForFun/Discussion_insert/no_image.jpg','ðåäðåäð','2021-08-03 15:37:39',NULL,'2021-08-03 15:37:53'),(9,'租屋交流',3,'ðßáðßáðßáðßá','Project_ForFun/Discussion_insert/no_image.jpg','ßáðßáðßáð','2021-08-03 15:44:46',NULL,'2021-08-03 15:44:53');
+INSERT INTO `post` VALUES (10,'租屋交流',8,'這附近的房子還不錯','Project_ForFun/Discussion_update/1628494811717','這捷運站附近的房子不錯','2021-08-09 14:49:54','2021-08-09 15:45:31',NULL),(11,'需求單',6,'求租','Project_ForFun/Discussion_update/1628495844262','【求租人】：2個男生\n【職業】：皆為大四學生、能準時交租！\n【地區】：台北市、新北市（中永和、新店可）\n【生活習慣】：不菸、愛清潔、注重生活品質環境\n【房型】：2房1廳\n【租期】：1年\n【預算】：15000-20000以內/月\n【樓層】：非加頂樓蓋或地下室','2021-08-09 15:51:37','2021-08-09 15:58:45',NULL),(12,'租屋交流',10,'遇到討厭的房東','Project_ForFun/Discussion_insert/1628496142452','我們這位房東, 是個很偉大的人.\n偉大到認為房東這角色應該比天還大吧~\n\n總是要怎樣就怎樣,我們已經盡量不要跟他交手了.','2021-08-09 16:02:31','2021-08-09 16:08:44',NULL),(13,'知識問答',3,'可殺價嗎？','Project_ForFun/Discussion_insert/1628499897494','預算不多\n押金可便宜一點嗎\n甘溫','2021-08-09 17:05:26',NULL,NULL),(14,'知識問答',5,'請問所需文件？','Project_ForFun/Discussion_insert/1628500044102','請問第一次要租房需要備齊哪些文件？','2021-08-09 17:07:45',NULL,NULL),(16,'知識問答',5,'出租前，應注意事項','Project_ForFun/Discussion_update/1628502793698','一、想要出租之租金金額 租金一般是以月計，即每月租金多少金額，並約定租金給付時間，如每月月初5日等。押租金簡稱押租或押金，押租金民法未有明文規定，但為社會上所通行，押金是租賃契約成立時，房客支付用以擔保租金支付為目的的金額，一般多為租金的一個月或二個月，若租賃關係結束，未有欠租或違約情事，房東應無條件將押金返還予房客。押金數額亦可以由當事人任意訂立，但若超過二個月租金，房客可以依土地法的規定主張超過部份得用以抵付租金。 二、租賃期間 租賃期間多為一至二年，營業使用的租期較長，通常為四、五年以上。 三、租賃對象限制 考慮出租對象，則是為了房屋安全或未來收租順利的考量，如有的房東不希望租給特種營業身分者，有的不願出租給餐飲業，有的不願租給殯葬業等，因此要租屋時，應了解租屋人的身分、職業、租屋用途等，當然，限制愈多，出租難度愈高，這點屋主必須有所理解。','2021-08-09 17:50:32','2021-08-09 17:53:16',NULL);
 /*!40000 ALTER TABLE `post` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -595,7 +592,7 @@ CREATE TABLE `publish` (
   CONSTRAINT `FK_PUBLISH_AREA` FOREIGN KEY (`AREA_ID`) REFERENCES `area` (`AREA_ID`),
   CONSTRAINT `FK_PUBLISH_CITY` FOREIGN KEY (`CITY_ID`) REFERENCES `city` (`CITY_ID`),
   CONSTRAINT `FK_PUBLISH_MEMBER` FOREIGN KEY (`OWNER_ID`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='刊登';
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='刊登';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -604,7 +601,7 @@ CREATE TABLE `publish` (
 
 LOCK TABLES `publish` WRITE;
 /*!40000 ALTER TABLE `publish` DISABLE KEYS */;
-INSERT INTO `publish` VALUES (1,3,'一般套房','/Project_ForFun/Publish/1/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/1/Info1.jpg','Project_ForFun/Publish/1/Info2.jpg','Project_ForFun/Publish/1/Info3.jpg',1,3,NULL,25.0514277,121.5432529,5500,1,85,1,1,'1|1|1|1|1|1|1|1|1',0,'2021-06-21 21:28:47',NULL,NULL),(2,3,'超高級套房','/Project_ForFun/Publish/2/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/2/Info1.jpg','Project_ForFun/Publish/2/Info2.jpg','Project_ForFun/Publish/2/Info3.jpg',1,3,NULL,25.0513287,121.54334379999987,7700,2,84,2,1,'1|1|1|1|1|1|1|1|1',0,'2021-06-21 21:28:47',NULL,NULL),(3,4,'高級公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-21 21:28:47',NULL,NULL),(4,5,'高級套房','Project_ForFun/Publish/4/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/4/Info1.jpg','Project_ForFun/Publish/4/Info2.jpg','Project_ForFun/Publish/4/Info3.jpg',1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-21 21:29:26',NULL,NULL),(5,3,'公寓','/Project_ForFun/Publish/5/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/5/Info1.jpg','Project_ForFun/Publish/5/Info2.jpg','Project_ForFun/Publish/5/Info3.jpg',1,3,NULL,25.0514227,121.5429203,8400,3,83,1,0,'1|1|1|1|1|1|1|1|1',0,'2021-06-23 17:16:33',NULL,NULL),(6,6,'套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-23 17:16:33',NULL,NULL),(7,7,'雅房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-23 17:16:33',NULL,NULL),(8,4,'鄰近捷運站套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-23 17:17:31',NULL,NULL),(9,3,'大坪數高級公寓','Project_ForFun/Publish/9/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/9/Info1.jpg','Project_ForFun/Publish/9/Info2.jpg','Project_ForFun/Publish/9/Info3.jpg',1,3,'台北市中山區南京東路三段219號4-5F',25.052128,121.54325290000001,1000,1,100,2,1,'1|0|1|1|0|1|1|0|1',3,'2021-06-24 21:08:09','2021-06-24 21:09:16',NULL),(10,3,'MMM大坪數高級公寓','Project_ForFun/Publish/10/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/10/Info1.jpg','Project_ForFun/Publish/10/Info2.jpg','Project_ForFun/Publish/10/Info3.jpg',1,3,'台北市中山區南京東路三段210號1樓',25.0517732,121.54334379999999,9999,1,100,1,0,'1|1|1|1|1|1|1|1|1',2,'2021-06-27 11:01:12','2021-06-27 11:01:12','2021-08-03 17:03:14'),(11,3,'熊派餐廳','Project_ForFun/Publish/11/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/11/Info1.jpg','Project_ForFun/Publish/11/Info2.jpg','Project_ForFun/Publish/11/Info3.jpg',1,3,'台北市中山區南京東路三段194巷1號',25.0514287,121.5429303,100,1,100,0,1,'1|1|1|1|1|1|1|1|1',3,'2021-06-27 11:03:59','2021-06-27 11:03:59',NULL),(12,3,'樂憩球早午餐','Project_ForFun/Publish/12/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/12/Info1.jpg','Project_ForFun/Publish/12/Info2.jpg','Project_ForFun/Publish/12/Info3.jpg',1,3,'台北市中山區遼寧街155巷41號',25.052579599999998,121.54335490000001,399,3,20,1,1,'1|1|1|1|1|1|1|1|1',3,'2021-06-27 11:05:47','2021-06-27 11:05:47',NULL),(13,3,'藍格印刷','Project_ForFun/Publish/13/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/13/Info1.jpg','Project_ForFun/Publish/13/Info2.jpg','Project_ForFun/Publish/13/Info3.jpg',1,3,'台北市中山區遼寧街155巷2號',25.0524414,121.5422744,5050,1,500,0,0,'1|1|1|1|1|1|1|1|1',3,'2021-06-27 11:07:46','2021-06-27 11:07:46',NULL),(14,3,'財團法人國防工業發展基金會','Project_ForFun/Publish/14/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/14/Info1.jpg','Project_ForFun/Publish/14/Info2.jpg','Project_ForFun/Publish/14/Info3.jpg',1,3,'台北市中山區北安路409號B1樓',25.0798854,121.543127,8888,3,88,1,0,'1|1|1|0|1|1|0|1|1',3,'2021-06-29 22:33:30','2021-06-29 22:35:40',NULL),(15,3,'北安休閒運動中心','Project_ForFun/Publish/15/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/15/Info1.jpg','Project_ForFun/Publish/15/Info2.jpg','Project_ForFun/Publish/15/Info3.jpg',1,3,'台北市中山區北安路400巷1弄12號',25.079226,121.54226899999999,3000,1,50,2,1,'1|1|1|1|1|0|1|0|0',3,'2021-06-29 22:37:23','2021-06-29 22:37:23',NULL),(16,3,'大直市場什錦麵/ 什錦炒飯','Project_ForFun/Publish/16/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利\ngood','Project_ForFun/Publish/16/Info1.jpg','Project_ForFun/Publish/16/Info2.jpg','Project_ForFun/Publish/16/Info3.jpg',1,3,'台北市中山區北安路476巷3號',25.079524199999998,121.545111,81000,1,100,1,1,'1|1|1|0|1|1|0|1|1',3,'2021-06-29 22:39:17','2021-06-29 22:39:17',NULL),(17,3,'大坪數高級公寓','Project_ForFun/Publish/17/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/17/Info1.jpg','Project_ForFun/Publish/17/Info2.jpg','Project_ForFun/Publish/17/Info3.jpg',1,3,'台北市中山區南京東路三段219號4-5F',25.052128,121.54325290000001,1000,1,100,0,0,'1|1|1|1|1|1|1|1|1',3,'2021-07-26 17:04:37','2021-07-26 17:07:38',NULL),(18,3,'大坪數高級公寓','Project_ForFun/Publish/18/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/18/Info1.jpg','Project_ForFun/Publish/18/Info2.jpg','Project_ForFun/Publish/18/Info3.jpg',1,3,'台北市中山區南京東路三段219號4-5F',25.052128,121.54325290000001,1000,1,100,1,1,'0|0|0|0|0|0|0|0|0',3,'2021-08-03 15:24:26','2021-08-03 15:24:26',NULL);
+INSERT INTO `publish` VALUES (1,3,'一般套房','/Project_ForFun/Publish/1/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/1/Info1.jpg','Project_ForFun/Publish/1/Info2.jpg','Project_ForFun/Publish/1/Info3.jpg',1,3,NULL,25.0514277,121.5432529,5500,1,85,1,1,'1|1|1|1|1|1|1|1|1',0,'2021-06-21 21:28:47',NULL,NULL),(2,3,'超高級套房','/Project_ForFun/Publish/2/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/2/Info1.jpg','Project_ForFun/Publish/2/Info2.jpg','Project_ForFun/Publish/2/Info3.jpg',1,3,NULL,25.0513287,121.54334379999987,7700,2,84,2,1,'1|1|1|1|1|1|1|1|1',0,'2021-06-21 21:28:47',NULL,NULL),(3,4,'高級公寓',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-21 21:28:47',NULL,NULL),(4,5,'高級套房','Project_ForFun/Publish/4/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/4/Info1.jpg','Project_ForFun/Publish/4/Info2.jpg','Project_ForFun/Publish/4/Info3.jpg',1,3,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-21 21:29:26',NULL,NULL),(5,3,'公寓','/Project_ForFun/Publish/5/Title.jpg','搶手貨，不租可惜 鄰近捷運站，交通便利','Project_ForFun/Publish/5/Info1.jpg','Project_ForFun/Publish/5/Info2.jpg','Project_ForFun/Publish/5/Info3.jpg',1,3,NULL,25.0514227,121.5429203,8400,3,83,1,0,'1|1|1|1|1|1|1|1|1',0,'2021-06-23 17:16:33',NULL,NULL),(6,6,'套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-23 17:16:33',NULL,NULL),(7,7,'雅房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-23 17:16:33',NULL,NULL),(8,4,'鄰近捷運站套房',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,'2021-06-23 17:17:31',NULL,NULL),(9,3,'大坪數高級公寓','Project_ForFun/Publish/9/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/9/Info1.jpg','Project_ForFun/Publish/9/Info2.jpg','Project_ForFun/Publish/9/Info3.jpg',1,3,'台北市中山區南京東路三段219號4-5F',25.052128,121.54325290000001,1000,1,100,2,1,'1|0|1|1|0|1|1|0|1',3,'2021-06-24 21:08:09','2021-06-24 21:09:16',NULL),(10,3,'MMM大坪數高級公寓','Project_ForFun/Publish/10/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/10/Info1.jpg','Project_ForFun/Publish/10/Info2.jpg','Project_ForFun/Publish/10/Info3.jpg',1,3,'台北市中山區南京東路三段210號1樓',25.0517732,121.54334379999999,9999,1,100,1,0,'1|1|1|1|1|1|1|1|1',2,'2021-06-27 11:01:12','2021-06-27 11:01:12','2021-08-03 17:03:14'),(11,3,'大坪數客廳','Project_ForFun/Publish/11/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/11/Info1.jpg','Project_ForFun/Publish/11/Info2.jpg','Project_ForFun/Publish/11/Info3.jpg',1,3,'台北市中山區南京東路三段194巷1號',25.0514287,121.5429303,100,1,100,0,1,'1|1|1|1|1|1|1|1|1',3,'2021-06-27 11:03:59','2021-08-09 15:03:46','2021-08-09 16:28:09'),(12,3,'高級套房出租','Project_ForFun/Publish/12/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/12/Info1.jpg','Project_ForFun/Publish/12/Info2.jpg','Project_ForFun/Publish/12/Info3.jpg',1,3,'台北市中山區遼寧街155巷41號',25.052579599999998,121.54335490000001,399,3,20,1,1,'1|1|1|1|1|1|1|1|1',3,'2021-06-27 11:05:47','2021-08-09 15:05:00',NULL),(13,3,'廚房出租','Project_ForFun/Publish/13/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/13/Info1.jpg','Project_ForFun/Publish/13/Info2.jpg','Project_ForFun/Publish/13/Info3.jpg',1,3,'台北市中山區遼寧街155巷2號',25.0524414,121.5422744,5050,1,500,0,0,'1|1|1|1|1|1|1|1|1',3,'2021-06-27 11:07:46','2021-08-09 15:13:19',NULL),(14,3,'財團法人國防工業發展基金會','Project_ForFun/Publish/14/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/14/Info1.jpg','Project_ForFun/Publish/14/Info2.jpg','Project_ForFun/Publish/14/Info3.jpg',1,3,'台北市中山區北安路409號B1樓',25.0798854,121.543127,8888,3,88,1,0,'1|1|1|0|1|1|0|1|1',3,'2021-06-29 22:33:30','2021-08-09 15:13:53',NULL),(15,3,'北安休閒運動中心','Project_ForFun/Publish/15/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/15/Info1.jpg','Project_ForFun/Publish/15/Info2.jpg','Project_ForFun/Publish/15/Info3.jpg',1,3,'台北市中山區北安路400巷1弄12號',25.079226,121.54226899999999,3000,1,50,2,1,'1|1|1|1|1|0|1|0|0',3,'2021-06-29 22:37:23','2021-08-09 15:15:25',NULL),(16,3,'大直市場華廈','Project_ForFun/Publish/16/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利\ngood','Project_ForFun/Publish/16/Info1.jpg','Project_ForFun/Publish/16/Info2.jpg','Project_ForFun/Publish/16/Info3.jpg',1,3,'台北市中山區北安路476巷3號',25.079524199999998,121.545111,81000,1,100,1,1,'1|1|1|0|1|1|0|1|1',3,'2021-06-29 22:39:17','2021-08-09 16:24:49',NULL),(17,3,'小坪數公寓','Project_ForFun/Publish/17/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/17/Info1.jpg','Project_ForFun/Publish/17/Info2.jpg','Project_ForFun/Publish/17/Info3.jpg',1,3,'台北市中山區南京東路三段219號4-5F',25.052128,121.54325290000001,1000,1,100,0,0,'1|1|1|1|1|1|1|1|1',3,'2021-07-26 17:04:37','2021-08-09 16:27:52',NULL),(18,3,'大坪數公司廠房','Project_ForFun/Publish/18/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/18/Info1.jpg','Project_ForFun/Publish/18/Info2.jpg','Project_ForFun/Publish/18/Info3.jpg',1,3,'台北市中山區南京東路三段219號4-5F',25.052128,121.54325290000001,1000,1,100,1,1,'0|0|0|0|0|0|0|0|0',3,'2021-08-03 15:24:26','2021-08-09 16:31:15',NULL),(19,5,'中央聯合辦公大樓南棟','Project_ForFun/Publish/19/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/19/Info1.jpg','Project_ForFun/Publish/19/Info2.jpg','Project_ForFun/Publish/19/Info3.jpg',1,1,'台北市中正區徐州路5號',25.0421129,121.5195433,8000,1,100,1,1,'0|1|1|0|1|0|1|1|0',3,'2021-08-09 14:41:39','2021-08-09 14:50:03',NULL),(20,5,'台灣經濟部標準檢驗','Project_ForFun/Publish/20/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/20/Info1.jpg','Project_ForFun/Publish/20/Info2.jpg','Project_ForFun/Publish/20/Info3.jpg',1,1,'台北市中正區濟南路一段4號',25.0424079,121.52073949999998,1000,1,100,2,0,'0|0|0|1|1|1|1|1|1',3,'2021-08-09 14:45:00','2021-08-09 14:50:15',NULL),(21,5,'教育部','Project_ForFun/Publish/21/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/21/Info1.jpg','Project_ForFun/Publish/21/Info2.jpg','Project_ForFun/Publish/21/Info3.jpg',1,1,'台北市中正區中山南路5號',25.0424561,121.51917909999999,1000,1,100,0,0,'1|1|1|1|1|1|1|1|1',3,'2021-08-09 14:49:13','2021-08-09 14:49:13',NULL),(22,3,'久居棧旅店 9ine Hotel','Project_ForFun/Publish/22/Title.jpg','這間休閒飯店坐落於繁忙交叉路口的街角位置，步行至淡水河約 5 分鐘，距離西門町購物區 2 公里，並距離台北市立美術館 3 公里。','Project_ForFun/Publish/22/Info1.jpg','Project_ForFun/Publish/22/Info2.jpg','Project_ForFun/Publish/22/Info3.jpg',1,2,'台北市大同區延平北路二段255號2樓',25.0625376,121.5115023,1000,1,100,0,1,'0|1|1|0|1|1|1|0|1',3,'2021-08-09 15:32:55','2021-08-09 15:32:55',NULL),(23,3,'御誠地政士事務所','Project_ForFun/Publish/23/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/23/Info1.jpg','Project_ForFun/Publish/23/Info2.jpg','Project_ForFun/Publish/23/Info3.jpg',1,2,'台北市大同區延平北路二段288號6樓',25.0628285,121.5106761,5000,2,10,0,0,'1|1|1|1|0|1|1|0|1',3,'2021-08-09 15:38:49','2021-08-09 15:38:49',NULL),(24,3,'高級辦公室','Project_ForFun/Publish/24/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/24/Info1.jpg','Project_ForFun/Publish/24/Info2.jpg','Project_ForFun/Publish/24/Info3.jpg',1,2,'台北市大同區民權西路237-1號',25.063117599999998,121.51172469999999,1000,1,100,0,0,'1|1|1|1|1|1|1|1|1',3,'2021-08-09 15:54:34','2021-08-09 15:54:34',NULL),(25,3,'雅房近夜市（限女）','Project_ForFun/Publish/25/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/25/Info1.jpg','Project_ForFun/Publish/25/Info2.jpg','Project_ForFun/Publish/25/Info3.jpg',1,2,'台北市大同區延平北路三段4號',25.063473899999998,121.51086,10000,6,1000,2,1,'1|1|0|1|0|1|0|1|1',3,'2021-08-09 17:11:20','2021-08-09 17:39:46',NULL),(26,3,'外交部領事事務','Project_ForFun/Publish/26/Title.jpg','搶手貨，不租可惜\n鄰近捷運站，交通便利','Project_ForFun/Publish/26/Info1.jpg','Project_ForFun/Publish/26/Info2.jpg','Project_ForFun/Publish/26/Info3.jpg',1,1,'台北市中正區濟南路一段2-2號號3~5樓',25.0426814,121.52011159999999,4500,12,1000,1,1,'0|1|0|1|0|1|0|1|0',3,'2021-08-09 17:34:52','2021-08-09 17:34:52',NULL);
 /*!40000 ALTER TABLE `publish` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -637,7 +634,7 @@ CREATE TABLE `report` (
   CONSTRAINT `FK_COMMENTID` FOREIGN KEY (`CHATROOM_ID`) REFERENCES `comment` (`COMMENT_ID`),
   CONSTRAINT `FK_REPORT_POSTID` FOREIGN KEY (`POST_ID`) REFERENCES `post` (`POST_ID`),
   CONSTRAINT `FK_REPORTED` FOREIGN KEY (`REPORTED_ID`) REFERENCES `member` (`MEMBER_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -646,7 +643,6 @@ CREATE TABLE `report` (
 
 LOCK TABLES `report` WRITE;
 /*!40000 ALTER TABLE `report` DISABLE KEYS */;
-INSERT INTO `report` VALUES (3,2,2,0,'不同就是因為他們自己動手',0,NULL,5,NULL,'2021-08-03 14:24:00',NULL),(4,2,2,0,'rgjgughui',3,NULL,6,NULL,'2021-08-03 14:27:05',NULL),(5,2,3,0,'dddfd33567',4,1,NULL,0,'2021-08-03 14:32:43',NULL),(6,2,3,0,'nmbnvc',1,1,NULL,0,'2021-08-03 14:33:55',NULL),(7,2,3,0,'6yhn8ik,',1,NULL,NULL,2,'2021-08-03 14:35:07',NULL);
 /*!40000 ALTER TABLE `report` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -659,4 +655,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-08-03 17:13:58
+-- Dump completed on 2021-08-09 17:55:25
