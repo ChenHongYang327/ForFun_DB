@@ -52,7 +52,6 @@ public class ReportController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
 		// 收取client端資料
 		request.setCharacterEncoding("UTF-8");
 		// 回傳前端
@@ -86,6 +85,7 @@ public class ReportController extends HttpServlet {
 		JsonObject jsonWri = new JsonObject();
 		switch (resultcode) {
 		case 1: // ios 檢舉留(chatroom）拿資料用的
+			
 			List<ReportChatMsg> reportChatMsgs = new ArrayList<>();
 			
 			List<Report_page_bean> reports = new ArrayList<>();
@@ -108,8 +108,8 @@ public class ReportController extends HttpServlet {
 				reportChatMsgs.add(reportChatMsg);
 			}
 
-			jsonWri.addProperty("REPORTCHATMSG", gson.toJson(reportChatMsgs.toString()));
-			jsonWri.addProperty("RESULT", 200);
+			jsonWri.addProperty("REPORTCHATMSG", gson.toJson(reportChatMsgs));
+			jsonWri.addProperty("RESULT", "200");
 		
 			break;
 
@@ -119,7 +119,7 @@ public class ReportController extends HttpServlet {
 		}
 		
 		try (PrintWriter pw = response.getWriter();) {
-			pw.println(jsonWri);
+			pw.println(jsonWri.toString());
 			System.out.println("output: " + jsonWri.toString());
 
 		} catch (Exception e) {
