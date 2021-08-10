@@ -56,9 +56,9 @@ public class PostService {
 		
 	}
 	
-	public List<Post> selectAllPosts() {
+	public Post selectAllPosts(int POST_ID) {
 		
-		return postDao.selectAllPost();
+		return postDao.selectAllPost(POST_ID);
 	}
 	
 }

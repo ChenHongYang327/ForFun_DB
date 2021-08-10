@@ -39,4 +39,12 @@ public class Report_page_service {
 	public int deleteById(int reportId) {
 		return report_pageDao.deleteById(reportId);
 	}
+	
+	public List<Report_page_bean> selectReportPost() {
+		return report_pageDao.selectReportPost();
+	}
+	
+	public int deleteBypostId(int postId) {
+		return report_pageDao.deleteBypostId(postId);
+	}
 }

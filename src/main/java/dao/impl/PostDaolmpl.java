@@ -198,14 +198,14 @@ public class PostDaolmpl implements PostDao {
 	}
 
 	@Override
-	public List<Post> selectAllPost() {
-		String sql = "SELECT *  FROM Post WHERE DELETE_TIME IS NULL;";
-		List<Post> postList = new ArrayList<Post>();
+	public Post selectAllPost(int POST_ID) {
+		String sql = "SELECT * FROM Post WHERE POST_ID = ? AND DELETE_TIME IS NULL;";
+		Post post = new Post();
 		try (Connection connection = dataSource.getConnection();
 				PreparedStatement ps = connection.prepareStatement(sql);) {
+			ps.setInt(1, POST_ID);
 			ResultSet rs = ps.executeQuery();
 			while (rs.next()) {
-				Post post = new Post();
 				post.setPostId(rs.getInt("POST_ID"));
 				post.setBoardId(rs.getString("BOARD_ID"));
 				post.setPosterId(rs.getInt("POSTER_ID"));
@@ -215,16 +215,13 @@ public class PostDaolmpl implements PostDao {
 				post.setCreateTime(rs.getTimestamp("CREATE_TIME"));
 				post.setUpdateTime(rs.getTimestamp("UPDATE_TIME"));
 				post.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
-				postList.add(post);
-
+				
 			}
-			return postList;
-
+		
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
-		return postList;
+		return post;
 	}
 
 }

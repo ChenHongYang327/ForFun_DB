@@ -156,8 +156,53 @@ public class Report_pageDaoImpl implements Report_pageDao {
 	        return -1;
 	}
 
-
-
 	
+	@Override
+		public List<Report_page_bean> selectReportPost() {
+			final String sql="SELECT * FROM FORFUN.report WHERE ITEM = 0 and DELETE_TIME is null;";
+			try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				List<Report_page_bean> reports=new ArrayList<Report_page_bean>();
+				ResultSet rs= pstmt.executeQuery(sql);
+				while(rs.next()) {
+					Report_page_bean report=new Report_page_bean();
+					report.setReport_id(rs.getInt("REPORT_ID"));
+					report.setWhistleblower_id(rs.getInt("WHISTLEBLOWER_ID"));
+					report.setReported_id(rs.getInt("REPORTED_ID"));
+					report.setType(rs.getInt("TYPE"));
+					report.setMessage(rs.getString("MESSAGE"));
+					report.setReport_class(rs.getInt("REPORT_CLASS"));
+					report.setPost_id(rs.getInt("POST_ID"));
+					report.setChatroom_id(rs.getInt("CHATROOM_ID"));
+					report.setItem(rs.getInt("ITEM"));
+					report.setCreateTime(rs.getTimestamp("CREATE_TIME"));
+					report.setDeleteTime(rs.getTimestamp("DELETE_TIME"));
+					reports.add(report);
+				}
+				return reports;
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return null;
+		}	
+		
+		
+		@Override
+		public int deleteBypostId(int postId) {
+			  final String sql = "UPDATE FORFUN.report SET DELETE_TIME = ? WHERE POST_ID = ?;";
+		        
+		        try (
+		            Connection conn = dataSource.getConnection();
+		            PreparedStatement stmt = conn.prepareStatement(sql);
+		        ) {
+		            stmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
+		            stmt.setInt(2, postId);
+		            
+		            return stmt.executeUpdate();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		        
+		        return -1;
+		}
 
 }

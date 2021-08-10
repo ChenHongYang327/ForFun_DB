@@ -22,6 +22,6 @@ public interface PostDao {
 	
 	List<Post> selectRentSeekList(String BOARD_ID, int POSTER_ID);
 	
-	List<Post> selectAllPost();
+	Post selectAllPost(int POST_ID);
 
 }

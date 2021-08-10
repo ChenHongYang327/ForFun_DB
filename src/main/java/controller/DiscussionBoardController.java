@@ -29,17 +29,19 @@ import dao.impl.PostDaolmpl;
 import member.bean.Comment;
 import member.bean.Member;
 import member.bean.Post;
+import member.bean.Report_page_bean;
 import service.CommentService;
 import service.MemberService;
 import service.NotificationService;
 import service.PostService;
+import service.Report_page_service;
 
 @WebServlet("/DiscussionBoardController")
 public class DiscussionBoardController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	PostService postService = null;   
 	MemberService memberService = new MemberService();
-	
+	Report_page_service reportService  = new Report_page_service();
 	@Override
 	public void init() throws ServletException {
 		// 私密金鑰檔案可以儲存在專案以外
@@ -118,6 +120,7 @@ public class DiscussionBoardController extends HttpServlet {
 		} else if (action.equals("postDelete")){
 			int postId = jsonObject.get("postId").getAsShort();
 			int count = postService.deleteById(postId);
+			reportService.deleteBypostId(postId);
 			writeText(response, String.valueOf(count));
 			
 			//---------刪除文章更新留言通知的狀態
@@ -131,6 +134,7 @@ public class DiscussionBoardController extends HttpServlet {
 			if (memberToken != null) {
 				NotificationController.sendSingleFcmNoNotification(memberToken);
 			}
+			
 			//----------------------
 		
 		} else if (action.equals("getImagePath")) {
@@ -149,10 +153,20 @@ public class DiscussionBoardController extends HttpServlet {
 		} else if (action.equals("getAllReport")) {
 			// 將輸入資料列印出來除錯用
 			System.out.println("input: " + jsonIn);
-			List<Post> postList = postService.selectAllPosts();
+			List<Report_page_bean> reportList = reportService.selectReportPost();
+			System.out.println(reportList.size()+"::::::");
+			List<Post> postList = new ArrayList<>();
+			for (Report_page_bean report_page_bean : reportList) {
+				Post post = postService.selectAllPosts(report_page_bean.getPost_id());
+				if(post.getPostId()!= null) {
+				postList.add(post);
+				}
+			}
+			System.out.println(postList.size()+":::123");
 			
-	
+			
 			//裝在jsonObject後設定key 送回前端	
+			jsonObject.addProperty("reportList", new Gson().toJson(reportList));
 			jsonObject.addProperty("postList", new Gson().toJson(postList));
 			System.out.println("outPut: " + gson.toJson(jsonObject));
 			writeText(response, gson.toJson(jsonObject));

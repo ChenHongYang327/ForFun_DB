@@ -17,6 +17,9 @@ public interface Report_pageDao {
 	int deleteById(int reportId);
 	
 	List<Report_page_bean> selectReportMember();
-
+	
+	List<Report_page_bean> selectReportPost();
+	
+	int deleteBypostId(int postId);
 
 }
