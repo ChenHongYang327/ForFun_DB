@@ -79,12 +79,14 @@ public class Report_page_Servlet extends HttpServlet {
 			String detailedStatusCharoom = clientReq.get("MESSAGE").getAsString();	
 			Integer spinnerCharoom = clientReq.get("REPORT_CLASS").getAsInt();	
 			Integer chatroomIdCharoom = clientReq.get("CHATROOM_ID").getAsInt();
+			Integer itemChat = clientReq.get("ITEM").getAsInt();
 			
 			report_page_bean.setWhistleblower_id(whistleBlowerIdCharoom);
 			report_page_bean.setReported_id(reportedIdCharoom);
 			report_page_bean.setMessage(detailedStatusCharoom);
 			report_page_bean.setReport_class(spinnerCharoom);
 			report_page_bean.setChatroom_id(chatroomIdCharoom);
+			report_page_bean.setItem(itemChat);
 			
 			if (report_page_Service.insertCharoom(report_page_bean) >= 0) {
 				

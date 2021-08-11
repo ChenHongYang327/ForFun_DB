@@ -60,7 +60,7 @@ public class Report_pageDaoImpl implements Report_pageDao {
 
 	@Override
 	public int insertCharoom(Report_page_bean report_page_bean) {
-		final String sql = "insert into report(WHISTLEBLOWER_ID, REPORTED_ID, MESSAGE, REPORT_CLASS, CHATROOM_ID) values(?, ?, ?, ?, ? );";
+		final String sql = "insert into report(WHISTLEBLOWER_ID, REPORTED_ID, MESSAGE, REPORT_CLASS, CHATROOM_ID, ITEM) values(?, ?, ?, ?, ? , ?);";
 		
 
 		try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
@@ -69,6 +69,7 @@ public class Report_pageDaoImpl implements Report_pageDao {
 			pstmt.setString(3, report_page_bean.getMessage());
 			pstmt.setInt(4, report_page_bean.getReport_class());
 			pstmt.setInt(5, report_page_bean.getChatroom_id());
+			pstmt.setInt(6, report_page_bean.getItem());
 			return pstmt.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
