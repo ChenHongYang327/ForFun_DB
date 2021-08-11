@@ -154,7 +154,6 @@ public class DiscussionBoardController extends HttpServlet {
 			// 將輸入資料列印出來除錯用
 			System.out.println("input: " + jsonIn);
 			List<Report_page_bean> reportList = reportService.selectReportPost();
-			System.out.println(reportList.size()+"::::::");
 			List<Post> postList = new ArrayList<>();
 			for (Report_page_bean report_page_bean : reportList) {
 				Post post = postService.selectAllPosts(report_page_bean.getPost_id());
@@ -162,14 +161,17 @@ public class DiscussionBoardController extends HttpServlet {
 				postList.add(post);
 				}
 			}
-			System.out.println(postList.size()+":::123");
-			
 			
 			//裝在jsonObject後設定key 送回前端	
 			jsonObject.addProperty("reportList", new Gson().toJson(reportList));
 			jsonObject.addProperty("postList", new Gson().toJson(postList));
 			System.out.println("outPut: " + gson.toJson(jsonObject));
 			writeText(response, gson.toJson(jsonObject));
+			
+		} else if (action.equals("getAllNotReport")) {
+			int reportId = jsonObject.get("reportId").getAsInt();
+			reportService.deleteById(reportId);
+			writeText(response, gson.toJson(reportId));
 			
 		} else {
 			writeText(response, "");
