@@ -47,4 +47,8 @@ public class Report_page_service {
 	public int deleteBypostId(int postId) {
 		return report_pageDao.deleteBypostId(postId);
 	}
+	
+	public int updateType(int REPORT_ID) {
+		return report_pageDao.updateType(REPORT_ID);
+	}
 }
