@@ -170,7 +170,7 @@ public class DiscussionBoardController extends HttpServlet {
 			
 		} else if (action.equals("getAllNotReport")) {
 			int reportId = jsonObject.get("reportId").getAsInt();
-			reportService.deleteById(reportId);
+			reportService.updateType(reportId);
 			writeText(response, gson.toJson(reportId));
 			
 		} else {
