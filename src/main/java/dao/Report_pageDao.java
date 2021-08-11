@@ -21,5 +21,7 @@ public interface Report_pageDao {
 	List<Report_page_bean> selectReportPost();
 	
 	int deleteBypostId(int postId);
+	
+	public int updateType(int REPORT_ID);
 
 }

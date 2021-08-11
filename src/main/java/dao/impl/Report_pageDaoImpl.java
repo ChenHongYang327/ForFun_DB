@@ -159,7 +159,7 @@ public class Report_pageDaoImpl implements Report_pageDao {
 	
 	@Override
 		public List<Report_page_bean> selectReportPost() {
-			final String sql="SELECT * FROM FORFUN.report WHERE ITEM = 0 and DELETE_TIME is null;";
+			final String sql="SELECT * FROM FORFUN.report WHERE ITEM = 0 and DELETE_TIME is null and TYPE = 0;";
 			try (Connection conn = dataSource.getConnection(); PreparedStatement pstmt = conn.prepareStatement(sql);) {
 				List<Report_page_bean> reports=new ArrayList<Report_page_bean>();
 				ResultSet rs= pstmt.executeQuery(sql);
@@ -196,6 +196,24 @@ public class Report_pageDaoImpl implements Report_pageDao {
 		        ) {
 		            stmt.setTimestamp(1, new Timestamp(System.currentTimeMillis()));
 		            stmt.setInt(2, postId);
+		            
+		            return stmt.executeUpdate();
+		        } catch (Exception e) {
+		            e.printStackTrace();
+		        }
+		        
+		        return -1;
+		}
+		
+		@Override
+		public int updateType(int REPORT_ID) {
+			  final String sql = "UPDATE FORFUN.report SET TYPE = 1 WHERE REPORT_ID = ?;";
+		        
+		        try (
+		            Connection conn = dataSource.getConnection();
+		            PreparedStatement stmt = conn.prepareStatement(sql);
+		        ) {
+		            stmt.setInt(1, REPORT_ID);
 		            
 		            return stmt.executeUpdate();
 		        } catch (Exception e) {
